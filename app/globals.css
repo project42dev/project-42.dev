@@ -1697,6 +1697,11 @@ a {
   padding: 1.4rem;
 }
 
+.code-example pre:focus-visible {
+  outline: 3px solid var(--cyan);
+  outline-offset: -3px;
+}
+
 .code-tools {
   align-items: center;
   display: flex;

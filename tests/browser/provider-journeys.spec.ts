@@ -120,6 +120,14 @@ test("renders provider routes and completes an accessible OpenAI journey", async
     await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await expect(page.getByText("Practice activity", { exact: true })).toBeVisible();
     await expect(page.getByText("Knowledge check", { exact: true })).toBeVisible();
+    const codeRegions = page.locator(".code-example pre");
+    if ((await codeRegions.count()) > 0) {
+      const codeRegion = codeRegions.first();
+      await expect(codeRegion).toHaveAttribute("tabindex", "0");
+      await expect(codeRegion).toHaveAttribute("aria-label", /code example$/);
+      await codeRegion.focus();
+      await expect(codeRegion).toBeFocused();
+    }
     await expectNoAutomatedAccessibilityViolations(page);
   }
 

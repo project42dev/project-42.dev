@@ -119,6 +119,13 @@ test("renders complete provider paths plus comparison and migration guidance", a
     assert.match(html, /Practice activity/);
     assert.match(html, /Knowledge check/);
     assert.match(html, /Sources and verification/);
+    for (const section of learningModule.sections.filter((item) => item.code)) {
+      assert.ok(
+        html.includes(`aria-label="${section.code.label} code example"`),
+        `${moduleId} code example needs an accessible name`,
+      );
+      assert.match(html, /<pre[^>]*tabindex="0"/);
+    }
   }
 });
 
