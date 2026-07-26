@@ -2,10 +2,10 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Project 42 — Learn AI with confidence",
+    name: "Project 42 — Start curious. Become capable.",
     short_name: "Project 42",
     description:
-      "Free, open, provider-neutral AI learning paths and practical field guides.",
+      "The public gateway to free Project 42 learning and practical AI guidance.",
     start_url: "/",
     display: "standalone",
     background_color: "#f6f3eb",

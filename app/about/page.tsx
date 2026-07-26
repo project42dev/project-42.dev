@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { siteFacts } from "../lib/siteFacts";
 
 export const metadata: Metadata = {
@@ -165,9 +164,9 @@ export default function AboutPage() {
           >
             Platform source
           </a>
-          <Link className="button button-secondary" href="/learn">
+          <a className="button button-secondary" href="https://learn.project-42.dev">
             Start learning
-          </Link>
+          </a>
         </div>
       </section>
     </main>

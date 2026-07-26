@@ -15,11 +15,11 @@ export function SiteFooter() {
         </div>
         <div>
           <strong>Explore</strong>
-          <Link href="/learn">Learning paths</Link>
-          <Link href="/resources">Field guide</Link>
-          <Link href="/diagrams">Visual guides</Link>
-          <Link href="/profile">Your transcript</Link>
-          <Link href="/learner-data">Learner data</Link>
+          <a href="https://learn.project-42.dev">Learning paths</a>
+          <a href="https://guide.project-42.dev">Field Guide</a>
+          <a href="https://guide.project-42.dev/diagrams">Visual guides</a>
+          <a href="https://learn.project-42.dev/profile">Your transcript</a>
+          <a href="https://learn.project-42.dev/learner-data">Learner data</a>
         </div>
         <div>
           <strong>Project</strong>

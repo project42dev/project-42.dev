@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
-import { ProgressProvider } from "./components/ProgressProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://project-42.dev"),
@@ -92,13 +91,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <ProgressProvider>
-          <SiteHeader />
-          <div id="main-content" tabIndex={-1}>
-            {children}
-          </div>
-          <SiteFooter />
-        </ProgressProvider>
+        <SiteHeader />
+        <div id="main-content" tabIndex={-1}>
+          {children}
+        </div>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -686,6 +686,45 @@ a {
   margin: 0;
 }
 
+.progress-strip {
+  align-items: center;
+  background: var(--navy);
+  border-radius: var(--radius);
+  color: white;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr 1fr auto;
+  margin-bottom: 5rem;
+  padding: 2rem;
+}
+
+.progress-strip div {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.progress-strip strong {
+  color: var(--lime);
+  font-size: 1.05rem;
+}
+
+.progress-strip span {
+  color: #bdc5d5;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.progress-strip .button-secondary {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--navy);
+}
+
+.progress-strip .button-secondary:hover {
+  background: white;
+  border-color: white;
+}
+
 .provider-dot {
   background: var(--lime);
   border-radius: 50%;
@@ -3185,6 +3224,14 @@ a {
 
   .hero-map {
     justify-self: center;
+  }
+
+  .progress-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .progress-strip .button {
+    justify-self: start;
   }
 
   .learning-path-row {

@@ -1,7 +1,8 @@
 # Project 42
 
-The public Project 42 learning experience: free, provider-neutral AI learning paths,
-knowledge checks, progress, badges, and a practical field guide.
+The public Project 42 gateway. It introduces the project and sends people to the
+separate Learn and Field Guide experiences while preserving legacy route redirects
+and a consent-based browser progress transfer.
 
 ## Develop
 
@@ -19,7 +20,7 @@ npm test
 
 The site consumes the versioned open-source learning core from
 [`project42dev/project42-platform`](https://github.com/project42dev/project42-platform).
-The current catalog includes the complete twelve-module Reliable Agent Workflows path
+The Project 42 ecosystem includes the complete twelve-module Reliable Agent Workflows path
 alongside the sixteen-module AI Foundations path. Its practical capstone includes complete
 and deliberately flawed calibration packages, eight required operating artifacts,
 criterion-level evidence mapping, failed-submission revision, a 100-point rubric,
@@ -38,10 +39,10 @@ artifacts are generated ahead of deployment. See
 [`docs/diagram-authoring.md`](docs/diagram-authoring.md) for the validation,
 accessibility, and security contract.
 
-## Current release facts
+## Current ecosystem facts
 
-- Site release `0.17.1`
-- Platform package `0.38.0`
+- Site release `0.18.0`
+- Platform package `0.39.0`
 - Content release `0.30.0`
 - 6 learning paths, 55 assessed modules, 49 evidence activities, and 257 reviewed questions
 - 50 practical resources and 4 provider scopes
@@ -53,7 +54,9 @@ drift.
 
 ## Repositories
 
-- `project-42.dev` — hosted public experience and brand
+- `project-42.dev` — public landing experience and brand
+- `learn.project-42.dev` — learning paths, assessments, badges, and transcripts
+- `guide.project-42.dev` — practical Field Guide and visual references
 - `project42-platform` — reusable Apache-2.0 platform and CC BY 4.0 curriculum
 - `project42dev-ops` — private planning and operations
 - `project42dev.github.io` — transitional public site

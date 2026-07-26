@@ -12,15 +12,15 @@ export function SiteHeader() {
           </span>
         </Link>
         <nav aria-label="Primary navigation">
-          <Link href="/learn">Learn</Link>
-          <Link href="/resources">Resources</Link>
-          <Link href="/diagrams">Visual guides</Link>
-          <Link href="/profile">My progress</Link>
+          <a href="https://learn.project-42.dev">Learn</a>
+          <a href="https://guide.project-42.dev">Field Guide</a>
+          <a href="https://guide.project-42.dev/diagrams">Visual guides</a>
+          <a href="https://learn.project-42.dev/profile">My progress</a>
           <Link href="/about">About</Link>
         </nav>
-        <Link className="header-action" href="/learn/ai-foundations">
+        <a className="header-action" href="https://learn.project-42.dev/learn/ai-foundations">
           Start learning
-        </Link>
+        </a>
       </div>
     </header>
   );

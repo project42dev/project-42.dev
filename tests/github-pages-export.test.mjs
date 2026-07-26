@@ -2,50 +2,67 @@ import assert from "node:assert/strict";
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
-import {
-  defaultLearnerDataPolicy,
-  starterCatalog,
-} from "@project42/platform";
+import { starterCatalog } from "@project42/platform";
+import diagramConfig from "../config/diagrams.json" with { type: "json" };
 import { buildRouteInventory } from "../scripts/link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const outputRoot = path.join(projectRoot, "dist", "pages");
 
-test("exports every governed route for GitHub Pages", async () => {
-  const inventory = buildRouteInventory(starterCatalog);
+test("exports only canonical landing routes as governed pages", async () => {
+  const inventory = buildRouteInventory();
   const manifest = JSON.parse(
     await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
   );
 
   assert.equal(manifest.canonicalDomain, "project-42.dev");
   assert.deepEqual(manifest.htmlRoutes, inventory.htmlRoutes);
+  assert.deepEqual(inventory.htmlRoutes, ["/", "/about", "/transfer-progress"]);
   for (const route of inventory.htmlRoutes) {
     const relative = route === "/" ? "index.html" : `${route.slice(1)}/index.html`;
     await access(path.join(outputRoot, relative));
   }
 });
 
-test("publishes current release facts and learner-data disclosure", async () => {
-  const [home, learnerData, releaseFacts, policy] = await Promise.all([
-    readFile(path.join(outputRoot, "index.html"), "utf8"),
-    readFile(path.join(outputRoot, "learner-data", "index.html"), "utf8"),
-    readFile(path.join(outputRoot, "release-facts.json"), "utf8").then(JSON.parse),
-    readFile(path.join(outputRoot, "learner-data", "policy.json"), "utf8").then(
-      JSON.parse,
+test("exports complete Learn and Field Guide legacy redirects", async () => {
+  const manifest = JSON.parse(
+    await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
+  );
+  const expectedRedirectCount =
+    6 +
+    starterCatalog.paths.length +
+    starterCatalog.modules.length +
+    starterCatalog.resources.length +
+    diagramConfig.diagrams.length;
+  assert.equal(Object.keys(manifest.legacyRedirects).length, expectedRedirectCount);
+  assert.equal(manifest.legacyRedirects["/learn"], "https://learn.project-42.dev/");
+  assert.equal(
+    manifest.legacyRedirects["/resources"],
+    "https://guide.project-42.dev/",
+  );
+  assert.equal(
+    manifest.legacyRedirects["/profile"],
+    "https://learn.project-42.dev/profile",
+  );
+
+  const [legacyLearning, legacyResource] = await Promise.all([
+    readFile(path.join(outputRoot, "learn", "ai-foundations", "index.html"), "utf8"),
+    readFile(
+      path.join(outputRoot, "resources", "prompt-checklist", "index.html"),
+      "utf8",
     ),
   ]);
-
-  const normalizedHome = home.replaceAll("<!-- -->", "");
-  assert.match(normalizedHome, /Project 42/);
-  assert.ok(normalizedHome.includes(`Site v${releaseFacts.siteVersion}`));
-  assert.match(learnerData, /Your learning data, without fine print/);
-  assert.match(learnerData, /href="\/learner-data\/policy\.json"/);
-  assert.equal(releaseFacts.siteVersion, "0.17.1");
-  assert.equal(releaseFacts.platformVersion, "0.38.0");
-  assert.deepEqual(policy, defaultLearnerDataPolicy);
+  assert.match(legacyLearning, /learn\.project-42\.dev\/learn\/ai-foundations/);
+  assert.match(legacyResource, /guide\.project-42\.dev\/resources\/prompt-checklist/);
+  assert.match(legacyLearning, /window\.location\.replace/);
 });
 
-test("contains GitHub Pages controls without server or Sites metadata", async () => {
+test("publishes current ecosystem facts and Pages controls", async () => {
+  const releaseFacts = JSON.parse(
+    await readFile(path.join(outputRoot, "release-facts.json"), "utf8"),
+  );
+  assert.equal(releaseFacts.siteVersion, "0.18.0");
+  assert.equal(releaseFacts.platformVersion, "0.39.0");
   assert.equal(
     await readFile(path.join(outputRoot, "CNAME"), "utf8"),
     "project-42.dev\n",

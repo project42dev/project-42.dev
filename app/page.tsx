@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { starterCatalog } from "@project42/platform";
-import { ProgressSnapshot } from "./components/ProgressSnapshot";
 import { diagramCatalog } from "./lib/diagrams";
 
 export default function Home() {
@@ -24,15 +22,15 @@ export default function Home() {
             know, and keep a record of your progress.
           </p>
           <div className="button-row">
-            <Link className="button button-primary" href="/learn/ai-foundations">
+            <a className="button button-primary" href="https://learn.project-42.dev/learn/ai-foundations">
               Start AI Foundations
-            </Link>
-            <Link className="button button-secondary" href="/resources">
+            </a>
+            <a className="button button-secondary" href="https://guide.project-42.dev">
               Browse the field guide
-            </Link>
-            <Link className="button button-secondary" href="/diagrams">
+            </a>
+            <a className="button button-secondary" href="https://guide.project-42.dev/diagrams">
               See visual guides
-            </Link>
+            </a>
           </div>
           <ul className="trust-list" aria-label="Project 42 promises">
             <li>Beginner-friendly</li>
@@ -63,7 +61,19 @@ export default function Home() {
         </div>
       </section>
 
-      <ProgressSnapshot />
+      <section className="progress-strip shell" aria-label="Project 42 destinations">
+        <div>
+          <strong>Learn</strong>
+          <span>Courses, knowledge checks, badges, and your transcript</span>
+        </div>
+        <div>
+          <strong>Field Guide</strong>
+          <span>Practical answers, workflows, comparisons, and visual guides</span>
+        </div>
+        <a className="button button-secondary" href="https://learn.project-42.dev/import-progress">
+          Move existing progress
+        </a>
+      </section>
 
       <section className="section shell" aria-labelledby="two-ways">
         <div className="section-heading">
@@ -87,7 +97,7 @@ export default function Home() {
               <li>{starterCatalog.modules.length} assessed modules</li>
               <li>Device-local transcript in this release</li>
             </ul>
-            <Link href="/learn">Explore learning paths →</Link>
+            <a href="https://learn.project-42.dev">Explore learning paths →</a>
           </article>
           <article className="pillar-card pillar-reference">
             <div className="card-index">Field guide / 02</div>
@@ -102,7 +112,7 @@ export default function Home() {
               <li>Anthropic, OpenAI, and Google coverage</li>
               <li>Provider-neutral core concepts</li>
             </ul>
-            <Link href="/resources">Open the field guide →</Link>
+            <a href="https://guide.project-42.dev">Open the Field Guide →</a>
           </article>
         </div>
       </section>
@@ -113,9 +123,9 @@ export default function Home() {
             <p className="eyebrow">Choose your starting point</p>
             <h2 id="featured-paths">Paths with a destination</h2>
           </div>
-          <Link className="text-link" href="/learn">
+          <a className="text-link" href="https://learn.project-42.dev">
             View all paths
-          </Link>
+          </a>
         </div>
         <div className="path-grid">
           {[beginnerPath, practitionerPath].filter(Boolean).map((path, index) => (
@@ -127,7 +137,9 @@ export default function Home() {
               <div className="path-number">0{index + 1}</div>
               <h3>{path!.title}</h3>
               <p>{path!.summary}</p>
-              <Link href={`/learn/${path!.id}`}>See this path →</Link>
+              <a href={`https://learn.project-42.dev/learn/${path!.id}`}>
+                See this path →
+              </a>
             </article>
           ))}
         </div>
@@ -153,9 +165,12 @@ export default function Home() {
         <p className="eyebrow">Your first checkpoint is 12 minutes away</p>
         <h2>Understanding beats intimidation.</h2>
         <p>Start with one module. We will remember where you left off on this device.</p>
-        <Link className="button button-primary" href="/learn/ai-foundations/what-ai-does">
+        <a
+          className="button button-primary"
+          href="https://learn.project-42.dev/learn/ai-foundations/what-ai-does"
+        >
           Begin the first module
-        </Link>
+        </a>
       </section>
     </main>
   );
