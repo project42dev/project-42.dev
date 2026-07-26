@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 const learnOrigin = "https://learn.project-42.dev";
 const storageKey = "project42.progress.v1";
+const transferReady = "project42-progress-transfer-ready-v1";
 const transferRequest = "project42-progress-transfer-request-v1";
 const transferResponse = "project42-progress-transfer-response-v1";
 
@@ -33,6 +34,7 @@ export function LegacyProgressBridge() {
       );
     }
     window.addEventListener("message", respond);
+    window.parent.postMessage({ type: transferReady }, learnOrigin);
     return () => window.removeEventListener("message", respond);
   }, []);
 
