@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 export default function NotFound() {
   return (
     <main className="not-found shell">
@@ -7,12 +5,12 @@ export default function NotFound() {
       <h1>This path has not been charted.</h1>
       <p>Return to the academy or search the field guide for another route.</p>
       <div className="button-row">
-        <Link className="button button-primary" href="/learn">
+        <a className="button button-primary" href="https://learn.project-42.dev">
           Learning paths
-        </Link>
-        <Link className="button button-secondary" href="/resources">
-          Field guide
-        </Link>
+        </a>
+        <a className="button button-secondary" href="https://guide.project-42.dev">
+          Field Guide
+        </a>
       </div>
     </main>
   );

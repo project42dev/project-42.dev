@@ -2,8 +2,6 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { starterCatalog } from "@project42/platform";
-import diagramConfig from "../config/diagrams.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultBaseUrl = "https://project-42.dev";
@@ -48,34 +46,15 @@ function sourceLabel(reference) {
 }
 
 export function buildRouteInventory(
-  catalog = starterCatalog,
-  diagrams = diagramConfig.diagrams,
 ) {
   const htmlRoutes = new Set([
     "/",
     "/about",
-    "/diagrams",
-    "/learn",
-    "/learner-data",
-    "/profile",
-    "/resources",
+    "/transfer-progress",
   ]);
-  for (const learningPath of catalog.paths) {
-    htmlRoutes.add(`/learn/${learningPath.id}`);
-    for (const moduleId of learningPath.moduleIds) {
-      htmlRoutes.add(`/learn/${learningPath.id}/${moduleId}`);
-    }
-  }
-  for (const resource of catalog.resources) {
-    htmlRoutes.add(`/resources/${resource.id}`);
-  }
-  for (const diagram of diagrams) {
-    htmlRoutes.add(`/diagrams/${diagram.id}`);
-  }
   return {
     htmlRoutes: [...htmlRoutes].sort(),
     endpointRoutes: [
-      "/learner-data/policy",
       "/manifest.webmanifest",
       "/robots.txt",
       "/sitemap.xml",
@@ -514,7 +493,6 @@ async function loadExceptions(exceptionsPath = defaultExceptionsPath) {
 }
 
 export async function runLinkIntegrityCheck({
-  catalog = starterCatalog,
   loadRoute,
   exceptions,
   staticRoot = defaultStaticRoot,
@@ -522,7 +500,7 @@ export async function runLinkIntegrityCheck({
   timeoutMs = positiveInteger(process.env.LINK_CHECK_TIMEOUT_MS, 20_000),
   attempts = positiveInteger(process.env.LINK_CHECK_ATTEMPTS, 3),
 } = {}) {
-  const inventory = buildRouteInventory(catalog);
+  const inventory = buildRouteInventory();
   const routeLoader = loadRoute ?? (await createWorkerLoader());
   const documents = new Map();
   const rendered = await mapLimit(inventory.htmlRoutes, 8, routeLoader);

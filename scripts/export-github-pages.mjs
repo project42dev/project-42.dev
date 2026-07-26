@@ -2,6 +2,8 @@ import { access, cp, mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
+import { starterCatalog } from "@project42/platform";
+import diagramConfig from "../config/diagrams.json" with { type: "json" };
 import { buildRouteInventory } from "./link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
@@ -44,9 +46,66 @@ document.addEventListener("click",function(event){
   window.location.assign(url.href);
 },true);
 </script>`;
-  return html
-    .replaceAll('href="/learner-data/policy"', 'href="/learner-data/policy.json"')
-    .replace("</head>", `${navigation}</head>`);
+  return html.replace("</head>", `${navigation}</head>`);
+}
+
+function buildLegacyRedirects() {
+  const redirects = new Map([
+    ["/learn", "https://learn.project-42.dev/"],
+    ["/profile", "https://learn.project-42.dev/profile"],
+    ["/learner-data", "https://learn.project-42.dev/learner-data"],
+    ["/learner-data/policy", "https://learn.project-42.dev/learner-data/policy"],
+    ["/resources", "https://guide.project-42.dev/"],
+    ["/diagrams", "https://guide.project-42.dev/diagrams"],
+  ]);
+  for (const learningPath of starterCatalog.paths) {
+    redirects.set(
+      `/learn/${learningPath.id}`,
+      `https://learn.project-42.dev/learn/${learningPath.id}`,
+    );
+    for (const moduleId of learningPath.moduleIds) {
+      redirects.set(
+        `/learn/${learningPath.id}/${moduleId}`,
+        `https://learn.project-42.dev/learn/${learningPath.id}/${moduleId}`,
+      );
+    }
+  }
+  for (const resource of starterCatalog.resources) {
+    redirects.set(
+      `/resources/${resource.id}`,
+      `https://guide.project-42.dev/resources/${resource.id}`,
+    );
+  }
+  for (const diagram of diagramConfig.diagrams) {
+    redirects.set(
+      `/diagrams/${diagram.id}`,
+      `https://guide.project-42.dev/diagrams/${diagram.id}`,
+    );
+  }
+  return redirects;
+}
+
+function redirectDocument(target) {
+  const attributeTarget = target
+    .replaceAll("&", "&amp;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
+  return `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0;url=${attributeTarget}">
+  <link rel="canonical" href="${attributeTarget}">
+  <title>Project 42 has moved</title>
+  <script>window.location.replace(${JSON.stringify(target)});</script>
+</head>
+<body>
+  <p>This Project 42 page has moved. <a href="${attributeTarget}">Continue</a>.</p>
+</body>
+</html>
+`;
 }
 
 async function writeRoute(route, content) {
@@ -91,6 +150,11 @@ async function main() {
     await writeRoute(route, addStaticNavigation(await response.text()));
   }
 
+  const legacyRedirects = buildLegacyRedirects();
+  for (const [route, target] of legacyRedirects) {
+    await writeRoute(route, redirectDocument(target));
+  }
+
   for (const [route, target] of endpointFiles) {
     const response = await fetchRoute(route);
     if (!response.ok) {
@@ -98,17 +162,6 @@ async function main() {
     }
     await writeFile(path.join(outputRoot, target), await response.text());
   }
-
-  const policyResponse = await fetchRoute("/learner-data/policy");
-  if (!policyResponse.ok) {
-    throw new Error(
-      `Cannot export /learner-data/policy: HTTP ${policyResponse.status}`,
-    );
-  }
-  const policy = await policyResponse.text();
-  JSON.parse(policy);
-  await mkdir(path.join(outputRoot, "learner-data"), { recursive: true });
-  await writeFile(path.join(outputRoot, "learner-data", "policy.json"), policy);
 
   const notFoundResponse = await fetchRoute("/__project42_not_found__");
   const notFoundHtml = addStaticNavigation(await notFoundResponse.text());
@@ -122,10 +175,8 @@ async function main() {
         schemaVersion: 1,
         canonicalDomain,
         htmlRoutes: inventory.htmlRoutes,
-        endpoints: [
-          ...endpointFiles.keys(),
-          "/learner-data/policy.json",
-        ],
+        legacyRedirects: Object.fromEntries(legacyRedirects),
+        endpoints: [...endpointFiles.keys()],
       },
       null,
       2,
@@ -134,7 +185,7 @@ async function main() {
 
   console.log(
     `GitHub Pages export ready: ${inventory.htmlRoutes.length} HTML routes and ` +
-      `${endpointFiles.size + 1} endpoints in ${outputRoot}.`,
+      `${legacyRedirects.size} legacy redirects and ${endpointFiles.size} endpoints in ${outputRoot}.`,
   );
 }
 
