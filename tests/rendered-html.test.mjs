@@ -34,6 +34,9 @@ test("renders the About page as part of the landing site", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /A free place to become fluent in AI/);
+  assert.match(html, /Deploy Project 42 for your own people/);
+  assert.match(html, /AI learning, created and maintained with AI/);
+  assert.match(html, /accountable human approval/);
   assert.match(html, /https:\/\/learn\.project-42\.dev/);
 });
 
