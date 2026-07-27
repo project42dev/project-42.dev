@@ -50,6 +50,7 @@ export function buildRouteInventory(
   const htmlRoutes = new Set([
     "/",
     "/about",
+    "/legal-transparency",
     "/transfer-progress",
   ]);
   return {

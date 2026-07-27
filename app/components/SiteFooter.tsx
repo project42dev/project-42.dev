@@ -24,6 +24,7 @@ export function SiteFooter() {
         <div>
           <strong>Project</strong>
           <Link href="/about">About</Link>
+          <Link href="/legal-transparency">Legal &amp; Transparency</Link>
           <a href={siteFacts.repositories.roadmap}>Public roadmap and issues</a>
           <a href={siteFacts.repositories.platform}>Open-source platform</a>
           <a href={siteFacts.repositories.site}>Public site source</a>
@@ -35,6 +36,8 @@ export function SiteFooter() {
           {siteFacts.contentVersion}
         </span>
         <span>
+          <Link href="/legal-transparency">Legal &amp; Transparency</Link>
+          {" · "}
           <a href={siteFacts.licenses.software.url}>Code {siteFacts.licenses.software.spdx}</a>
           {" · "}
           <a href={siteFacts.licenses.curriculum.url}>

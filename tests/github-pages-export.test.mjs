@@ -17,7 +17,12 @@ test("exports only canonical landing routes as governed pages", async () => {
 
   assert.equal(manifest.canonicalDomain, "project-42.dev");
   assert.deepEqual(manifest.htmlRoutes, inventory.htmlRoutes);
-  assert.deepEqual(inventory.htmlRoutes, ["/", "/about", "/transfer-progress"]);
+  assert.deepEqual(inventory.htmlRoutes, [
+    "/",
+    "/about",
+    "/legal-transparency",
+    "/transfer-progress",
+  ]);
   for (const route of inventory.htmlRoutes) {
     const relative = route === "/" ? "index.html" : `${route.slice(1)}/index.html`;
     await access(path.join(outputRoot, relative));
@@ -58,11 +63,16 @@ test("exports complete Learn and Field Guide legacy redirects", async () => {
 });
 
 test("publishes current ecosystem facts and Pages controls", async () => {
-  const releaseFacts = JSON.parse(
-    await readFile(path.join(outputRoot, "release-facts.json"), "utf8"),
-  );
-  assert.equal(releaseFacts.siteVersion, "0.18.0");
-  assert.equal(releaseFacts.platformVersion, "0.39.0");
+  const [releaseFacts, application, installedPlatform] = await Promise.all([
+    readFile(path.join(outputRoot, "release-facts.json"), "utf8").then(JSON.parse),
+    readFile(path.join(projectRoot, "package.json"), "utf8").then(JSON.parse),
+    readFile(
+      path.join(projectRoot, "node_modules", "@project42", "platform", "package.json"),
+      "utf8",
+    ).then(JSON.parse),
+  ]);
+  assert.equal(releaseFacts.siteVersion, application.version);
+  assert.equal(releaseFacts.platformVersion, installedPlatform.version);
   assert.equal(
     await readFile(path.join(outputRoot, "CNAME"), "utf8"),
     "project-42.dev\n",
