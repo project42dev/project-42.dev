@@ -169,6 +169,35 @@ export default function AboutPage() {
           </a>
         </div>
       </section>
+
+      <section
+        className="future-platform-banner"
+        aria-labelledby="future-platform-title"
+      >
+        <div>
+          <p className="eyebrow">Coming next</p>
+          <h2 id="future-platform-title">
+            Deploy Project 42 for your own people—and keep it current.
+          </h2>
+          <p>
+            Project 42 is becoming a complete, supported open-source distribution
+            that organizations can run for their own employees, students, or
+            communities. Local identity, branding, configuration, private learner
+            records, and custom content stay under the operator&apos;s control while
+            governed update previews make upstream software and curriculum
+            improvements available without overwriting those local choices.
+          </p>
+        </div>
+        <aside aria-label="How Project 42 is made">
+          <strong>AI learning, created and maintained with AI.</strong>
+          <p>
+            The same class of technology taught here helps research, draft, test,
+            fact-check, and refresh the platform and its lessons. Independent models,
+            deterministic checks, and accountable human approval stand between an AI
+            proposal and publication.
+          </p>
+        </aside>
+      </section>
     </main>
   );
 }
