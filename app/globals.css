@@ -2879,6 +2879,56 @@ a {
   max-width: 700px;
 }
 
+.future-platform-banner {
+  background:
+    radial-gradient(circle at 92% 8%, rgb(99 215 228 / 18%), transparent 32%),
+    var(--navy);
+  border: 1px solid rgb(255 255 255 / 14%);
+  border-radius: var(--radius);
+  color: white;
+  display: grid;
+  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  margin-top: 1rem;
+  padding: clamp(2.2rem, 5vw, 4rem);
+}
+
+.future-platform-banner h2 {
+  font-size: clamp(2.2rem, 5vw, 4.25rem);
+  font-weight: 840;
+  letter-spacing: -0.06em;
+  line-height: 0.98;
+  margin: 0;
+  max-width: 900px;
+}
+
+.future-platform-banner > div > p:last-child {
+  color: #c8d2e6;
+  line-height: 1.65;
+  max-width: 800px;
+}
+
+.future-platform-banner aside {
+  align-self: end;
+  background: rgb(255 255 255 / 8%);
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: calc(var(--radius) - 8px);
+  padding: clamp(1.4rem, 3vw, 2rem);
+}
+
+.future-platform-banner aside strong {
+  color: var(--lime);
+  display: block;
+  font-size: 1.25rem;
+  letter-spacing: -0.025em;
+}
+
+.future-platform-banner aside p {
+  color: #dfe7f5;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
 .learner-data-page {
   padding-bottom: 8rem;
 }
@@ -3329,6 +3379,7 @@ a {
   .resource-grid,
   .about-grid,
   .open-source-banner,
+  .future-platform-banner,
   .release-facts-heading,
   .provider-fact-section,
   .profile-identity,
