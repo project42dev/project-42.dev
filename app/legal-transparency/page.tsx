@@ -66,23 +66,27 @@ export default function LegalTransparencyPage() {
         <div>
           <p className="eyebrow">Review status</p>
           <h2 id="legal-review-title" tabIndex={-1}>
-            Engineering-complete review draft
+            Owner-accepted review draft
           </h2>
           <p>
-            This wording is not yet effective legal terms. Owner fact verification
-            and qualified legal review are required before publication. The
-            source-controlled draft is available now so those reviews can be
-            specific, testable, and versioned.
+            This wording is not yet effective legal terms. The Project 42 owner
+            accepted this review draft on July 28, 2026. Qualified legal review, the
+            final effective version and date, and the recurring review date remain
+            pending.
           </p>
         </div>
         <dl>
           <div>
             <dt>Draft version</dt>
-            <dd>{legalVersion}</dd>
+            <dd>
+              {legalVersion}
+              <br />
+              <span>Owner accepted July 28, 2026</span>
+            </dd>
           </div>
           <div>
             <dt>Effective date</dt>
-            <dd>Pending approval</dd>
+            <dd>Pending qualified legal review</dd>
           </div>
           <div>
             <dt>Publication authority</dt>
@@ -373,8 +377,9 @@ export default function LegalTransparencyPage() {
             <h3>Change history</h3>
             <ul>
               <li>
-                <strong>{legalVersion}</strong> · 2026-07-27 · Engineering draft
-                prepared for owner and qualified legal review; not effective.
+                <strong>{legalVersion}</strong> · 2026-07-28 · Owner accepted this
+                review draft; qualified legal review and an effective version and
+                date remain pending.
               </li>
             </ul>
           </article>

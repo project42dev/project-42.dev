@@ -22,9 +22,19 @@ test("exposes the review-gated Legal & Transparency page accessibly", async ({
     }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Engineering-complete review draft" }),
+    page.getByRole("heading", { name: "Owner-accepted review draft" }),
   ).toBeVisible();
   await expect(page.getByText(/not yet effective legal terms/i)).toBeVisible();
+  await expect(
+    page.getByText(/accepted this review draft on July 28, 2026/i),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/qualified legal review/i).first(),
+  ).toBeVisible();
+  await expect(
+    page.getByText(/Pending qualified legal review/i),
+  ).toBeVisible();
+  await expect(page.getByText("Owner accepted July 28, 2026")).toBeVisible();
 
   await expect(page.getByRole("main")).toHaveCount(1);
   await expect(page.getByRole("contentinfo")).toHaveCount(1);
