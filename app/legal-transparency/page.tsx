@@ -22,6 +22,42 @@ export default function LegalTransparencyPage() {
         </p>
       </header>
 
+      <nav aria-labelledby="legal-contents-title" className="legal-toc">
+        <div>
+          <p className="eyebrow">Page guide</p>
+          <h2 id="legal-contents-title">On this page</h2>
+        </div>
+        <ol>
+          <li>
+            <a href="#legal-review-title">Review status</a>
+          </li>
+          <li>
+            <a href="#people-title">People and responsibility</a>
+          </li>
+          <li>
+            <a href="#licenses-title">Open-source and reuse</a>
+          </li>
+          <li>
+            <a href="#service-title">Service expectations</a>
+          </li>
+          <li>
+            <a href="#third-party-title">External services</a>
+          </li>
+          <li>
+            <a href="#account-title">Accounts, privacy, and choice</a>
+          </li>
+          <li>
+            <a href="#acceptable-use-title">Acceptable use</a>
+          </li>
+          <li>
+            <a href="#warranty-title">Warranty and liability</a>
+          </li>
+          <li>
+            <a href="#history-title">Version and sources</a>
+          </li>
+        </ol>
+      </nav>
+
       <aside
         aria-labelledby="legal-review-title"
         className="legal-review-notice"
@@ -29,7 +65,9 @@ export default function LegalTransparencyPage() {
       >
         <div>
           <p className="eyebrow">Review status</p>
-          <h2 id="legal-review-title">Engineering-complete review draft</h2>
+          <h2 id="legal-review-title" tabIndex={-1}>
+            Engineering-complete review draft
+          </h2>
           <p>
             This wording is not yet effective legal terms. Owner fact verification
             and qualified legal review are required before publication. The
@@ -56,7 +94,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="people-title">
         <div className="policy-section-heading">
           <p className="eyebrow">People and responsibility</p>
-          <h2 id="people-title">AI helps make Project 42. People govern it.</h2>
+          <h2 id="people-title" tabIndex={-1}>
+            AI helps make Project 42. People govern it.
+          </h2>
           <p>
             Project 42 was created by Kristopher Turner. The hosted Project 42
             service is operated by Hybrid Cloud Solutions LLC. These statements
@@ -102,7 +142,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="licenses-title">
         <div className="policy-section-heading">
           <p className="eyebrow">Open-source and reuse</p>
-          <h2 id="licenses-title">Free to use does not mean ownerless.</h2>
+          <h2 id="licenses-title" tabIndex={-1}>
+            Free to use does not mean ownerless.
+          </h2>
           <p>
             Each kind of material keeps its own license and ownership boundary.
             A repository license controls the files it covers; it does not relicense
@@ -163,7 +205,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="service-title">
         <div className="policy-section-heading">
           <p className="eyebrow">Service expectations</p>
-          <h2 id="service-title">Useful, not infallible or uninterrupted.</h2>
+          <h2 id="service-title" tabIndex={-1}>
+            Useful, not infallible or uninterrupted.
+          </h2>
           <p>
             Project 42 is an educational resource and experimental open-source
             service. Use it as a starting point, verify important decisions against
@@ -203,7 +247,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="third-party-title">
         <div className="policy-section-heading">
           <p className="eyebrow">External services</p>
-          <h2 id="third-party-title">Their services, their terms.</h2>
+          <h2 id="third-party-title" tabIndex={-1}>
+            Their services, their terms.
+          </h2>
           <p>
             Project 42 relies on and links to services outside its control, including
             identity, hosting, infrastructure, model, documentation, source-control,
@@ -241,7 +287,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="account-title">
         <div className="policy-section-heading">
           <p className="eyebrow">Accounts, privacy, and choice</p>
-          <h2 id="account-title">Consent is a control, not a buried checkbox.</h2>
+          <h2 id="account-title" tabIndex={-1}>
+            Consent is a control, not a buried checkbox.
+          </h2>
           <p>
             Acceptance of legal information does not replace a separate consent
             decision where consent is required. Optional consent is not preselected
@@ -275,7 +323,9 @@ export default function LegalTransparencyPage() {
       >
         <div className="policy-section-heading">
           <p className="eyebrow">Acceptable use</p>
-          <h2 id="acceptable-use-title">Learn and build without harming others.</h2>
+          <h2 id="acceptable-use-title" tabIndex={-1}>
+            Learn and build without harming others.
+          </h2>
           <p>
             Do not use Project 42 to violate law, invade privacy, bypass access
             controls, distribute malware, harass people, misrepresent identity or
@@ -289,7 +339,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="warranty-title">
         <div className="policy-section-heading">
           <p className="eyebrow">Warranty and liability</p>
-          <h2 id="warranty-title">The legal limit still has limits.</h2>
+          <h2 id="warranty-title" tabIndex={-1}>
+            The legal limit still has limits.
+          </h2>
           <p>
             To the maximum extent permitted by applicable law, Project 42 software,
             curriculum, hosted features, and related materials are provided
@@ -312,7 +364,9 @@ export default function LegalTransparencyPage() {
       <section className="legal-section" aria-labelledby="history-title">
         <div className="policy-section-heading">
           <p className="eyebrow">Version and sources</p>
-          <h2 id="history-title">Reviewable words, not invisible fine print.</h2>
+          <h2 id="history-title" tabIndex={-1}>
+            Reviewable words, not invisible fine print.
+          </h2>
         </div>
         <div className="policy-two-column">
           <article>
