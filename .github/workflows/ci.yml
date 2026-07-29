@@ -35,4 +35,5 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: "true"
       # Playwright's headless Chromium launch uses the smaller headless shell.
       - run: npx playwright install --with-deps chromium --only-shell
-      - run: npm run check
+      - name: Audit dependencies and run complete quality gates
+        run: npm run verify
