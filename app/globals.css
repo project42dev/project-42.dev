@@ -3577,6 +3577,54 @@ a {
   max-width: 920px;
 }
 
+.legal-toc {
+  align-items: start;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(10rem, 0.35fr) minmax(0, 1fr);
+  margin-bottom: 2rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.legal-toc h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: -0.035em;
+  margin: 0;
+}
+
+.legal-toc ol {
+  display: grid;
+  gap: 0.45rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  list-style-position: inside;
+  margin: 0;
+  padding: 0;
+}
+
+.legal-toc li {
+  min-width: 0;
+}
+
+.legal-toc a {
+  align-items: center;
+  display: inline-flex;
+  font-weight: 760;
+  min-height: 44px;
+  padding-block: 0.35rem;
+}
+
+.legal-page a:focus-visible,
+.legal-page h2:focus-visible {
+  outline-color: var(--navy);
+}
+
+.site-footer a:focus-visible {
+  outline-color: var(--lime);
+}
+
 .legal-review-notice {
   align-items: start;
   background: var(--navy);
@@ -3715,6 +3763,7 @@ a {
 }
 
 @media (forced-colors: active) {
+  .legal-toc,
   .legal-review-notice,
   .legal-license-grid article,
   .legal-link-grid article,
@@ -3722,9 +3771,40 @@ a {
   .legal-caution {
     border: 1px solid CanvasText;
   }
+
+  .legal-toc,
+  .legal-review-notice,
+  .site-footer {
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .legal-toc a,
+  .footer-grid a,
+  .footer-bottom a {
+    color: LinkText;
+    text-decoration: underline;
+  }
+
+  .legal-page a:focus-visible,
+  .legal-page h2:focus-visible,
+  .site-footer a:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .site-footer {
+    border-top: 1px solid CanvasText;
+  }
+
+  .footer-grid > div:first-child p,
+  .footer-grid strong,
+  .footer-bottom {
+    color: CanvasText;
+  }
 }
 
 @media (max-width: 760px) {
+  .legal-toc,
   .legal-review-notice,
   .legal-license-grid,
   .legal-link-grid,
@@ -3734,6 +3814,14 @@ a {
 
   .legal-review-notice {
     padding: 1.25rem;
+  }
+
+  .legal-toc {
+    padding: 1.25rem;
+  }
+
+  .legal-toc ol {
+    grid-template-columns: 1fr;
   }
 
   .legal-review-notice > *,
@@ -3750,6 +3838,13 @@ a {
   *,
   *::before,
   *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .legal-toc a,
+  .legal-page h2,
+  .site-footer a {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }

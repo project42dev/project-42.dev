@@ -61,6 +61,10 @@ test("renders the review-gated Legal & Transparency page from every footer", asy
   assert.match(html, /provided.*as is.*as available/is);
   assert.match(html, /https:\/\/learn\.project-42\.dev\/learner-data/);
   assert.match(html, /0.1-review-draft/);
+  assert.match(html, /aria-labelledby="legal-contents-title"/);
+  assert.match(html, /href="#legal-review-title"/);
+  assert.match(html, /href="#people-title"/);
+  assert.match(html, /href="#history-title"/);
 });
 
 test("renders the narrowly scoped legacy progress bridge", async () => {
