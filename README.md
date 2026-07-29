@@ -14,9 +14,13 @@ npm run dev
 ## Verify
 
 ```bash
-npm run lint
-npm test
+npm run verify
 ```
+
+`npm run verify` runs full and production-only dependency audits before the complete
+lint, type, build, rendered-route, link, browser, GitHub Pages, and accessibility
+checks. See [`docs/dependency-security.md`](docs/dependency-security.md) for the audit
+policy and the reviewed transitive-dependency remediation.
 
 The site consumes the versioned open-source learning core from
 [`project42dev/project42-platform`](https://github.com/project42dev/project42-platform).
