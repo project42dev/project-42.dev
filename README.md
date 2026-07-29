@@ -65,6 +65,14 @@ drift.
 - `project42dev-ops` — private planning and operations
 - `project42dev.github.io` — transitional public site
 
+## Project governance
+
+- [Contributing](CONTRIBUTING.md) — repository scope, development, tests, pull
+  requests, review, accessibility, and licensing
+- [Security](SECURITY.md) — private vulnerability reporting and safe evidence
+- [Support](SUPPORT.md) — supported versions, compatibility boundaries, issue
+  routing, and deprecation policy
+
 ## Deployment
 
 The canonical public instance deploys from this repository to GitHub Pages and is
