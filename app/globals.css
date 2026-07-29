@@ -122,6 +122,7 @@ a {
   font-weight: 650;
   gap: 0.7rem;
   letter-spacing: -0.02em;
+  min-height: 44px;
   text-decoration: none;
 }
 
@@ -169,7 +170,9 @@ a {
   display: inline-flex;
   font-size: 0.88rem;
   font-weight: 720;
+  justify-content: center;
   min-height: 44px;
+  min-width: 44px;
   text-decoration: none;
 }
 
@@ -447,8 +450,11 @@ a {
 
 .progress-snapshot a,
 .text-link {
+  align-items: center;
+  display: inline-flex;
   font-size: 0.8rem;
   font-weight: 820;
+  min-height: 44px;
   white-space: nowrap;
 }
 
@@ -560,8 +566,11 @@ a {
 }
 
 .pillar-card a {
+  align-items: center;
+  display: inline-flex;
   font-size: 0.88rem;
   font-weight: 850;
+  min-height: 44px;
 }
 
 .path-grid {
@@ -635,9 +644,12 @@ a {
 }
 
 .path-card a {
+  align-items: center;
   bottom: 2rem;
+  display: inline-flex;
   font-size: 0.84rem;
   font-weight: 850;
+  min-height: 44px;
   position: absolute;
 }
 
@@ -2795,6 +2807,10 @@ a {
   text-transform: uppercase;
 }
 
+.release-facts .eyebrow {
+  color: #aeb7c9;
+}
+
 .release-facts dd {
   color: var(--lime);
   font-family: Georgia, "Times New Roman", serif;
@@ -2867,6 +2883,10 @@ a {
   gap: 3rem;
   grid-template-columns: 1fr auto;
   padding: clamp(2.2rem, 5vw, 4rem);
+}
+
+.open-source-banner .eyebrow {
+  color: var(--navy);
 }
 
 .open-source-banner h2 {
@@ -3231,8 +3251,11 @@ a {
 }
 
 .footer-grid a {
+  align-items: center;
   color: #cbd2df;
+  display: flex;
   font-size: 0.78rem;
+  min-height: 44px;
   text-decoration: none;
 }
 
@@ -3342,11 +3365,19 @@ a {
   }
 
   .site-header nav {
+    flex-wrap: wrap;
     gap: 1.2rem;
+    overflow-x: visible;
+    row-gap: 0.25rem;
   }
 
   .legal-hero h1 {
     font-size: clamp(2rem, 13vw, 4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .page-hero h1,
+  .cta h2 {
     overflow-wrap: anywhere;
   }
 
@@ -3364,7 +3395,15 @@ a {
   }
 
   .hero-map {
-    max-width: 410px;
+    max-width: 100%;
+  }
+
+  .map-node-start {
+    left: 0;
+  }
+
+  .map-node-build {
+    right: 0;
   }
 
   .progress-snapshot {
@@ -3396,14 +3435,31 @@ a {
 
   .pillar-card {
     min-height: 400px;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .provider-section {
     gap: 2.5rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .provider-row {
-    grid-template-columns: 12px 90px 1fr;
+    grid-template-columns: 12px minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .provider-row p {
+    grid-column: 2;
+  }
+
+  .provider-fact-section,
+  .provider-fact-section > *,
+  .provider-fact-section li,
+  .provider-fact-section span {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .section-heading-inline {
