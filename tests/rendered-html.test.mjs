@@ -40,6 +40,29 @@ test("renders the About page as part of the landing site", async () => {
   assert.match(html, /https:\/\/learn\.project-42\.dev/);
 });
 
+test("renders the review-gated Legal & Transparency page from every footer", async () => {
+  for (const route of ["/", "/about", "/legal-transparency"]) {
+    const response = await render(route);
+    assert.equal(response.status, 200, route);
+    assert.match(await response.text(), /href="\/legal-transparency"/, route);
+  }
+
+  const response = await render("/legal-transparency");
+  const html = (await response.text()).replaceAll("<!-- -->", "");
+  assert.match(html, /Open on purpose. Honest about the limits/);
+  assert.match(html, /not yet effective legal terms/i);
+  assert.match(html, /Project 42 was created by Kristopher Turner/);
+  assert.match(html, /operated by Hybrid Cloud Solutions LLC/);
+  assert.match(html, /AI cannot approve or publish Project 42 content by itself/);
+  assert.match(html, /Apache License 2.0/);
+  assert.match(html, /Creative Commons Attribution 4.0 International/);
+  assert.match(html, /© 2026 Hybrid Cloud Solutions LLC/);
+  assert.match(html, /purely AI-generated/);
+  assert.match(html, /provided.*as is.*as available/is);
+  assert.match(html, /https:\/\/learn\.project-42\.dev\/learner-data/);
+  assert.match(html, /0.1-review-draft/);
+});
+
 test("renders the narrowly scoped legacy progress bridge", async () => {
   const response = await render("/transfer-progress");
   assert.equal(response.status, 200);

@@ -95,6 +95,7 @@ a {
 .site-header {
   background: rgba(246, 243, 235, 0.92);
   border-bottom: 1px solid rgba(17, 24, 39, 0.12);
+  overflow-x: clip;
   position: sticky;
   top: 0;
   z-index: 50;
@@ -3259,8 +3260,10 @@ a {
     grid-column: 1 / -1;
     grid-row: 2;
     justify-content: flex-start;
+    min-width: 0;
     overflow-x: auto;
     padding-bottom: 0.8rem;
+    width: 100%;
   }
 
   .header-action {
@@ -3335,10 +3338,16 @@ a {
 
   .header-inner {
     min-height: 66px;
+    min-width: 0;
   }
 
   .site-header nav {
     gap: 1.2rem;
+  }
+
+  .legal-hero h1 {
+    font-size: clamp(2rem, 13vw, 4rem);
+    overflow-wrap: anywhere;
   }
 
   .header-action {
@@ -3547,6 +3556,189 @@ a {
 
   .policy-lifecycle span {
     grid-column: 2;
+  }
+}
+
+.legal-page {
+  padding-bottom: 8rem;
+}
+
+.legal-page h1,
+.legal-page h2,
+.legal-page h3,
+.legal-page p,
+.legal-page li,
+.legal-page dd,
+.legal-page a {
+  overflow-wrap: anywhere;
+}
+
+.legal-hero {
+  max-width: 920px;
+}
+
+.legal-review-notice {
+  align-items: start;
+  background: var(--navy);
+  border-radius: var(--radius);
+  color: white;
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 1.2fr 0.8fr;
+  margin-bottom: 7rem;
+  padding: clamp(2.2rem, 5vw, 4rem);
+}
+
+.legal-review-notice h2 {
+  color: white;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  letter-spacing: -0.045em;
+  line-height: 1;
+  margin: 0.5rem 0 1rem;
+}
+
+.legal-review-notice p:not(.eyebrow) {
+  color: #cbd2df;
+  line-height: 1.7;
+}
+
+.legal-review-notice .eyebrow {
+  color: var(--lime);
+}
+
+.legal-review-notice dl {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+}
+
+.legal-review-notice dl div {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-small);
+  padding: 1rem 1.15rem;
+}
+
+.legal-review-notice dt {
+  color: #aeb7c9;
+  font-size: 0.68rem;
+  font-weight: 760;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.legal-review-notice dd {
+  color: var(--lime);
+  font-weight: 820;
+  margin: 0.45rem 0 0;
+  overflow-wrap: anywhere;
+}
+
+.legal-section {
+  margin-bottom: 7rem;
+  min-width: 0;
+}
+
+.legal-license-grid,
+.legal-link-grid,
+.legal-destination-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.legal-license-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.legal-link-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.legal-license-grid article,
+.legal-link-grid article {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 1.5rem;
+}
+
+.legal-license-grid h3,
+.legal-link-grid h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.65rem;
+}
+
+.legal-license-grid p,
+.legal-link-grid p,
+.legal-caution {
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.legal-license-grid a,
+.legal-section a {
+  font-weight: 760;
+}
+
+.legal-caution {
+  background: #fff2d8;
+  border: 1px solid #d8b566;
+  border-radius: var(--radius-small);
+  color: #5e3d00;
+  margin-top: 1rem;
+  padding: 1.25rem 1.4rem;
+}
+
+.legal-destination-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.legal-destination-grid a {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-small);
+  display: grid;
+  gap: 0.45rem;
+  padding: 1.5rem;
+  text-decoration: none;
+}
+
+.legal-destination-grid a:hover {
+  border-color: var(--cyan-deep);
+}
+
+.legal-destination-grid strong {
+  color: var(--navy);
+}
+
+.legal-destination-grid span {
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+@media (forced-colors: active) {
+  .legal-review-notice,
+  .legal-license-grid article,
+  .legal-link-grid article,
+  .legal-destination-grid a,
+  .legal-caution {
+    border: 1px solid CanvasText;
+  }
+}
+
+@media (max-width: 760px) {
+  .legal-review-notice,
+  .legal-license-grid,
+  .legal-link-grid,
+  .legal-destination-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .legal-review-notice {
+    padding: 1.25rem;
+  }
+
+  .legal-review-notice > *,
+  .legal-review-notice dl div {
+    min-width: 0;
   }
 }
 
