@@ -20,6 +20,10 @@ const intakeWorkflow = await readFile(
   new URL("ado-sync.yml", workflowDirectory),
   "utf8",
 );
+const releaseWorkflow = await readFile(
+  new URL("release.yml", workflowDirectory),
+  "utf8",
+);
 
 const pinnedCheckout =
   "actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1";
@@ -65,6 +69,7 @@ test("current workflows satisfy the immutable and deployment boundaries", () => 
     },
     { name: "ci.yml", workflow: ciWorkflow },
     { name: "ado-sync.yml", workflow: intakeWorkflow },
+    { name: "release.yml", workflow: releaseWorkflow },
   ]);
 });
 
