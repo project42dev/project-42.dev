@@ -113,9 +113,8 @@ export default function LegalTransparencyPage() {
             <span>01</span>
             <h3>AI-assisted production</h3>
             <p>
-              AI systems substantially assist research, source-change detection,
-              drafting, editing, coding, test creation, accessibility review, and
-              factual review.
+              AI systems substantially assist research, drafting, editing,
+              coding, test creation, accessibility review, and factual review.
             </p>
           </article>
           <article>
