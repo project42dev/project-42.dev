@@ -140,6 +140,12 @@ export default function LegalTransparencyPage() {
         <p className="legal-caution">
           Multi-model and human review reduce risk; they do not guarantee that every
           statement is accurate, complete, current, or appropriate for your situation.
+          See{" "}
+          <a href="https://github.com/project42dev/project-42.dev/blob/main/docs/ai-content-practices.md">
+            AI content practices
+          </a>{" "}
+          for the human-gate, review, publish-time, and source-tracking detail
+          behind these claims, including what is not yet automated.
         </p>
       </section>
 
