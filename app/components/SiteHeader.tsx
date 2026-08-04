@@ -6,10 +6,8 @@ import { siteFacts } from "../lib/siteFacts";
 const LEARN = "https://learn.project-42.dev";
 const GUIDE = "https://guide.project-42.dev";
 
-// Release notes and support have no first-party page yet, so these point at the
-// canonical artifacts in the repository rather than at a route that does not
-// exist. Roadmap already resolved this way in the footer.
-const releaseNotesHref = `${siteFacts.repositories.site}/blob/main/RELEASE_NOTES.md`;
+// Support is the only About item without a page, so it points at the
+// canonical file in the repository. Releases and roadmap are real pages now.
 const supportHref = `${siteFacts.repositories.site}/blob/main/SUPPORT.md`;
 
 function ProfileIcon() {
@@ -58,10 +56,10 @@ export function SiteHeader() {
                 <Link href="/about">About Project 42</Link>
               </li>
               <li>
-                <a href={releaseNotesHref}>Release notes</a>
+                <Link href="/releases">Release notes</Link>
               </li>
               <li>
-                <a href={siteFacts.repositories.roadmap}>Roadmap</a>
+                <Link href="/roadmap">Roadmap</Link>
               </li>
               <li>
                 <a href={supportHref}>Support</a>

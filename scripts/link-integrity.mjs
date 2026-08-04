@@ -51,6 +51,8 @@ export function buildRouteInventory(
     "/",
     "/about",
     "/legal-transparency",
+    "/releases",
+    "/roadmap",
     "/transfer-progress",
   ]);
   return {

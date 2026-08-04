@@ -1,7 +1,14 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-const routes = ["/", "/about", "/legal-transparency", "/transfer-progress"];
+const routes = [
+  "/",
+  "/about",
+  "/legal-transparency",
+  "/transfer-progress",
+  "/releases",
+  "/roadmap",
+];
 const axeTags = ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"];
 
 async function expectNoHorizontalPageOverflow(page: Page) {

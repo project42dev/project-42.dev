@@ -39,12 +39,14 @@
     "test:browser": "playwright test",
     "test:pages": "playwright test --config playwright.pages.config.ts",
     "test:pages:artifact": "node --test tests/github-pages-export.test.mjs",
-    "check": "npm run facts:check && npm run brand:check && npm run diagrams:check && npm run workflows:check && npm run governance:check && npm run release:validate && npm run lint && npm run typecheck && npm test && npm run pages:export && npm run test:pages:artifact && npm run test:pages",
+    "check": "npm run facts:check && npm run releases:check && npm run brand:check && npm run diagrams:check && npm run workflows:check && npm run governance:check && npm run release:validate && npm run lint && npm run typecheck && npm test && npm run pages:export && npm run test:pages:artifact && npm run test:pages",
     "audit": "npm run audit:production",
     "audit:production": "npm audit --omit=dev --audit-level=low",
     "verify": "npm run audit && npm run check",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next"
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "releases:generate": "node scripts/generate-release-notes.mjs",
+    "releases:check": "node scripts/generate-release-notes.mjs --check"
   },
   "dependencies": {
     "@project42/platform": "github:project42dev/project42-platform#v0.49.0",

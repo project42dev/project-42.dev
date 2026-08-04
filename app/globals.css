@@ -320,6 +320,9 @@ a {
 }
 
 .profile-trigger {
+  /* The photo fills the circle, so clip it and drop the button padding. */
+  overflow: hidden;
+  padding: 0;
   border: 1px solid var(--line);
   border-radius: 50%;
   color: var(--ink);
@@ -336,6 +339,19 @@ a {
   height: 22px;
   width: 22px;
 }
+.profile-photo {
+  border-radius: 50%;
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
+}
+
+.profile-initials {
+  font-size: 0.82rem;
+  font-weight: 850;
+  letter-spacing: 0.02em;
+}
+
 
 .header-action {
   align-items: center;
@@ -955,6 +971,13 @@ a {
 .page-hero h1 {
   font-size: clamp(3.2rem, 7vw, 6.3rem);
   max-width: 980px;
+}
+
+/* page-hero h1 sets a tight line-height with margin 0, which reads well for a
+   one-line headline. Any headline that wraps put its second-line descenders
+   into the lede underneath. */
+.page-hero h1 + p {
+  margin-top: 1.5rem;
 }
 
 .page-hero > p:last-child,
@@ -4377,4 +4400,130 @@ a {
   .diagram-canvas img {
     min-width: 620px;
   }
+}
+
+/* Releases and roadmap. Both are lists of real records, so they are set as
+   readable rows rather than cards: the content is the point, not the frame. */
+.release-list,
+.roadmap-list {
+  display: grid;
+  gap: 1.3rem;
+  list-style: none;
+  margin: 3rem 0 0;
+  padding: 0;
+}
+
+.release-entry {
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  /* Padding in vw as well as rem, so it shrinks with the viewport instead of
+     eating the whole line box at 200% text. */
+  overflow-wrap: anywhere;
+  padding: clamp(1rem, 4vw, 1.75rem) clamp(0.9rem, 4vw, 2rem);
+}
+
+.release-entry-head {
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-bottom: 1rem;
+  padding-bottom: 0.7rem;
+}
+
+.release-entry-head h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.release-entry-head time {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.release-entry ul {
+  color: var(--ink-soft);
+  display: grid;
+  gap: 0.5rem;
+  line-height: 1.6;
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.roadmap-group + .roadmap-group {
+  margin-top: 3.5rem;
+}
+
+.roadmap-group-head {
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 0.9rem;
+  padding-bottom: 0.7rem;
+}
+
+.roadmap-group-head h2 {
+  margin: 0;
+}
+
+.roadmap-group-head span {
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  margin-left: auto;
+}
+
+.roadmap-list {
+  /* min() so the track can collapse below its ideal width at 200% text,
+     which is what the reflow requirement asks for. */
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  margin-top: 1.5rem;
+}
+
+.roadmap-item {
+  overflow-wrap: anywhere;
+  background: var(--paper-strong);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: var(--radius-small);
+  padding: 1.4rem 1.6rem;
+}
+
+/* The status is carried by the group heading, so the stripe reinforces it
+   rather than being the only signal. */
+.roadmap-available {
+  border-left-color: var(--lime);
+}
+
+.roadmap-in-progress {
+  border-left-color: var(--cyan);
+}
+
+.roadmap-item h3 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.roadmap-item p {
+  color: var(--ink-soft);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.roadmap-detail {
+  border-top: 1px solid var(--line);
+  font-size: 0.9rem;
+  margin-top: 0.9rem !important;
+  padding-top: 0.9rem;
+}
+
+.page-foot-note {
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
 }
