@@ -47,6 +47,8 @@ async function expectMinimumTargets(page: Page) {
     .locator(
       [
         ".site-header a",
+        ".header-menu-trigger",
+        ".header-menu-list a",
         ".button",
         ".progress-strip > a",
         ".pillar-card > a",
@@ -59,6 +61,18 @@ async function expectMinimumTargets(page: Page) {
     .evaluateAll((elements) =>
       elements
         .filter((element) => {
+          // An ancestor with display:none does NOT change this element's own
+          // computed display, so the style check below passed anything hidden
+          // by a wrapper and measured it as a 0x0 target. checkVisibility walks
+          // ancestors and honours the hidden attribute, which is what "is this
+          // actually a target the user can hit" means.
+          if (typeof element.checkVisibility === "function") {
+            return element.checkVisibility({
+              contentVisibilityAuto: true,
+              opacityProperty: true,
+              visibilityProperty: true,
+            });
+          }
           const style = getComputedStyle(element);
           return style.display !== "none" && style.visibility !== "hidden";
         })
@@ -143,15 +157,17 @@ test("primary navigation follows a predictable keyboard focus order", async ({
   page,
 }) => {
   await page.goto("/");
+  // About is a disclosure button now, and progress and account moved into the
+  // profile menu at the end of the header, so the order runs nav then actions.
   const expectedOrder = [
     page.getByRole("link", { name: "Skip to content" }),
     page.getByRole("link", { name: "Project 42 home" }),
     page.getByRole("link", { name: "Learn", exact: true }),
     page.getByRole("link", { name: "Field Guide", exact: true }).first(),
     page.getByRole("link", { name: "Visual guides", exact: true }).first(),
-    page.getByRole("link", { name: "My progress" }),
-    page.getByRole("link", { name: "About", exact: true }).first(),
+    page.getByRole("button", { name: "About", exact: true }),
     page.getByRole("link", { name: "Start learning" }),
+    page.getByRole("button", { name: "Your account" }),
   ];
 
   for (const target of expectedOrder) {
