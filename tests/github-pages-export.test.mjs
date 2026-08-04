@@ -21,6 +21,8 @@ test("exports only canonical landing routes as governed pages", async () => {
     "/",
     "/about",
     "/legal-transparency",
+    "/releases",
+    "/roadmap",
     "/transfer-progress",
   ]);
   for (const route of inventory.htmlRoutes) {
