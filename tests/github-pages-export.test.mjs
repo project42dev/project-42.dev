@@ -3,7 +3,7 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { starterCatalog } from "@project42/platform";
-import diagramConfig from "../config/diagrams.json" with { type: "json" };
+import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import { buildRouteInventory } from "../scripts/link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");

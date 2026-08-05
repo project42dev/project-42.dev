@@ -7,21 +7,21 @@
       "source": "learning-evidence-loop.mmd",
       "sourceSha256": "bb7320b9964e2fac205eb30ebda50d9078a9abdfda571e41c7775f9b7088c63c",
       "svg": "learning-evidence-loop.svg",
-      "svgSha256": "10976569caaa7288c4e423beeb6d70e96f0bfeea943c50e5c5c88deb93fbdaf9"
+      "svgSha256": "b8aeb3a4811cb4cf7430ec07606e21c3ae0fa3868bf6d7ca9d0591c8116c9132"
     },
     {
       "id": "grounded-answer-workflow",
       "source": "grounded-answer-workflow.mmd",
       "sourceSha256": "695373c14bff83c3868c7a5de4bf01ac7526fbf638add2cbc194e95913f7a65f",
       "svg": "grounded-answer-workflow.svg",
-      "svgSha256": "953ddee2049dc2e64342622b62d486190c4ff17b9278ce98d233bc4169159755"
+      "svgSha256": "c850a0fce35828edd7848b69e5f3dc5966f2b0c98410dd77cd1d00feefb7dfb3"
     },
     {
       "id": "safe-agent-loop",
       "source": "safe-agent-loop.mmd",
       "sourceSha256": "3b1a5b83b184a9ff4ce362ef7d253f7f13bb7ee9fc3d668c686bac7e0fe6728d",
       "svg": "safe-agent-loop.svg",
-      "svgSha256": "fef74e4c050fbee27b495cf6ac074934e82adaf9c2522c503066df0b3caeeae6"
+      "svgSha256": "f9bcad86783b56bb808a4e449946f0955bb53d49afedb8ba56b89fa7a3306852"
     },
     {
       "id": "prompt-contract",
@@ -42,7 +42,7 @@
       "source": "tool-trust-boundaries.mmd",
       "sourceSha256": "a3401e369dcd11f479b6cc04f3580e3d44b0c08542fca9596f2858013c1887be",
       "svg": "tool-trust-boundaries.svg",
-      "svgSha256": "c30c32acf4e86cb2e10e5d52ca8ddf337b910b8c47835c892f934c7843849e8d"
+      "svgSha256": "6ca13083826bc1e2f2eadc8189b92d8efe927cfbf6600822e8402c28f8c3c992"
     },
     {
       "id": "multi-agent-handoff",
@@ -54,9 +54,9 @@
     {
       "id": "content-freshness-release",
       "source": "content-freshness-release.mmd",
-      "sourceSha256": "7b08209d0f670e5e8ca6bc8e44ae6cefdc88e44ad10f16b176eb7b20cc372fb8",
+      "sourceSha256": "e2ffa6894a362a2ce0e76506c9c94ea7afed095938a59619967ef41436eb3485",
       "svg": "content-freshness-release.svg",
-      "svgSha256": "a41951f6ec01955a1cf0a66324324a05f1c32699b605c37c9772db3fe0a7b37f"
+      "svgSha256": "23a9acabafb75820b1565d3fb5bb69e901f0f3d473c7aec51808170f900107f1"
     }
   ]
 }

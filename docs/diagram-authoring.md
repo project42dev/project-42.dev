@@ -1,28 +1,36 @@
 # Diagram authoring
 
-Project 42 diagrams are accessible, source-first learning artifacts. Mermaid source
-under `diagrams/` is canonical. SVG and public `.mmd` files under
-`public/diagrams/` are generated and must never be hand-edited.
+Project 42 diagrams are accessible, source-first learning artifacts consumed from
+the `@project42/platform` package. Mermaid source under
+`node_modules/@project42/platform/content/diagrams/` is canonical. SVG and public
+`.mmd` files under `public/diagrams/` are generated and must never be hand-edited.
 
-## Add or change a diagram
+## Diagram source location
 
-1. Add or update its entry in `config/diagrams.json`.
-2. Add the matching `diagrams/<id>.mmd` source.
-3. Include Mermaid `accTitle` and `accDescr` declarations.
-4. Keep links, click handlers, inline initialization, and inline HTML out of source.
-5. Install the Playwright browser once with:
+Diagrams are authored and maintained in the `project42-platform` repository. This
+site consumes the published catalog from `@project42/platform/content/diagrams/catalogue.json`.
+
+To add or change a diagram, make changes in the `project42-platform` repository,
+publish a new platform release, then bump the platform version in this site's
+`package.json`.
+
+## Generate diagrams locally
+
+After bumping the platform version:
+
+1. Install the Playwright browser once with:
 
    ```powershell
    npx playwright install chromium
    ```
 
-6. Generate reviewed artifacts:
+2. Generate reviewed artifacts:
 
    ```powershell
    npm run diagrams:generate
    ```
 
-7. Run `npm run diagrams:check` and the complete `npm run check` gate.
+3. Run `npm run diagrams:check` and the complete `npm run check` gate.
 
 The generator pins Mermaid CLI, uses strict security settings, disables HTML labels,
 embeds source provenance, copies the public source, and writes a hash manifest.

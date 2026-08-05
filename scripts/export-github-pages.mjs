@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 import { starterCatalog } from "@project42/platform";
-import diagramConfig from "../config/diagrams.json" with { type: "json" };
+import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import { buildRouteInventory } from "./link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
@@ -130,7 +130,7 @@ async function main() {
           fetch: async () => new Response("Not found", { status: 404 }),
         },
       },
-      { waitUntil() {}, passThroughOnException() {} },
+      { waitUntil() { }, passThroughOnException() { } },
     );
 
   await rm(outputRoot, { recursive: true, force: true });
@@ -185,7 +185,7 @@ async function main() {
 
   console.log(
     `GitHub Pages export ready: ${inventory.htmlRoutes.length} HTML routes and ` +
-      `${legacyRedirects.size} legacy redirects and ${endpointFiles.size} endpoints in ${outputRoot}.`,
+    `${legacyRedirects.size} legacy redirects and ${endpointFiles.size} endpoints in ${outputRoot}.`,
   );
 }
 
