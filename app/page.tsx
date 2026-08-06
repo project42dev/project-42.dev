@@ -70,8 +70,8 @@ export default function Home() {
           <strong>Field Guide</strong>
           <span>Practical answers, workflows, comparisons, and visual guides</span>
         </div>
-        <a className="button button-secondary" href="https://learn.project-42.dev/import-progress">
-          Move existing progress
+        <a className="button button-secondary" href="https://learn.project-42.dev/account">
+          Sign in to track progress
         </a>
       </section>
 
@@ -95,7 +95,7 @@ export default function Home() {
             <ul>
               <li>{starterCatalog.paths.length} starter paths</li>
               <li>{starterCatalog.modules.length} assessed modules</li>
-              <li>Device-local transcript in this release</li>
+              <li>Account-backed progress and transcript</li>
             </ul>
             <a href="https://learn.project-42.dev">Explore learning paths →</a>
           </article>
@@ -164,7 +164,7 @@ export default function Home() {
       <section className="cta shell">
         <p className="eyebrow">Your first checkpoint is 12 minutes away</p>
         <h2>Understanding beats intimidation.</h2>
-        <p>Start with one module. We will remember where you left off on this device.</p>
+        <p>Start with one module. Your approved account keeps your place across devices.</p>
         <a
           className="button button-primary"
           href="https://learn.project-42.dev/learn/ai-foundations/what-ai-does"

@@ -302,7 +302,7 @@ export default function LegalTransparencyPage() {
           <p>
             Acceptance of legal information does not replace a separate consent
             decision where consent is required. Optional consent is not preselected
-            or bundled with basic browser-local learning.
+            or bundled with access to public learning material.
           </p>
         </div>
         <div className="legal-destination-grid">

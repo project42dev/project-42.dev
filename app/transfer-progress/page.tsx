@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-import { LegacyProgressBridge } from "../components/LegacyProgressBridge";
 
 export const metadata: Metadata = {
-  title: "Transfer learning progress",
-  description:
-    "A limited bridge for moving browser-only Project 42 progress to Learn.",
+  title: "Progress transfer retired",
+  description: "The previous browser progress transfer is no longer supported.",
   robots: { index: false, follow: false },
 };
 
@@ -12,21 +10,17 @@ export default function TransferProgressPage() {
   return (
     <main className="page-shell shell">
       <header className="page-hero">
-        <p className="eyebrow">Project 42 site migration</p>
-        <h1>Transfer your browser-only learning progress.</h1>
+        <p className="eyebrow">Project 42 account update</p>
+        <h1>The previous progress transfer has been retired.</h1>
         <p>
-          This page responds only to the official Project 42 Learn site and reads
-          only the existing Project 42 progress key. It never sends data to a server.
+          Project 42 now uses approved learner accounts for progress, scores, badges,
+          and transcripts. The former browser record cannot be imported.
         </p>
       </header>
       <section className="profile-card">
-        <LegacyProgressBridge />
         <p>
-          Start the transfer from{" "}
-          <a href="https://learn.project-42.dev/import-progress">
-            Learn’s import page
-          </a>
-          .
+          <a href="https://learn.project-42.dev/account">Sign in to Project 42 Learn</a>{" "}
+          to start or continue an account-backed learning record.
         </p>
       </section>
     </main>

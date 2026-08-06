@@ -24,7 +24,8 @@ test("renders the Project 42 public gateway", async () => {
   assert.match(html, /Learn deeply. Find answers quickly/);
   assert.match(html, /https:\/\/learn\.project-42\.dev/);
   assert.match(html, /https:\/\/guide\.project-42\.dev/);
-  assert.match(html, /Move existing progress/);
+  assert.match(html, /Sign in to track progress/);
+  assert.match(html, /Account-backed progress and transcript/);
   assert.ok(html.includes(`Site v${releaseFacts.siteVersion}`));
   assert.ok(html.includes(`Platform v${releaseFacts.platformVersion}`));
 });
@@ -67,13 +68,13 @@ test("renders the review-gated Legal & Transparency page from every footer", asy
   assert.match(html, /href="#history-title"/);
 });
 
-test("renders the narrowly scoped legacy progress bridge", async () => {
+test("preserves the retired legacy progress URL without restoring browser state", async () => {
   const response = await render("/transfer-progress");
   assert.equal(response.status, 200);
   const html = await response.text();
-  assert.match(html, /Transfer your browser-only learning progress/);
-  assert.match(html, /never sends data to a server/i);
-  assert.match(html, /https:\/\/learn\.project-42\.dev\/import-progress/);
+  assert.match(html, /previous progress transfer has been retired/i);
+  assert.match(html, /former browser record cannot be imported/i);
+  assert.match(html, /https:\/\/learn\.project-42\.dev\/account/);
   assert.match(html, /noindex/);
 });
 
