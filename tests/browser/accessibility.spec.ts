@@ -183,6 +183,16 @@ test("primary navigation follows a predictable keyboard focus order", async ({
   }
 });
 
+test("profile menu offers sign in from the main site", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Your account" }).click();
+
+  await expect(page.getByRole("link", { name: "Sign in", exact: true })).toHaveAttribute(
+    "href",
+    "https://learn.project-42.dev/account",
+  );
+});
+
 test("reduced-motion mode suppresses scrolling and visible transitions", async ({
   page,
 }) => {
