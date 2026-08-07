@@ -15,7 +15,7 @@ concurrency:
 jobs:
   validate:
     name: Validate Pages candidate
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, linux, x64, hcs]
     permissions:
       contents: read
     steps:
@@ -36,7 +36,7 @@ jobs:
     name: Package validated Pages artifact
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'project42dev/project-42.dev'
     needs: validate
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, linux, x64, hcs]
     permissions:
       contents: read
       pages: write

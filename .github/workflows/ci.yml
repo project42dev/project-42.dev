@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, linux, x64, hcs]
     steps:
       - name: Enforce public tracker boundary
         if: github.event_name == 'pull_request'
