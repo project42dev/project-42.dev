@@ -11,7 +11,7 @@ async function render(pathname) {
       headers: { accept: "text/html" },
     }),
     { ASSETS: { fetch: async () => new Response("Not found", { status: 404 }) } },
-    { waitUntil() {}, passThroughOnException() {} },
+    { waitUntil() { }, passThroughOnException() { } },
   );
 }
 
