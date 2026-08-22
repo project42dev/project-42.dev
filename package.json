@@ -49,7 +49,7 @@
     "releases:check": "node scripts/generate-release-notes.mjs --check"
   },
   "dependencies": {
-    "@project42/platform": "github:project42dev/project42-platform#v0.95.0",
+    "@project42/platform": "github:project42dev/project42-platform#v0.96.0",
     "next": "16.2.11",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -83,7 +83,7 @@
   },
   "type": "module",
   "allowScripts": {
-    "github:project42dev/project42-platform#v0.95.0": true,
+    "github:project42dev/project42-platform#v0.96.0": true,
     "puppeteer": false,
     "github:project42dev/project42-platform#d905f7c70bbb5c01a5830115d91a6ef29464cfd5": true
   }
