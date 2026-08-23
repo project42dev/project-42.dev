@@ -167,7 +167,7 @@ export default function Home() {
           <p className="eyebrow" style={{ color: "#38bdf8" }}>Open Source & Self-Hosting</p>
           <h2 id="self-host-title" style={{ fontSize: "2rem", marginBottom: "1rem" }}>Run Project 42 Inside Your Organization</h2>
           <p style={{ fontSize: "1.1rem", color: "#94a3b8", marginBottom: "1.5rem", lineHeight: "1.6" }}>
-            Deploy the complete, host-agnostic Project 42 platform in your own cloud, air-gapped intranet, or local server. Customize with your organization's branding, overlay internal courses, and sync with upstream curriculum updates.
+            Deploy the complete, host-agnostic Project 42 platform in your own cloud, air-gapped intranet, or local server. Customize with your organization&apos;s branding, overlay internal courses, and sync with upstream curriculum updates.
           </p>
           <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
             <a className="button button-primary" href="https://github.com/project42dev/project42-platform" target="_blank" rel="noopener noreferrer">
