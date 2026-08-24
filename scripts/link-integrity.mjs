@@ -57,6 +57,7 @@ export function buildRouteInventory(
     "/platform",
     "/releases",
     "/roadmap",
+    "/support",
     "/transfer-progress",
   ]);
   return {

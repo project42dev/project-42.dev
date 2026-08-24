@@ -47,7 +47,7 @@ export function SiteHeader() {
                 <Link href="/roadmap">Roadmap</Link>
               </li>
               <li>
-                <a href={supportHref}>Support</a>
+                <Link href="/support">Support &amp; Content Requests</Link>
               </li>
               <li>
                 <Link href="/legal-transparency">Legal and transparency</Link>
