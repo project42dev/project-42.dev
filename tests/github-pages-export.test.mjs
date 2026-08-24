@@ -20,9 +20,14 @@ test("exports only canonical landing routes as governed pages", async () => {
   assert.deepEqual(inventory.htmlRoutes, [
     "/",
     "/about",
+    "/admin",
+    "/admin/logs",
+    "/admin/settings",
     "/legal-transparency",
+    "/platform",
     "/releases",
     "/roadmap",
+    "/support",
     "/transfer-progress",
   ]);
   for (const route of inventory.htmlRoutes) {
