@@ -4067,6 +4067,10 @@ a {
     text-decoration: underline;
   }
 
+  .site-footer a {
+    text-decoration-line: underline !important;
+  }
+
   .legal-page a:focus-visible,
   .legal-page h2:focus-visible,
   .site-footer a:focus-visible {
