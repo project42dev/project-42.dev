@@ -50,7 +50,11 @@ export function buildRouteInventory(
   const htmlRoutes = new Set([
     "/",
     "/about",
+    "/admin",
+    "/admin/logs",
+    "/admin/settings",
     "/legal-transparency",
+    "/platform",
     "/releases",
     "/roadmap",
     "/transfer-progress",

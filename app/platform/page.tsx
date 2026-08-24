@@ -29,7 +29,7 @@ export default function OpenSourcePlatformPage() {
             GitHub Repository ↗
           </a>
           <a
-            href="https://gallery.project-42.dev"
+            href="https://github.com/project42dev/project42-gallery"
             target="_blank"
             rel="noopener noreferrer"
             style={{ background: "rgba(255, 255, 255, 0.08)", color: "#ffffff", border: "1px solid rgba(255, 255, 255, 0.15)", padding: "12px 26px", borderRadius: "999px", fontSize: "14px", fontWeight: 700, textDecoration: "none" }}
@@ -93,7 +93,7 @@ npm run self-host`}
         
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "20px" }}>
           <a
-            href="https://gallery.project-42.dev/docs/THEME_AUTHORING_GUIDE.md"
+            href="https://github.com/project42dev/project42-gallery/blob/main/docs/THEME_AUTHORING_GUIDE.md"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "block", background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.08)", padding: "20px", borderRadius: "12px", textDecoration: "none", color: "inherit" }}
@@ -103,7 +103,7 @@ npm run self-host`}
           </a>
 
           <a
-            href="https://gallery.project-42.dev/docs/THEME_SCHEMA.md"
+            href="https://github.com/project42dev/project42-gallery/blob/main/docs/THEME_SCHEMA.md"
             target="_blank"
             rel="noopener noreferrer"
             style={{ display: "block", background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.08)", padding: "20px", borderRadius: "12px", textDecoration: "none", color: "inherit" }}

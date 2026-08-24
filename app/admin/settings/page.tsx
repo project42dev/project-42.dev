@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 interface ThemeOption {
   id: string;
@@ -21,17 +21,20 @@ const BUILT_IN_THEMES: ThemeOption[] = [
 ];
 
 export default function AdminSettingsPage() {
-  const [activeTheme, setActiveTheme] = useState("04-field-signal");
-  const [activeLayout, setActiveLayout] = useState("website");
+  const [activeTheme, setActiveTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("p42_theme") || "04-field-signal";
+    }
+    return "04-field-signal";
+  });
+  const [activeLayout, setActiveLayout] = useState(() => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("p42_layout") || "website";
+    }
+    return "website";
+  });
   const [approvedDomains, setApprovedDomains] = useState("turnerpublishing.com\nmit.edu\nanthropic-partner.org");
   const [savedStatus, setSavedStatus] = useState("");
-
-  useEffect(() => {
-    const savedT = localStorage.getItem("p42_theme") || "04-field-signal";
-    const savedL = localStorage.getItem("p42_layout") || "website";
-    setActiveTheme(savedT);
-    setActiveLayout(savedL);
-  }, []);
 
   const handleSave = () => {
     localStorage.setItem("p42_theme", activeTheme);
@@ -50,7 +53,7 @@ export default function AdminSettingsPage() {
         </div>
 
         <a
-          href="https://gallery.project-42.dev"
+          href="https://github.com/project42dev/project42-gallery"
           target="_blank"
           rel="noreferrer"
           style={{ background: "rgba(56, 189, 248, 0.15)", color: "#38bdf8", border: "1px solid rgba(56, 189, 248, 0.3)", padding: "8px 18px", borderRadius: "999px", fontSize: "13px", fontWeight: 700, textDecoration: "none" }}

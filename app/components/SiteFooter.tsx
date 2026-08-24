@@ -22,7 +22,7 @@ export function SiteFooter() {
             <a href="https://learn.project-42.dev" style={{ color: "#94a3b8", textDecoration: "none" }}>Learning paths</a>
             <a href="https://guide.project-42.dev" style={{ color: "#94a3b8", textDecoration: "none" }}>Field Guide</a>
             <a href="https://guide.project-42.dev/diagrams" style={{ color: "#94a3b8", textDecoration: "none" }}>Visual guides</a>
-            <a href="https://gallery.project-42.dev" style={{ color: "#94a3b8", textDecoration: "none" }}>Theme Gallery</a>
+            <a href="https://github.com/project42dev/project42-gallery" style={{ color: "#94a3b8", textDecoration: "none" }}>Theme Gallery</a>
           </div>
 
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
