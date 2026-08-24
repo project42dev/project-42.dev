@@ -19,21 +19,21 @@ export function getActiveThemeId(): string {
   if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_THEME) {
     return process.env.NEXT_PUBLIC_THEME;
   }
-  return config.theme || "01-cosmic-answer";
+  return config.theme || "04-field-signal";
 }
 
 export function getThemeAssets(themeId?: string) {
   const active = themeId || getActiveThemeId();
   return {
     id: active,
-    mark: /themes//mark.svg,
-    hero: /themes//hero.png,
+    mark: "/themes/" + active + "/mark.svg",
+    hero: "/themes/" + active + "/hero.png",
     badges: {
-      foundations: /themes//badges/badge-foundations.svg,
-      practitioner: /themes//badges/badge-practitioner.svg,
-      agentic: /themes//badges/badge-agentic.svg,
-      evidence: /themes//badges/badge-evidence.svg,
+      foundations: "/themes/" + active + "/badges/badge-foundations.svg",
+      practitioner: "/themes/" + active + "/badges/badge-practitioner.svg",
+      agentic: "/themes/" + active + "/badges/badge-agentic.svg",
+      evidence: "/themes/" + active + "/badges/badge-evidence.svg",
     },
-    tokensCss: /themes//tokens.css,
+    tokensCss: "/themes/" + active + "/tokens.css",
   };
 }
