@@ -29,7 +29,7 @@ export default function OpenSourcePlatformPage() {
             GitHub Repository ↗
           </a>
           <a
-            href="https://github.com/project42dev/project42-gallery"
+            href="https://gallery.project-42.dev"
             target="_blank"
             rel="noopener noreferrer"
             style={{ background: "rgba(255, 255, 255, 0.08)", color: "#ffffff", border: "1px solid rgba(255, 255, 255, 0.15)", padding: "12px 26px", borderRadius: "999px", fontSize: "14px", fontWeight: 700, textDecoration: "none" }}
