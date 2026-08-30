@@ -38,7 +38,7 @@ export function SiteHeader() {
                 <Link href="/platform">Open-source platform &amp; docs</Link>
               </li>
               <li>
-                <a href="https://github.com/project42dev/project42-gallery" target="_blank" rel="noopener noreferrer">Theme Gallery &amp; Studio</a>
+                <a href="https://gallery.project-42.dev" target="_blank" rel="noopener noreferrer">Theme Gallery &amp; Studio</a>
               </li>
               <li>
                 <Link href="/releases">Release notes</Link>
