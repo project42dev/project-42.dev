@@ -7,21 +7,21 @@
       "source": "learning-evidence-loop.mmd",
       "sourceSha256": "bb7320b9964e2fac205eb30ebda50d9078a9abdfda571e41c7775f9b7088c63c",
       "svg": "learning-evidence-loop.svg",
-      "svgSha256": "6b65c4d5d31e9eb62631a57973ef12cefcb4e7ceaac04a1f2aeef0ce7177150d"
+      "svgSha256": "8277e6fd526fe6b35f4bf3139f62d11e8ce95170db0b8b1687f0a0315527aab6"
     },
     {
       "id": "grounded-answer-workflow",
       "source": "grounded-answer-workflow.mmd",
       "sourceSha256": "695373c14bff83c3868c7a5de4bf01ac7526fbf638add2cbc194e95913f7a65f",
       "svg": "grounded-answer-workflow.svg",
-      "svgSha256": "3f53bf81d2ac4269ce512db3452711ba69c45599514b3d526653930b54df3c53"
+      "svgSha256": "4b1fc7571aee5a08ff184b1d46a51f7fab9738ed2bec83cdffe02d697576bb43"
     },
     {
       "id": "safe-agent-loop",
       "source": "safe-agent-loop.mmd",
       "sourceSha256": "3b1a5b83b184a9ff4ce362ef7d253f7f13bb7ee9fc3d668c686bac7e0fe6728d",
       "svg": "safe-agent-loop.svg",
-      "svgSha256": "4c4a108ecdc147a4fd96ea7776d32d2c298f4e82abd604dea02ebe4e9a3c9a5c"
+      "svgSha256": "badb5248b8df2dadf60c7165a000277977e7d612b8b9f6b9f7b31448b4365691"
     },
     {
       "id": "prompt-contract",
@@ -42,7 +42,7 @@
       "source": "tool-trust-boundaries.mmd",
       "sourceSha256": "a3401e369dcd11f479b6cc04f3580e3d44b0c08542fca9596f2858013c1887be",
       "svg": "tool-trust-boundaries.svg",
-      "svgSha256": "dcf0676f6207936bd23dc2e2e44c660b0ff61a8b7f6d7e6844daf206ed8029b4"
+      "svgSha256": "04b6ce961192f8418bf26fcd99d1fe77edee82082ef1835e03151110dbec052b"
     },
     {
       "id": "multi-agent-handoff",
