@@ -212,31 +212,34 @@ test("renders account, approval, and cross-device progress surfaces", async () =
   assert.doesNotMatch(admin, /Review and merge learner records/i);
 });
 
-// The landing page offers the choice; each format owns its own route. This
-// guards the defect that prompted the split: the root used to be a copy of the
-// project-42.dev home page, and the header's own Learn link pointed at /learn,
-// so the same nav item landed on two different URLs depending on where it was
-// clicked from and the first page you saw was one you had already seen.
-test("renders the learning paths and format routes", async () => {
-  const [home, learn, onDemand] = await Promise.all([
+// Learn owns a discovery landing page. The self-paced catalog and on-demand
+// catalog remain distinct destinations beneath it.
+test("renders the Learn landing, learning paths, and format routes", async () => {
+  const [home, learn, paths, onDemand] = await Promise.all([
     render("/"),
     render("/learn"),
+    render("/learn/paths"),
     render("/ondemand"),
   ]);
   assert.equal(home.status, 200);
   assert.equal(learn.status, 200);
+  assert.equal(paths.status, 200);
   assert.equal(onDemand.status, 200);
 
   const homeHtml = await home.text();
   const learnHtml = await learn.text();
+  const pathsHtml = await paths.text();
   const onDemandHtml = await onDemand.text();
 
   assert.match(homeHtml, /Start curious/);
-  assert.match(homeHtml, /href="\/learn"/, "the landing page links to learning paths");
-  assert.match(learnHtml, /Learning paths/);
+  assert.match(homeHtml, /href="\/learn\/paths"/, "the gateway links to the learning catalog");
+  assert.match(learnHtml, /Start curious/);
+  assert.match(learnHtml, /Become capable/);
+  assert.match(learnHtml, /href="\/learn\/paths"/);
+  assert.match(pathsHtml, /Learning paths with a clear next step/);
   assert.match(onDemandHtml, /The classroom, on demand/);
   assert.doesNotMatch(
-    learnHtml,
+    pathsHtml,
     /agents-and-guardrails-preview\.mp4/,
     "the film belongs to the on-demand rendering, not to the written index",
   );

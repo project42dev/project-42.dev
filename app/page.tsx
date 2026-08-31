@@ -130,7 +130,7 @@ export default function Home() {
               <li>{starterCatalog.modules.length} assessed modules</li>
               <li>Account-backed progress and transcript</li>
             </ul>
-            <Link href="/learn">Explore learning paths →</Link>
+            <Link href="/learn/paths">Explore learning paths →</Link>
           </article>
           <article className="pillar-card pillar-reference">
             <div className="card-index">Field guide / 02</div>
@@ -156,7 +156,7 @@ export default function Home() {
             <p className="eyebrow">Choose your starting point</p>
             <h2 id="featured-paths">Paths with a destination</h2>
           </div>
-          <Link className="text-link" href="/learn">
+          <Link className="text-link" href="/learn/paths">
             View all paths
           </Link>
         </div>

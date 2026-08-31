@@ -8,6 +8,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     "",
     "/learn",
+    "/learn/paths",
     "/ondemand",
     "/guide",
     "/guide/diagrams",

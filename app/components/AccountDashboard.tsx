@@ -481,7 +481,7 @@ function RegistrationStatusCard({
                   : "Check request status"}
             </button>
           )}
-          <Link className="button button-secondary" href="/learn">
+          <Link className="button button-secondary" href="/learn/paths">
             Browse the learning catalog
           </Link>
           {/*
@@ -564,7 +564,7 @@ function RegistrationStatusCard({
             ? `Try again in ${retrySeconds} seconds`
             : content.action}
         </button>
-        <Link className="button button-secondary" href="/learn">
+        <Link className="button button-secondary" href="/learn/paths">
           Browse the learning catalog
         </Link>
       </div>
@@ -642,7 +642,7 @@ export function AccountDashboard() {
             >
               Sign in
             </button>
-            <Link className="button button-secondary" href="/learn">
+            <Link className="button button-secondary" href="/learn/paths">
               Browse the learning catalog
             </Link>
           </div>

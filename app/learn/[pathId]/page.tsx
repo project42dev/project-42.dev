@@ -36,7 +36,7 @@ export default async function PathPage({ params }: PathPageProps) {
   return (
     <main className="page-shell shell">
       <nav className="breadcrumbs" aria-label="Breadcrumb">
-        <Link href="/learn">Learning paths</Link>
+        <Link href="/learn/paths">Learning paths</Link>
         <span>/</span>
         <span aria-current="page">{path.title}</span>
       </nav>

@@ -266,7 +266,7 @@ export function ProfileDashboard() {
             <p className="eyebrow">Transcript</p>
             <h2>Your paths</h2>
           </div>
-          <Link className="text-link" href="/learn">
+          <Link className="text-link" href="/learn/paths">
             Continue learning
           </Link>
         </div>
@@ -414,7 +414,7 @@ export function ProfileDashboard() {
           <div className="empty-state attempt-empty">
             <h3>No scores yet.</h3>
             <p>Complete a module knowledge check and every attempt will appear here.</p>
-            <Link className="button button-primary" href="/learn">
+            <Link className="button button-primary" href="/learn/paths">
               Choose a learning path
             </Link>
           </div>
@@ -486,7 +486,7 @@ export function ProfileDashboard() {
             </p>
             <Link
               className="button button-primary"
-              href="/learn"
+              href="/learn/paths"
             >
               Choose a learning path
             </Link>

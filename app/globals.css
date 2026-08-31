@@ -1128,6 +1128,60 @@ a {
   gap: 1.3rem;
 }
 
+.focus-area-group {
+  margin-bottom: 3.5rem;
+}
+
+.focus-area-header {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.focus-area-header .eyebrow {
+  margin-bottom: 0.25rem;
+}
+
+.focus-area-header h2 {
+  font-size: 1.75rem;
+  margin: 0 0 0.5rem;
+}
+
+.focus-area-header > p:last-child {
+  color: var(--ink-soft);
+  margin: 0;
+  max-width: 800px;
+}
+
+.self-host-section {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  margin-block: 3rem;
+  padding: 2.5rem 2rem;
+}
+
+.self-host-content {
+  margin-inline: auto;
+  max-width: 800px;
+  text-align: center;
+}
+
+.self-host-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.self-host-content > p:not(.eyebrow) {
+  color: var(--ink-soft);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.self-host-content .button-row {
+  justify-content: center;
+}
+
 .learning-path-row {
   align-items: center;
   background: var(--paper-strong);
