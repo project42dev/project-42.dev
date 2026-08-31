@@ -4,10 +4,11 @@ import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { starterCatalog } from "@project42/platform";
 import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
+import diagramOverrides from "../config/diagram-catalog-overrides.json" with { type: "json" };
 import instructorRenderingConfig from "../config/instructor-renderings.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const defaultBaseUrl = "https://learn.project-42.dev";
+const defaultBaseUrl = "https://project-42.dev";
 const defaultExceptionsPath = path.join(
   projectRoot,
   "config",
@@ -48,9 +49,13 @@ function sourceLabel(reference) {
   return `${reference.sourceRoute} -> ${reference.target}`;
 }
 
+const mergedDiagrams = [...new Map(
+  [...diagramConfig.diagrams, ...diagramOverrides.diagrams].map((diagram) => [diagram.id, diagram]),
+).values()];
+
 export function buildRouteInventory(
   catalog = starterCatalog,
-  diagrams = diagramConfig.diagrams,
+  diagrams = mergedDiagrams,
   instructorRenderings = instructorRenderingConfig.renderings,
 ) {
   const htmlRoutes = new Set([
@@ -59,15 +64,24 @@ export function buildRouteInventory(
     "/account",
     "/account/github/callback",
     "/admin",
+    "/admin/appearance",
     "/admin/logs",
     "/admin/settings",
     "/auth/callback",
     "/diagrams",
+    "/guide",
+    "/guide/diagrams",
     "/import-progress",
     "/learn",
     "/learner-data",
+    "/legal-transparency",
     "/ondemand",
+    "/platform",
     "/profile",
+    "/releases",
+    "/roadmap",
+    "/support",
+    "/transfer-progress",
   ]);
   for (const learningPath of catalog.paths) {
     htmlRoutes.add(`/learn/${learningPath.id}`);
@@ -77,6 +91,11 @@ export function buildRouteInventory(
   }
   for (const diagram of diagrams) {
     htmlRoutes.add(`/diagrams/${diagram.id}`);
+    htmlRoutes.add(`/guide/diagrams/${diagram.id}`);
+  }
+  for (const resource of catalog.resources) {
+    htmlRoutes.add(`/guide/resources/${resource.id}`);
+    htmlRoutes.add(`/resources/${resource.id}`);
   }
   // Only lessons that have been rendered get a route, which is the same rule
   // generateStaticParams applies. Deriving these from the class scripts instead

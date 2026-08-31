@@ -2,9 +2,8 @@
 
 ## Purpose
 
-This repository is the branded public Project 42 gateway at `project-42.dev`.
-Structured learning belongs in `learn.project-42.dev`; practical references belong
-in `guide.project-42.dev`.
+This repository is the unified public Project 42 portal at `project-42.dev`.
+Learning, Field Guide, profile, and ecosystem information are same-origin routes.
 
 ## Stack
 
@@ -24,9 +23,9 @@ npm test
 ## Rules
 
 1. Public content contracts come from `project42-platform`; do not duplicate them here.
-2. Preserve former learning/resource URLs through generated redirects.
-3. The progress-transfer bridge must use exact origins, one storage key, and explicit
-   learner approval; never imply cloud persistence.
+2. Preserve former learning/resource URLs through path-preserving legacy-host redirects.
+3. Public navigation uses relative paths; only Gallery and Admin are external portals.
 4. No secrets, private PMO material, or production learner data.
-5. Learn and Field Guide application features do not belong in this repository.
+5. The selected public theme comes from the root `project42.config.json`; Admin uses
+   its independent fixed operational theme.
 6. Build, lint, and rendered-route tests must pass before release.

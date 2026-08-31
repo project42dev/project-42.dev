@@ -18,7 +18,7 @@ test("exports every governed route for GitHub Pages", async () => {
     await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
   );
 
-  assert.equal(manifest.canonicalDomain, "learn.project-42.dev");
+  assert.equal(manifest.canonicalDomain, "project-42.dev");
   assert.deepEqual(manifest.htmlRoutes, inventory.htmlRoutes);
   assert.ok(inventory.htmlRoutes.includes("/account"));
   assert.ok(inventory.htmlRoutes.includes("/account/github/callback"));
@@ -30,32 +30,27 @@ test("exports every governed route for GitHub Pages", async () => {
   }
 });
 
-test("keeps the migrated routes live in the default export AB#6851 AB#6227", async () => {
-  // The default export is what the self-host Learn image serves (Dockerfile
-  // runs npm run pages:build). A self-hosted deployment has no
-  // account.project-42.dev or admin.project-42.dev, so retiring these routes by
-  // default would redirect its users to this project's hosted surface.
-  // Retirement is opt-in via --retire-migrated-routes and belongs only to the
-  // learn.project-42.dev publish.
+test("keeps public account routes live while isolating Admin AB#6167", async () => {
+  // Account remains part of the unified public journey. Admin is replaced by a
+  // noindex redirect in the hosted public artifact.
   const [account, admin] = await Promise.all([
     readFile(path.join(outputRoot, "account", "index.html"), "utf8"),
     readFile(path.join(outputRoot, "admin", "index.html"), "utf8"),
   ]);
 
-  for (const html of [account, admin]) {
-    assert.doesNotMatch(html, /<meta http-equiv="refresh"/);
-  }
+  assert.doesNotMatch(account, /<meta http-equiv="refresh"/);
+  assert.match(admin, /https:\/\/admin\.project-42\.dev\/admin\//);
   assert.match(account, /One learning record/);
-  assert.match(admin, /Accounts &amp; Registrations/);
+  assert.doesNotMatch(admin, /Accounts &amp; Registrations/);
 });
 
-test("retires the routes that moved to their own subdomains AB#6851 AB#6227", async () => {
+test("retires only Admin routes in hosted public artifacts AB#6167", async () => {
   const retiredRoot = path.join(projectRoot, "dist", "pages-retired-test");
   execFileSync(
     process.execPath,
     [
       path.join(projectRoot, "scripts", "export-github-pages.mjs"),
-      "--retire-migrated-routes",
+      "--retire-admin-routes",
       "--out=pages-retired-test",
     ],
     { cwd: projectRoot, stdio: "pipe" },
@@ -71,7 +66,6 @@ test("retires the routes that moved to their own subdomains AB#6851 AB#6227", as
   ]);
 
   for (const [html, target] of [
-    [account, "https://account.project-42.dev/account/"],
     [admin, "https://admin.project-42.dev/admin/"],
   ]) {
     assert.match(html, new RegExp(`<meta http-equiv="refresh" content="0; url=${target}">`));
@@ -82,7 +76,7 @@ test("retires the routes that moved to their own subdomains AB#6851 AB#6227", as
     assert.doesNotMatch(html, /AccountDashboard|AdminDashboard/);
   }
 
-  assert.doesNotMatch(account, /One learning record/);
+  assert.match(account, /One learning record/);
   assert.doesNotMatch(admin, /Accounts &amp; Registrations/);
 
   // /account/github/callback is the live GitHub identity-link redirect URI
@@ -124,7 +118,7 @@ test("publishes current release facts and learner-data disclosure", async () => 
 test("contains GitHub Pages controls without server or Sites metadata", async () => {
   assert.equal(
     await readFile(path.join(outputRoot, "CNAME"), "utf8"),
-    "learn.project-42.dev\n",
+    "project-42.dev\n",
   );
   await access(path.join(outputRoot, ".nojekyll"));
   await access(path.join(outputRoot, "404.html"));
