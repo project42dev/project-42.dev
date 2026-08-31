@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { siteFacts } from "../lib/siteFacts";
 
 export const metadata: Metadata = {
@@ -54,6 +55,16 @@ export default function AboutPage() {
             curriculum are open so teams can eventually run and extend their own.
           </p>
         </section>
+        <section>
+          <span className="about-number">05</span>
+          <h2>One course, two ways to take it</h2>
+          <p>
+            Every module can be read or watched. An instructor-led lesson is a second
+            rendering of the same material, not a second course, so both carry the
+            same knowledge check, cite the same sources, and land in the same record.
+            A correction reaches the reader and the viewer together.
+          </p>
+        </section>
       </div>
 
       <section className="release-facts" aria-labelledby="release-facts-title">
@@ -105,10 +116,13 @@ export default function AboutPage() {
             <dt>Reviewed questions</dt>
             <dd>{siteFacts.counts.reviewedQuestions}</dd>
           </div>
-          <div>
-            <dt>Practical resources</dt>
-            <dd>{siteFacts.counts.resources}</dd>
-          </div>
+          {/*
+            No "Practical resources" tile. Learn's count is legitimately 0
+            because the references moved to guide.project-42.dev, but rendering
+            that reads as "Project 42 has no practical resources", which is
+            false: there are 83 of them one subdomain over. The fact stays in
+            release-facts.json; it just is not a stat this site should display.
+          */}
           <div>
             <dt>Provider scopes</dt>
             <dd>{siteFacts.counts.providerScopes}</dd>
@@ -164,39 +178,10 @@ export default function AboutPage() {
           >
             Platform source
           </a>
-          <a className="button button-secondary" href="https://learn.project-42.dev">
+          <Link className="button button-secondary" href="/learn">
             Start learning
-          </a>
+          </Link>
         </div>
-      </section>
-
-      <section
-        className="future-platform-banner"
-        aria-labelledby="future-platform-title"
-      >
-        <div>
-          <p className="eyebrow">Coming next</p>
-          <h2 id="future-platform-title">
-            Deploy Project 42 for your own people—and keep it current.
-          </h2>
-          <p>
-            Project 42 is becoming a complete, supported open-source distribution
-            that organizations can run for their own employees, students, or
-            communities. Local identity, branding, configuration, private learner
-            records, and custom content stay under the operator&apos;s control while
-            governed update previews make upstream software and curriculum
-            improvements available without overwriting those local choices.
-          </p>
-        </div>
-        <aside aria-label="How Project 42 is made">
-          <strong>AI learning, created and maintained with AI.</strong>
-          <p>
-            The same class of technology taught here helps research, draft, test,
-            fact-check, and refresh the platform and its lessons. Independent models,
-            deterministic checks, and accountable human approval stand between an AI
-            proposal and publication.
-          </p>
-        </aside>
       </section>
     </main>
   );

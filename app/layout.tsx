@@ -2,16 +2,19 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
+import { ProgressProvider } from "./components/ProgressProvider";
+import { AuthProvider } from "./components/AuthProvider";
+import { ProfilePreferencesProvider } from "./components/ProfilePreferencesProvider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://project-42.dev"),
+  metadataBase: new URL("https://learn.project-42.dev"),
   title: {
-    default: "Project 42 — Learn AI with confidence",
-    template: "%s · Project 42",
+    default: "Project 42 Learn — Learn AI with confidence",
+    template: "%s · Project 42 Learn",
   },
   description:
-    "Free, open, provider-neutral AI learning paths, knowledge checks, and practical field guides.",
-  applicationName: "Project 42",
+    "Free, open, provider-neutral AI learning paths, knowledge checks, and practical activities.",
+  applicationName: "Project 42 Learn",
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
@@ -57,10 +60,10 @@ export const metadata: Metadata = {
   ],
   openGraph: {
     type: "website",
-    siteName: "Project 42",
-    title: "Project 42 — Learn AI with confidence",
+    siteName: "Project 42 Learn",
+    title: "Project 42 Learn — Learn AI with confidence",
     description:
-      "Free learning paths and practical resources from first principles to reliable agents.",
+      "Free learning paths from first principles to reliable agents.",
     images: [
       {
         url: "/og.png",
@@ -72,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Project 42 — Learn AI with confidence",
+    title: "Project 42 Learn — Learn AI with confidence",
     description:
-      "Free learning paths and practical resources from first principles to reliable agents.",
+      "Free learning paths from first principles to reliable agents.",
     images: ["/og.png"],
   },
 };
@@ -83,7 +86,7 @@ import config from "../project42.config.json";
 
 export const viewport: Viewport = {
   colorScheme: "dark light",
-  themeColor: "#090d16",
+  themeColor: "#0b1225",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -101,11 +104,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>
-        <SiteHeader />
-        <div id="main-content" tabIndex={-1}>
-          {children}
-        </div>
-        <SiteFooter />
+        <AuthProvider>
+          <ProfilePreferencesProvider>
+            <ProgressProvider>
+              <SiteHeader />
+              <div id="main-content" tabIndex={-1}>
+                {children}
+              </div>
+              <SiteFooter />
+            </ProgressProvider>
+          </ProfilePreferencesProvider>
+        </AuthProvider>
       </body>
     </html>
   );

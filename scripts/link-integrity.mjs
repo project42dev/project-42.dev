@@ -2,9 +2,12 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { starterCatalog } from "@project42/platform";
+import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
+import instructorRenderingConfig from "../config/instructor-renderings.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const defaultBaseUrl = "https://project-42.dev";
+const defaultBaseUrl = "https://learn.project-42.dev";
 const defaultExceptionsPath = path.join(
   projectRoot,
   "config",
@@ -46,23 +49,45 @@ function sourceLabel(reference) {
 }
 
 export function buildRouteInventory(
+  catalog = starterCatalog,
+  diagrams = diagramConfig.diagrams,
+  instructorRenderings = instructorRenderingConfig.renderings,
 ) {
   const htmlRoutes = new Set([
     "/",
     "/about",
+    "/account",
+    "/account/github/callback",
     "/admin",
     "/admin/logs",
     "/admin/settings",
-    "/legal-transparency",
-    "/platform",
-    "/releases",
-    "/roadmap",
-    "/support",
-    "/transfer-progress",
+    "/auth/callback",
+    "/diagrams",
+    "/import-progress",
+    "/learn",
+    "/learner-data",
+    "/ondemand",
+    "/profile",
   ]);
+  for (const learningPath of catalog.paths) {
+    htmlRoutes.add(`/learn/${learningPath.id}`);
+    for (const moduleId of learningPath.moduleIds) {
+      htmlRoutes.add(`/learn/${learningPath.id}/${moduleId}`);
+    }
+  }
+  for (const diagram of diagrams) {
+    htmlRoutes.add(`/diagrams/${diagram.id}`);
+  }
+  // Only lessons that have been rendered get a route, which is the same rule
+  // generateStaticParams applies. Deriving these from the class scripts instead
+  // would inventory forty routes for one film.
+  for (const rendering of instructorRenderings) {
+    htmlRoutes.add(`/ondemand/${rendering.pathId}/${rendering.moduleId}`);
+  }
   return {
     htmlRoutes: [...htmlRoutes].sort(),
     endpointRoutes: [
+      "/learner-data/policy",
       "/manifest.webmanifest",
       "/robots.txt",
       "/sitemap.xml",
@@ -349,7 +374,7 @@ async function fetchExternal(
           accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.1",
           range: "bytes=0-2047",
           "user-agent":
-            "Project42-LinkChecker/0.1 (+https://github.com/project42dev/project-42.dev)",
+            "Project42-Learn-LinkChecker/0.1 (+https://github.com/project42dev/learn.project-42.dev)",
         },
       });
       try {
@@ -443,8 +468,7 @@ export async function checkExternalReferences({
         ...new Set(byTarget.get(target).map((reference) => reference.sourceRoute)),
       ];
       failures.push(
-        `External link failed: ${target} (${
-          result.status ? `HTTP ${result.status}` : result.error
+        `External link failed: ${target} (${result.status ? `HTTP ${result.status}` : result.error
         }; sources: ${sources.join(", ")})`,
       );
     }
@@ -478,7 +502,7 @@ async function createWorkerLoader(workerPath = defaultWorkerPath) {
           fetch: async () => new Response("Not found", { status: 404 }),
         },
       },
-      { waitUntil() {}, passThroughOnException() {} },
+      { waitUntil() { }, passThroughOnException() { } },
     );
     const contentType = response.headers.get("content-type") ?? "";
     const html = contentType.includes("text/html") ? await response.text() : "";
@@ -506,6 +530,7 @@ async function loadExceptions(exceptionsPath = defaultExceptionsPath) {
 }
 
 export async function runLinkIntegrityCheck({
+  catalog = starterCatalog,
   loadRoute,
   exceptions,
   staticRoot = defaultStaticRoot,
@@ -513,7 +538,7 @@ export async function runLinkIntegrityCheck({
   timeoutMs = positiveInteger(process.env.LINK_CHECK_TIMEOUT_MS, 20_000),
   attempts = positiveInteger(process.env.LINK_CHECK_ATTEMPTS, 3),
 } = {}) {
-  const inventory = buildRouteInventory();
+  const inventory = buildRouteInventory(catalog);
   const routeLoader = loadRoute ?? (await createWorkerLoader());
   const documents = new Map();
   const rendered = await mapLimit(inventory.htmlRoutes, 8, routeLoader);
@@ -572,11 +597,11 @@ async function main() {
   const summary = result.summary;
   console.log(
     `Link integrity passed: ${summary.htmlRoutes} HTML routes, ` +
-      `${summary.endpointRoutes} metadata endpoints, ` +
-      `${summary.internalReferences} internal references, ` +
-      `${summary.checkedAssets} static assets, ` +
-      `${summary.uniqueExternalLinks} external links, ` +
-      `${summary.usedExceptions} active exception(s) used.`,
+    `${summary.endpointRoutes} metadata endpoints, ` +
+    `${summary.internalReferences} internal references, ` +
+    `${summary.checkedAssets} static assets, ` +
+    `${summary.uniqueExternalLinks} external links, ` +
+    `${summary.usedExceptions} active exception(s) used.`,
   );
 }
 

@@ -1,91 +1,184 @@
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
-import { starterCatalog } from "@project42/platform";
-import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
+import {
+  defaultLearnerDataPolicy,
+  starterCatalog,
+} from "@project42/platform";
 import { buildRouteInventory } from "../scripts/link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const outputRoot = path.join(projectRoot, "dist", "pages");
 
-test("exports only canonical landing routes as governed pages", async () => {
-  const inventory = buildRouteInventory();
+test("exports every governed route for GitHub Pages", async () => {
+  const inventory = buildRouteInventory(starterCatalog);
   const manifest = JSON.parse(
     await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
   );
 
-  assert.equal(manifest.canonicalDomain, "project-42.dev");
+  assert.equal(manifest.canonicalDomain, "learn.project-42.dev");
   assert.deepEqual(manifest.htmlRoutes, inventory.htmlRoutes);
-  assert.deepEqual(inventory.htmlRoutes, [
-    "/",
-    "/about",
-    "/admin",
-    "/admin/logs",
-    "/admin/settings",
-    "/legal-transparency",
-    "/platform",
-    "/releases",
-    "/roadmap",
-    "/support",
-    "/transfer-progress",
-  ]);
+  assert.ok(inventory.htmlRoutes.includes("/account"));
+  assert.ok(inventory.htmlRoutes.includes("/account/github/callback"));
+  assert.ok(inventory.htmlRoutes.includes("/admin"));
+  assert.ok(inventory.htmlRoutes.includes("/auth/callback"));
   for (const route of inventory.htmlRoutes) {
     const relative = route === "/" ? "index.html" : `${route.slice(1)}/index.html`;
     await access(path.join(outputRoot, relative));
   }
 });
 
-test("exports complete Learn and Field Guide legacy redirects", async () => {
-  const manifest = JSON.parse(
-    await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
-  );
-  const expectedRedirectCount =
-    6 +
-    starterCatalog.paths.length +
-    starterCatalog.modules.length +
-    starterCatalog.resources.length +
-    diagramConfig.diagrams.length;
-  assert.equal(Object.keys(manifest.legacyRedirects).length, expectedRedirectCount);
-  assert.equal(manifest.legacyRedirects["/learn"], "https://learn.project-42.dev/");
-  assert.equal(
-    manifest.legacyRedirects["/resources"],
-    "https://guide.project-42.dev/",
-  );
-  assert.equal(
-    manifest.legacyRedirects["/profile"],
-    "https://learn.project-42.dev/profile",
+test("keeps the migrated routes live in the default export AB#6851 AB#6227", async () => {
+  // The default export is what the self-host Learn image serves (Dockerfile
+  // runs npm run pages:build). A self-hosted deployment has no
+  // account.project-42.dev or admin.project-42.dev, so retiring these routes by
+  // default would redirect its users to this project's hosted surface.
+  // Retirement is opt-in via --retire-migrated-routes and belongs only to the
+  // learn.project-42.dev publish.
+  const [account, admin] = await Promise.all([
+    readFile(path.join(outputRoot, "account", "index.html"), "utf8"),
+    readFile(path.join(outputRoot, "admin", "index.html"), "utf8"),
+  ]);
+
+  for (const html of [account, admin]) {
+    assert.doesNotMatch(html, /<meta http-equiv="refresh"/);
+  }
+  assert.match(account, /One learning record/);
+  assert.match(admin, /Accounts &amp; Registrations/);
+});
+
+test("retires the routes that moved to their own subdomains AB#6851 AB#6227", async () => {
+  const retiredRoot = path.join(projectRoot, "dist", "pages-retired-test");
+  execFileSync(
+    process.execPath,
+    [
+      path.join(projectRoot, "scripts", "export-github-pages.mjs"),
+      "--retire-migrated-routes",
+      "--out=pages-retired-test",
+    ],
+    { cwd: projectRoot, stdio: "pipe" },
   );
 
-  const [legacyLearning, legacyResource] = await Promise.all([
-    readFile(path.join(outputRoot, "learn", "ai-foundations", "index.html"), "utf8"),
+  const [account, admin, githubCallback] = await Promise.all([
+    readFile(path.join(retiredRoot, "account", "index.html"), "utf8"),
+    readFile(path.join(retiredRoot, "admin", "index.html"), "utf8"),
     readFile(
-      path.join(outputRoot, "resources", "prompt-checklist", "index.html"),
+      path.join(retiredRoot, "account", "github", "callback", "index.html"),
       "utf8",
     ),
   ]);
-  assert.match(legacyLearning, /learn\.project-42\.dev\/learn\/ai-foundations/);
-  assert.match(legacyResource, /guide\.project-42\.dev\/resources\/prompt-checklist/);
-  assert.match(legacyLearning, /window\.location\.replace/);
+
+  for (const [html, target] of [
+    [account, "https://account.project-42.dev/account/"],
+    [admin, "https://admin.project-42.dev/admin/"],
+  ]) {
+    assert.match(html, new RegExp(`<meta http-equiv="refresh" content="0; url=${target}">`));
+    assert.match(html, new RegExp(`<link rel="canonical" href="${target}">`));
+    assert.match(html, /<meta name="robots" content="noindex">/);
+    // The published artifact must not keep serving a second live copy of a
+    // surface that now belongs to its own subdomain.
+    assert.doesNotMatch(html, /AccountDashboard|AdminDashboard/);
+  }
+
+  assert.doesNotMatch(account, /One learning record/);
+  assert.doesNotMatch(admin, /Accounts &amp; Registrations/);
+
+  // /account/github/callback is the live GitHub identity-link redirect URI
+  // (GITHUB_LINK_REDIRECT_URI still points at learn.project-42.dev), so it is
+  // deliberately NOT retired - retiring it would break identity linking.
+  assert.doesNotMatch(githubCallback, /<meta http-equiv="refresh"/);
 });
 
-test("publishes current ecosystem facts and Pages controls", async () => {
-  const [releaseFacts, application, installedPlatform] = await Promise.all([
+test("publishes current release facts and learner-data disclosure", async () => {
+  const [home, learnerData, releaseFacts, policy, installedPlatform, application] = await Promise.all([
+    readFile(path.join(outputRoot, "index.html"), "utf8"),
+    readFile(path.join(outputRoot, "learner-data", "index.html"), "utf8"),
     readFile(path.join(outputRoot, "release-facts.json"), "utf8").then(JSON.parse),
-    readFile(path.join(projectRoot, "package.json"), "utf8").then(JSON.parse),
+    readFile(path.join(outputRoot, "learner-data", "policy.json"), "utf8").then(
+      JSON.parse,
+    ),
     readFile(
       path.join(projectRoot, "node_modules", "@project42", "platform", "package.json"),
       "utf8",
     ).then(JSON.parse),
+    readFile(path.join(projectRoot, "package.json"), "utf8").then(JSON.parse),
   ]);
+
+  const normalizedHome = home.replaceAll("<!-- -->", "");
+  assert.match(normalizedHome, /Project 42/);
+  assert.ok(normalizedHome.includes(`Site v${releaseFacts.siteVersion}`));
+  assert.match(learnerData, /Your learning data, without fine print/);
+  assert.match(learnerData, /href="\/learner-data\/policy\.json"/);
   assert.equal(releaseFacts.siteVersion, application.version);
   assert.equal(releaseFacts.platformVersion, installedPlatform.version);
+  assert.equal(releaseFacts.learnerDataPolicy.policyVersion, "2026-07-27");
+  assert.equal(
+    releaseFacts.learnerDataPolicy.hostedRecordStore,
+    "cloudflare-d1",
+  );
+  assert.deepEqual(policy, defaultLearnerDataPolicy);
+});
+
+test("contains GitHub Pages controls without server or Sites metadata", async () => {
   assert.equal(
     await readFile(path.join(outputRoot, "CNAME"), "utf8"),
-    "project-42.dev\n",
+    "learn.project-42.dev\n",
   );
   await access(path.join(outputRoot, ".nojekyll"));
   await access(path.join(outputRoot, "404.html"));
   await assert.rejects(access(path.join(outputRoot, ".openai")));
   await assert.rejects(access(path.join(outputRoot, "server")));
+});
+
+test("a filtered --domain/--routes export publishes only its own routes with cross-subdomain nav links AB#6851", async () => {
+  const filteredOutputRoot = path.join(projectRoot, "dist", "pages-account-test");
+  execFileSync(
+    process.execPath,
+    [
+      "scripts/export-github-pages.mjs",
+      "--domain=account.project-42.dev",
+      "--routes=/account",
+      "--out=pages-account-test",
+    ],
+    { cwd: projectRoot, stdio: "pipe" },
+  );
+
+  const manifest = JSON.parse(
+    await readFile(path.join(filteredOutputRoot, "pages-manifest.json"), "utf8"),
+  );
+  assert.equal(manifest.canonicalDomain, "account.project-42.dev");
+  assert.deepEqual(manifest.htmlRoutes, [
+    "/account",
+    "/account/github/callback",
+  ]);
+  assert.deepEqual(manifest.endpoints, []);
+
+  assert.equal(
+    await readFile(path.join(filteredOutputRoot, "CNAME"), "utf8"),
+    "account.project-42.dev\n",
+  );
+  await assert.rejects(
+    access(path.join(filteredOutputRoot, "learn", "index.html")),
+    "a filtered export must not publish routes it doesn't own",
+  );
+  await assert.rejects(
+    access(path.join(filteredOutputRoot, "learner-data")),
+    "a filtered export skips site-wide endpoints, not just unowned HTML routes",
+  );
+
+  const accountPage = await readFile(
+    path.join(filteredOutputRoot, "account", "index.html"),
+    "utf8",
+  );
+  assert.ok(
+    accountPage.length > 500 && accountPage.includes("One learning record. Your account."),
+    "a filtered export renders the owned account page correctly",
+  );
+  const rootRedirect = await readFile(
+    path.join(filteredOutputRoot, "index.html"),
+    "utf8",
+  );
+  assert.match(rootRedirect, /content="0; url=\/account\/"/);
 });

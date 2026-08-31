@@ -1,11 +1,31 @@
 import type { MetadataRoute } from "next";
+import { starterCatalog } from "@project42/platform";
+import { diagramCatalog } from "./lib/diagrams";
+import { instructorRenderings } from "./lib/instructorMedia";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const base = "https://project-42.dev";
-  return ["", "/about", "/releases", "/roadmap", "/legal-transparency"].map((path) => ({
+  const base = "https://learn.project-42.dev";
+  return [
+    "",
+    "/learn",
+    "/ondemand",
+    "/diagrams",
+    "/import-progress",
+    "/profile",
+    "/learner-data",
+    "/about",
+    ...starterCatalog.paths.map((path) => `/learn/${path.id}`),
+    ...starterCatalog.paths.flatMap((path) =>
+      path.moduleIds.map((moduleId) => `/learn/${path.id}/${moduleId}`),
+    ),
+    ...instructorRenderings.map(
+      (rendering) => `/ondemand/${rendering.pathId}/${rendering.moduleId}`,
+    ),
+    ...diagramCatalog.map((diagram) => `/diagrams/${diagram.id}`),
+  ].map((path) => ({
     url: `${base}${path}`,
-    lastModified: new Date("2026-07-27"),
+    lastModified: new Date("2026-07-25"),
     changeFrequency: "monthly",
-    priority: path === "" ? 1 : 0.8,
+    priority: path === "" ? 1 : path.split("/").length <= 2 ? 0.8 : 0.6,
   }));
 }
