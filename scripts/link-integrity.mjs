@@ -73,6 +73,7 @@ export function buildRouteInventory(
     "/guide/diagrams",
     "/import-progress",
     "/learn",
+    "/learn/paths",
     "/learner-data",
     "/legal-transparency",
     "/ondemand",

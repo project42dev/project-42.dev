@@ -7,7 +7,7 @@ export default function NotFound() {
       <h1>This path has not been charted.</h1>
       <p>Return to the academy or search the field guide for another route.</p>
       <div className="button-row">
-        <Link className="button button-primary" href="/learn">
+        <Link className="button button-primary" href="/learn/paths">
           Learning paths
         </Link>
         <Link className="button button-secondary" href="/guide">

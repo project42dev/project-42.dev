@@ -14,6 +14,7 @@ const galacticTokens = {
 const publicRouteFamilies = [
   "/",
   "/learn",
+  "/learn/paths",
   "/learn/ai-foundations",
   "/learn/ai-foundations/what-ai-does",
   "/guide",
@@ -35,6 +36,22 @@ const publicRouteFamilies = [
   "/support",
   "/legal-transparency",
 ] as const;
+
+test("routes Learn to the landing page and keeps the path catalog distinct", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("link", { name: "Learn", exact: true }).click();
+  await expect(page).toHaveURL(/\/learn\/?$/);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Start curious");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Become capable");
+
+  await page.getByRole("link", { name: "Explore learning paths" }).click();
+  await expect(page).toHaveURL(/\/learn\/paths\/?$/);
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText(
+    "Learning paths with a clear next step.",
+  );
+});
 
 const protectedRouteFamilies = [
   "/profile",

@@ -59,7 +59,7 @@ export default async function ModulePage({ params }: ModulePageProps) {
     <main className="lesson-page shell">
       <ModuleVisitTracker moduleId={lessonModule.id} pathId={path.id} />
       <nav className="breadcrumbs" aria-label="Breadcrumb">
-        <Link href="/learn">Learning paths</Link>
+        <Link href="/learn/paths">Learning paths</Link>
         <span>/</span>
         <Link href={`/learn/${path.id}`}>{path.title}</Link>
         <span>/</span>

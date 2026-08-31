@@ -243,7 +243,7 @@ export default function OnDemandPage() {
 
       <p className="learn-format-switch" style={{ marginTop: "2rem" }}>
         Prefer reading the text-first modules?{" "}
-        <Link href="/learn">Explore the self-paced library →</Link>
+        <Link href="/learn/paths">Explore the self-paced library →</Link>
       </p>
     </main>
   );

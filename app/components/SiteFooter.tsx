@@ -41,7 +41,7 @@ export function SiteFooter() {
         <div style={{ display: "flex", gap: "48px", flexWrap: "wrap", fontSize: "13px" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             <strong style={{ color: "#ffffff", fontSize: "12px", textTransform: "uppercase", letterSpacing: "0.06em" }}>Explore</strong>
-            <Link href="/learn" style={{ color: "#94a3b8", textDecoration: "none" }}>Learning paths</Link>
+            <Link href="/learn/paths" style={{ color: "#94a3b8", textDecoration: "none" }}>Learning paths</Link>
             <Link href="/guide" style={{ color: "#94a3b8", textDecoration: "none" }}>Field Guide</Link>
             <Link href="/guide/diagrams" style={{ color: "#94a3b8", textDecoration: "none" }}>Visual guides</Link>
             <a href="https://gallery.project-42.dev" style={{ color: "#94a3b8", textDecoration: "none" }}>Theme Gallery</a>
