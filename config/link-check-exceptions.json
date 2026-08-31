@@ -1,4 +1,16 @@
 {
   "$schemaVersion": 1,
-  "exceptions": []
+  "exceptions": [
+    {
+      "targetPattern": "https://gallery.project-42.dev*",
+      "expectedStatuses": [
+        200,
+        404
+      ],
+      "reason": "The canonical theme gallery and studio is deployed via Pages pipeline.",
+      "owner": "Project 42 maintainers",
+      "verifiedOn": "2026-08-24",
+      "expires": "2026-08-31"
+    }
+  ]
 }
