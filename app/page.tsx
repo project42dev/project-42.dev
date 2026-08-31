@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { starterCatalog } from "@project42/platform";
 import { diagramCatalog } from "./lib/diagrams";
 
@@ -10,54 +11,85 @@ export default function Home() {
 
   return (
     <main>
-      <section className="hero shell">
-        <div className="hero-copy">
-          <p className="eyebrow">Free, open AI learning</p>
-          <h1>
-            Start curious.
-            <span>Become capable.</span>
-          </h1>
-          <p className="hero-lede">
-            Project 42 makes artificial intelligence understandable from your first
-            question to your first reliable agent. Learn at your pace, check what you
-            know, and keep a record of your progress.
-          </p>
-          <div className="button-row">
-            <Link className="button button-primary" href="/learn/ai-foundations">
-              Start AI Foundations
-            </Link>
-            <Link className="button button-secondary" href="/guide">
-              Browse the field guide
-            </Link>
-            <Link className="button button-secondary" href="/guide/diagrams">
-              See visual guides
-            </Link>
+      <section className="galactic-showcase shell" aria-labelledby="galactic-headline">
+        <div className="galactic-poster-card">
+          <div className="galactic-poster-hero">
+            <div className="galactic-floating-card">
+              <div className="galactic-brand-row">
+                <Image
+                  alt="Project 42 Galactic Guide mark"
+                  className="galactic-brand-mark"
+                  height={42}
+                  priority
+                  src="/themes/06-galactic-guide/mark.svg"
+                  width={42}
+                />
+                <span>Project 42 / Guide</span>
+              </div>
+              <p className="galactic-eyebrow">06 · The Galactic Guide (Don&apos;t Panic)</p>
+              <h1 id="galactic-headline">The Answer to AI, Agents, and Everything.</h1>
+              <p className="galactic-lede">
+                A friendly, provider-neutral survival guide from your very first prompt
+                to production multi-agent swarms. 13 paths, 92 modules, and always
+                knowing where your context is.
+              </p>
+              <div className="galactic-actions">
+                <Link href="/learn/ai-foundations">Consult The Guide (Path 01)</Link>
+                <Link href="/guide">Don&apos;t Panic (Field Guide)</Link>
+              </div>
+            </div>
           </div>
-          <ul className="trust-list" aria-label="Project 42 promises">
-            <li>Beginner-friendly</li>
-            <li>Provider-neutral</li>
-            <li>Evidence-linked</li>
-            <li>Open source</li>
-          </ul>
-        </div>
-        <div className="hero-map" aria-label="Learning journey preview">
-          <div className="map-orbit map-orbit-one" />
-          <div className="map-orbit map-orbit-two" />
-          <div className="map-node map-node-start">
-            <span>01</span>
-            Understand
+
+          <div className="galactic-system-bar">
+            <div>
+              <p className="galactic-system-title">Identity idea</p>
+              <p>
+                A retro-futuristic pocket datapad that dispels intimidation with
+                reassuring golden bezels, hitchhiker references, and pragmatic
+                engineering.
+              </p>
+            </div>
+            <div>
+              <p className="galactic-system-title">Sub-brands</p>
+              <div className="galactic-subbrands">
+                <span>Project 42 Guide</span>
+                <span>42 Don&apos;t Panic Manual</span>
+              </div>
+            </div>
+            <div>
+              <p className="galactic-system-title">Palette</p>
+              <div className="galactic-palette" aria-label="Galactic Guide palette">
+                <span className="galactic-swatch galactic-swatch-bg" title="#090d16" />
+                <span className="galactic-swatch galactic-swatch-amber" title="#f59e0b" />
+                <span className="galactic-swatch galactic-swatch-emerald" title="#10b981" />
+                <span className="galactic-swatch galactic-swatch-cream" title="#fef3c7" />
+              </div>
+            </div>
           </div>
-          <div className="map-node map-node-build">
-            <span>02</span>
-            Practice
-          </div>
-          <div className="map-node map-node-prove">
-            <span>03</span>
-            Prove it
-          </div>
-          <div className="map-center">
-            <span className="map-mark">42</span>
-            <small>Your path</small>
+
+          <div className="galactic-badges-bar">
+            <p className="galactic-system-title">
+              Learner achievement badges (earned across 13 paths &amp; 89 activities)
+            </p>
+            <div className="galactic-badge-grid">
+              {[
+                ["badge-foundations.svg", "Hitchhiker Novice", "Level 01"],
+                ["badge-practitioner.svg", "Sub-Etha Scout", "Level 02"],
+                ["badge-agentic.svg", "Swarm Architect", "Level 03"],
+                ["badge-evidence.svg", "Don't Panic Medal", "Mastery"],
+              ].map(([asset, title, level]) => (
+                <article className="galactic-badge-card" key={asset}>
+                  <Image
+                    alt=""
+                    height={68}
+                    src={`/themes/06-galactic-guide/badges/${asset}`}
+                    width={68}
+                  />
+                  <span className="galactic-badge-level">{level}</span>
+                  <strong>{title}</strong>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
