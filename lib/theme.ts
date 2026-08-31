@@ -19,7 +19,7 @@ export function getActiveThemeId(): string {
   if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_THEME) {
     return process.env.NEXT_PUBLIC_THEME;
   }
-  return config.theme || "04-field-signal";
+  return config.theme || "06-galactic-guide";
 }
 
 export function getThemeAssets(themeId?: string) {
