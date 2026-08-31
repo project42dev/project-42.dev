@@ -27,7 +27,17 @@ test("renders the Project 42 home page", async () => {
   assert.equal(response.status, 200);
   const html = await response.text();
   assert.match(html, /Project 42/);
-  assert.match(html, /Start curious/);
+  assert.match(html, /The Answer to AI, Agents, and Everything/);
+  assert.match(html, /The Galactic Guide \(Don&#x27;t Panic\)/);
+  assert.match(html, /Consult The Guide \(Path 01\)/);
+  assert.match(html, /Identity idea/);
+  assert.match(html, /Project 42 Guide/);
+  assert.match(html, /42 Don&#x27;t Panic Manual/);
+  assert.match(html, /Hitchhiker Novice/);
+  assert.match(html, /Sub-Etha Scout/);
+  assert.match(html, /Swarm Architect/);
+  assert.match(html, /Don&#x27;t Panic Medal/);
+  assert.match(html, /\/themes\/06-galactic-guide\/mark\.svg/);
   assert.match(html, /Learn deeply. Find answers quickly/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
   assert.ok(
