@@ -1,8 +1,8 @@
 # Project 42
 
-The public Project 42 gateway. It introduces the project and sends people to the
-separate Learn and Field Guide experiences while preserving legacy route redirects
-and a consent-based browser progress transfer.
+The unified Project 42 public portal. The gateway, learning paths, Field Guide,
+learner profile, and ecosystem pages all use same-origin routes under
+`project-42.dev`. Gallery and Admin remain intentionally separate portals.
 
 ## Develop
 
@@ -58,9 +58,11 @@ drift.
 
 ## Repositories
 
-- `project-42.dev` — public landing experience and brand
-- `learn.project-42.dev` — learning paths, assessments, badges, and transcripts
-- `guide.project-42.dev` — practical Field Guide and visual references
+- `project-42.dev` — unified landing, Learn, Field Guide, profile, and information portal
+- `learn.project-42.dev` — legacy host that redirects to canonical same-path routes
+- `guide.project-42.dev` — legacy host that redirects into canonical `/guide` routes
+- `gallery.project-42.dev` — public, unauthenticated theme gallery
+- `admin.project-42.dev` — role-protected operational portal
 - `project42-platform` — reusable Apache-2.0 platform and CC BY 4.0 curriculum
 - `project42dev-ops` — private planning and operations
 - `project42dev.github.io` — transitional public site

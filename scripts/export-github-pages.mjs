@@ -18,19 +18,12 @@ const args = new Map(
     return [key, rest.join("=")];
   }),
 );
-const canonicalDomain = args.get("domain") ?? "learn.project-42.dev";
+const canonicalDomain = args.get("domain") ?? "project-42.dev";
 const routePrefixes = args.get("routes")?.split(",").map((value) => value.trim()).filter(Boolean) ?? null;
 const isFilteredExport = routePrefixes !== null;
-// --retire-migrated-routes replaces the routes that moved to their own
-// subdomains with redirect stubs (AB#6851, AB#6227). It is opt-in and used only
-// by the learn.project-42.dev Pages publish, NOT by the default export.
-//
-// The default export is also what the self-host Learn image serves (Dockerfile
-// runs npm run pages:build). A self-hosted deployment has no
-// account.project-42.dev or admin.project-42.dev, so redirecting there would
-// send its users to this project's hosted surface instead of their own. The
-// default must keep rendering the real pages.
-const retireMigratedRoutes = args.has("retire-migrated-routes");
+// Hosted public artifacts redirect Admin routes to the isolated Admin Portal.
+// Account and learner-profile routes remain on the unified public origin.
+const retireAdminRoutes = args.has("retire-admin-routes");
 const outputRoot = path.join(
   projectRoot,
   "dist",
@@ -64,11 +57,8 @@ function outputPathForRoute(route) {
   return path.join(outputRoot, route.replace(/^\/+/, ""), "index.html");
 }
 
-// Routes that learn.project-42.dev handed off to their own subdomains
-// (AB#6851, AB#6227). Learn's build still renders them - the app keeps working
-// for local dev, Playwright, and the subdomain exports that reuse these very
-// components - but the HTML Learn *publishes* is replaced with a redirect, so
-// the old public URLs stop serving a second live copy of each surface.
+// Admin routes remain renderable for validation and filtered Admin exports, but
+// the hosted public artifact must never expose a second operational console.
 //
 // This is deliberately an export-time transform rather than runtime
 // headers().get("host") branching inside the pages: a previous attempt at the
@@ -78,7 +68,6 @@ function outputPathForRoute(route) {
 // special-case them. Only the published artifact needs to redirect, and only
 // the default full-site export produces it.
 const RETIRED_ROUTES = new Map([
-  ["/account", "https://account.project-42.dev/account/"],
   ["/admin", "https://admin.project-42.dev/admin/"],
   ["/admin/logs", "https://admin.project-42.dev/admin/logs/"],
   ["/admin/settings", "https://admin.project-42.dev/admin/settings/"],
@@ -131,12 +120,8 @@ async function main() {
   const { default: worker } = await import(workerUrl.href);
   const fetchRoute = (route) =>
     worker.fetch(
-      // The synthetic export request has no real "Host" header, but
-      // subdomainLinks.ts's crossDomainHref() reads headers().get("host") to
-      // decide whether an /account or /admin link should render relative or
-      // absolute. Set it explicitly so a filtered --domain export of a
-      // subdomain's own routes gets relative links, and the default full-site
-      // export keeps every route relative to learn.project-42.dev.
+      // Set the synthetic host explicitly so generated metadata and client
+      // bootstrap state reflect the artifact's deployment domain.
       new Request(`https://${canonicalDomain}${route}`, {
         headers: { host: canonicalDomain },
       }),
@@ -162,7 +147,7 @@ async function main() {
     // export: that export IS the subdomain publishing its own copy, so it must
     // keep the real page or it would redirect to itself forever.
     const retiredTarget =
-      retireMigratedRoutes && !isFilteredExport
+      retireAdminRoutes && !isFilteredExport
         ? RETIRED_ROUTES.get(route)
         : undefined;
     if (retiredTarget) {
