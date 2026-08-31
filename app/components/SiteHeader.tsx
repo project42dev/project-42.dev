@@ -1,27 +1,34 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { BrandMark } from "./BrandMark";
 import { HeaderMenu, MenuChevron } from "./HeaderMenu";
 import { ProfileMenu } from "./ProfileMenu";
-import { siteFacts } from "../lib/siteFacts";
-
-const LEARN = "https://learn.project-42.dev";
-const GUIDE = "https://guide.project-42.dev";
-const supportHref = `${siteFacts.repositories.site}/blob/main/SUPPORT.md`;
+import { AdminHeader } from "../admin/components/AdminHeader";
+import { clientCrossDomainHref } from "../lib/subdomainLinks";
 
 export function SiteHeader() {
+  const pathname = usePathname();
+
+  // If in Admin Console, render dedicated AdminHeader
+  if (pathname && pathname.startsWith("/admin")) {
+    return <AdminHeader />;
+  }
+
   return (
     <header className="site-header">
       <div className="shell header-inner">
-        <Link className="brand" href="/" aria-label="Project 42 home">
+        <a className="brand" href="https://project-42.dev" aria-label="Project 42 home">
           <BrandMark />
           <span>
             Project <strong>42</strong>
           </span>
-        </Link>
+        </a>
         <nav aria-label="Primary navigation">
-          <a href={LEARN}>Learn</a>
-          <a href={GUIDE}>Field Guide</a>
-          <a href={`${GUIDE}/diagrams`}>Visual guides</a>
+          <Link href="/">Learn</Link>
+          <Link href="/guide">Field Guide</Link>
+          <Link href="/diagrams">Visual guides</Link>
           <HeaderMenu
             label={
               <>
@@ -50,16 +57,22 @@ export function SiteHeader() {
                 <Link href="/support">Support &amp; Content Requests</Link>
               </li>
               <li>
-                <Link href="/legal-transparency">Legal and transparency</Link>
+                <Link href="/legal-transparency">
+                  Legal and transparency
+                </Link>
               </li>
             </ul>
           </HeaderMenu>
         </nav>
         <div className="header-actions">
-          <a className="header-action" href={LEARN}>
+          <Link className="header-action" href="/">
             Start learning
-          </a>
-          <ProfileMenu />
+          </Link>
+          <ProfileMenu
+            accountHref="/account"
+            learnerDataHref="/learner-data"
+            profileHref="/profile"
+          />
         </div>
       </div>
     </header>

@@ -1,17 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useAuth } from "./AuthProvider";
 import { HeaderMenu } from "./HeaderMenu";
 
-const LEARN = "https://learn.project-42.dev";
-const API_ORIGIN = process.env.NEXT_PUBLIC_PROJECT42_API_ORIGIN || "https://api.project-42.dev";
-
-interface UserAccount {
-  id: string;
-  displayName: string | null;
-  primaryEmail: string | null;
-  roles: string[];
+interface ProfileMenuProps {
+  accountHref: string;
+  profileHref: string;
+  learnerDataHref: string;
 }
 
 function ProfileIcon() {
@@ -29,206 +26,153 @@ function ProfileIcon() {
   );
 }
 
+/** First letters of the name, or of the email local part. Never more than two. */
 function initialsFor(name: string): string {
   const words = name
     .replace(/@.*$/, "")
     .split(/[\s._-]+/)
     .filter(Boolean);
   if (words.length === 0) return "";
-  return words.slice(0, 2).map((w) => w[0]).join("").toUpperCase();
+  const letters = words.slice(0, 2).map((word) => word[0]);
+  return letters.join("").toUpperCase();
 }
 
-const authCacheKey = "project42.auth-cache.v1";
-
-function readCachedAccount(): UserAccount | null {
-  if (typeof window === "undefined") return null;
-  try {
-    let raw = localStorage.getItem(authCacheKey);
-    if (!raw) {
-      const match = document.cookie.match(/(?:^|;\s*)project42\.auth\.v1=([^;]+)/);
-      if (match) {
-        raw = decodeURIComponent(match[1]);
-        try { localStorage.setItem(authCacheKey, raw); } catch {}
-      }
-    }
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (parsed && parsed.account && parsed.account.id) {
-      if (Date.now() - (parsed.savedAt || 0) < 7 * 86400 * 1000) {
-        return parsed.account;
-      }
-    }
-    return null;
-  } catch {
-    return null;
-  }
-}
-
-function writeCachedAccount(account: UserAccount | null) {
-  if (typeof window === "undefined") return;
-  try {
-    const isDev =
-      window.location.hostname === "localhost" ||
-      window.location.hostname.endsWith(".localhost");
-    const domainAttr = isDev ? "" : "; domain=.project-42.dev";
-
-    if (account) {
-      const data = JSON.stringify({ account, savedAt: Date.now() });
-      localStorage.setItem(authCacheKey, data);
-      document.cookie = `project42.auth.v1=${encodeURIComponent(data)}${domainAttr}; path=/; max-age=604800; SameSite=Lax; Secure`;
-    } else {
-      localStorage.removeItem(authCacheKey);
-      document.cookie = `project42.auth.v1=; max-age=0${domainAttr}; path=/; SameSite=Lax; Secure`;
-    }
-  } catch {
-    // Best-effort
-  }
-}
-
-export function ProfileMenu() {
-  const [account, setAccount] = useState<UserAccount | null>(() => readCachedAccount());
+/**
+ * The learner's own corner of the header.
+ *
+ * The menu keeps the shared cross-site destinations in a stable order. The
+ * sign-in control depends on session state; protected destinations enforce
+ * authentication when opened. An unconfigured self-host can still reach its
+ * account entry page without presenting a nonfunctional hosted sign-in action.
+ *
+ * The trigger shows the learner's own photo when they have uploaded one. The
+ * photo is private: it is not a public URL, it is fetched as a blob through the
+ * authenticated apiFetch and held as an object URL for the life of the page,
+ * the same way the account page loads it. That is why this cannot be a plain
+ * <img src> and why the object URL is revoked on cleanup.
+ */
+export function ProfileMenu({
+  accountHref,
+  profileHref,
+  learnerDataHref,
+}: ProfileMenuProps) {
+  const { configured, status, account, apiFetch, signIn, signOut } = useAuth();
+  const signedIn = status === "signed-in" && Boolean(account);
+  const name = account?.displayName ?? account?.primaryEmail ?? null;
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    // No synchronous reset on sign-out. Setting state during an effect
+    // triggers a cascading render, and it is unnecessary here: the trigger
+    // below only shows the photo while signed in, and the cleanup revokes the
+    // object URL either way.
+    if (!signedIn) return undefined;
     let cancelled = false;
-    async function checkSession() {
+    let objectUrl: string | null = null;
+
+    void (async () => {
       try {
-        const res = await fetch(`${API_ORIGIN}/v1/auth/session`, {
-          credentials: "include",
-          headers: { "content-type": "application/json" },
-          cache: "no-store",
-        });
-        if (res.ok) {
-          const data = await res.json();
-          if (!cancelled && data.account) {
-            setAccount(data.account);
-            writeCachedAccount(data.account);
-          }
-        } else if (res.status === 401) {
-          const existing = readCachedAccount();
-          if (!existing) {
-            if (!cancelled) setAccount(null);
-          }
+        const response = await apiFetch("/v1/me/profile");
+        const body = (await response.json()) as {
+          profile?: { photoAvailable?: boolean };
+        };
+        if (!response.ok || !body.profile?.photoAvailable) return;
+        const photo = await apiFetch("/v1/me/profile/photo");
+        if (!photo.ok) return;
+        objectUrl = URL.createObjectURL(await photo.blob());
+        if (cancelled) {
+          URL.revokeObjectURL(objectUrl);
+          return;
         }
+        setPhotoUrl(objectUrl);
       } catch {
-        // Fallback: keep cached state if offline
+        // The header is not the place to report this. The account page owns
+        // profile errors and says so there; a broken avatar here just falls
+        // back to initials.
       }
-    }
-    checkSession();
+    })();
+
     return () => {
       cancelled = true;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
-  }, []);
+  }, [apiFetch, signedIn, account?.id]);
 
-  const handleSignIn = () => {
-    const returnTo = typeof window !== "undefined" ? window.location.href : "https://project-42.dev";
-    window.location.replace(`${API_ORIGIN}/v1/auth/start?return_to=${encodeURIComponent(returnTo)}`);
-  };
+  const initials = signedIn && name ? initialsFor(name) : "";
+  const trigger = signedIn && photoUrl ? (
+    // Decorative: the button itself carries the accessible name, so announcing
+    // the image as well would say the person's name twice.
+    //
+    // A plain <img>, not next/image: this is a blob object URL for a private
+    // photo fetched through the authenticated API, so there is no remote URL
+    // for an optimizer to fetch and nothing it could usefully do.
+    // eslint-disable-next-line @next/next/no-img-element
+    <img alt="" className="profile-photo" src={photoUrl} />
+  ) : initials ? (
+    <span aria-hidden="true" className="profile-initials">
+      {initials}
+    </span>
+  ) : (
+    <ProfileIcon />
+  );
 
-  const handleSignOut = async () => {
-    try {
-      writeCachedAccount(null);
-      const returnTo = typeof window !== "undefined" ? window.location.href : "https://project-42.dev";
-      await fetch(`${API_ORIGIN}/v1/auth/signout?return_to=${encodeURIComponent(returnTo)}`, {
-        method: "POST",
-        credentials: "include",
-      });
-    } finally {
-      setAccount(null);
-      if (typeof window !== "undefined") {
-        window.location.reload();
-      }
-    }
-  };
-
-  const signedIn = Boolean(account);
-  const displayName = account?.displayName || account?.primaryEmail || "Learner";
-  const initials = initialsFor(displayName);
+  // When signed out and the identity provider is configured, clicking the
+  // profile icon goes straight to sign-in — no dropdown, no intermediate page.
+  if (!signedIn && configured) {
+    return (
+      <button
+        aria-label="Sign in to your account"
+        className="profile-trigger"
+        onClick={() => void signIn()}
+        type="button"
+      >
+        <ProfileIcon />
+      </button>
+    );
+  }
 
   return (
     <HeaderMenu
-      accessibleLabel={signedIn && account ? `Your account, ${displayName}` : "Your account"}
+      accessibleLabel={signedIn && name ? `Your account, ${name}` : "Your account"}
       align="end"
-      label={
-        signedIn && initials ? (
-          <span style={{
-            width: "32px",
-            height: "32px",
-            borderRadius: "50%",
-            background: "linear-gradient(135deg, #38bdf8, #818cf8)",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: 800,
-            fontSize: "12px",
-            color: "#070b12"
-          }}>
-            {initials}
-          </span>
-        ) : (
-          <ProfileIcon />
-        )
-      }
+      label={trigger}
       triggerClassName="profile-trigger"
     >
+      {signedIn && name ? (
+        <p className="header-menu-identity">
+          <span>Signed in as</span>
+          <strong>{name}</strong>
+        </p>
+      ) : null}
       <ul className="header-menu-list">
-        {signedIn ? (
-          <>
-            <li style={{ padding: "8px 16px 10px", borderBottom: "1px solid rgba(255,255,255,0.08)", fontSize: "12.5px" }}>
-              <strong style={{ display: "block", color: "#ffffff" }}>{displayName}</strong>
-              {account?.primaryEmail && (
-                <span style={{ color: "#94a3b8", fontSize: "11.5px" }}>{account.primaryEmail}</span>
-              )}
-            </li>
-            <li>
-              <a href={`${LEARN}/profile`}>My progress &amp; transcript</a>
-            </li>
-            <li>
-              <a href={`${LEARN}/account`}>Account settings</a>
-            </li>
-            <li>
-              <a href={`${LEARN}/learner-data`}>Learner data</a>
-            </li>
-            {account?.roles?.includes("owner") && (
-              <li>
-                <a href="https://admin.project-42.dev/admin">Admin Console</a>
-              </li>
-            )}
-            <li style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "4px" }}>
-              <button
-                onClick={() => void handleSignOut()}
-                style={{
-                  background: "none",
-                  border: "none",
-                  color: "#ef4444",
-                  cursor: "pointer",
-                  font: "inherit",
-                  padding: "0.5rem 1rem",
-                  textAlign: "left",
-                  width: "100%",
-                }}
-                type="button"
-              >
-                Sign out
+        {!signedIn ? (
+          <li>
+            {configured ? (
+              <button onClick={() => void signIn()} type="button">
+                Sign in
               </button>
-            </li>
-          </>
-        ) : (
-          <>
-            <li>
-              <a href={`${LEARN}/account`}>Sign in</a>
-            </li>
-            <li>
-              <a href={`${LEARN}/profile`}>My progress</a>
-            </li>
-            <li>
-              <a href={`${LEARN}/account`}>Account</a>
-            </li>
-            <li>
-              <a href={`${LEARN}/learner-data`}>Learner data</a>
-            </li>
-          </>
-        )}
+            ) : (
+              <Link href={accountHref}>Sign in</Link>
+            )}
+          </li>
+        ) : null}
+        <li>
+          <Link href={profileHref}>My progress</Link>
+        </li>
+        <li>
+          <Link href={accountHref}>Account</Link>
+        </li>
+        <li>
+          <Link href={learnerDataHref}>Learner data</Link>
+        </li>
       </ul>
+      {configured && signedIn ? (
+        <div className="header-menu-footer">
+          <button onClick={() => void signOut()} type="button">
+            Sign out
+          </button>
+        </div>
+      ) : null}
     </HeaderMenu>
   );
 }
