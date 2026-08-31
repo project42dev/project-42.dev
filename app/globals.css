@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap");
 
 :root,
 html[data-theme="06-galactic-guide"] {
@@ -3884,7 +3884,12 @@ a {
   }
 
   .lesson-block {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    min-width: 0;
+  }
+
+  .lesson-block > * {
+    min-width: 0;
   }
 
   .lesson-block-index {
@@ -4311,14 +4316,14 @@ html[data-theme="06-galactic-guide"] .capstone-reflection textarea::placeholder 
   *::before,
   *::after {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
   }
 
   .legal-toc a,
   .legal-page h2,
   .site-footer a {
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
   }
 }
 
@@ -6591,10 +6596,10 @@ html[data-project42-reduced-motion="true"] {
 html[data-project42-reduced-motion="true"] *,
 html[data-project42-reduced-motion="true"] *::before,
 html[data-project42-reduced-motion="true"] *::after {
-  animation-duration: 0.01ms !important;
+  animation-duration: 0s !important;
   animation-iteration-count: 1 !important;
   scroll-behavior: auto !important;
-  transition-duration: 0.01ms !important;
+  transition-duration: 0s !important;
 }
 
 @media (forced-colors: none){
@@ -6641,10 +6646,10 @@ html[data-project42-reduced-motion="true"] *::after {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0s !important;
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
-    transition-duration: 0.01ms !important;
+    transition-duration: 0s !important;
   }
 }
 
@@ -8123,6 +8128,79 @@ button.orchard-node:hover {
 /* Authoritative 06 Galactic Guide presentation                               */
 /* Mirrors gallery.project-42.dev/preview.html?theme=galactic.                */
 /* -------------------------------------------------------------------------- */
+
+.support-page {
+  display: grid;
+  gap: 2rem;
+}
+
+.support-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.support-card {
+  align-items: flex-start;
+  background: #151a23;
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.5rem;
+}
+
+.support-card > div {
+  flex: 1;
+}
+
+.support-card h2,
+.support-card p {
+  margin-top: 0;
+}
+
+.support-index {
+  color: #f59e0b;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.support-policy {
+  align-items: end;
+  background: #0c1220;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 16px;
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: minmax(0, 1fr) auto;
+  padding: 1.75rem;
+}
+
+.support-policy h2,
+.support-policy p {
+  margin-top: 0;
+}
+
+.support-policy nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+}
+
+@media (max-width: 800px) {
+  .support-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .support-policy {
+    align-items: start;
+    grid-template-columns: 1fr;
+  }
+}
 
 html[data-theme="06-galactic-guide"] body:not(:has(.admin-portal-root)) {
   background: #090d16;
