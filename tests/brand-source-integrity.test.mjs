@@ -68,6 +68,39 @@ test("the configured theme cannot be overridden by stale browser state", () => {
   assert.match(publicSources, /removeItem\(["']project42\.theme\.v1["']\)/);
 });
 
+test("favicon provenance follows the declaratively selected theme", () => {
+  const config = JSON.parse(fs.readFileSync(path.resolve("project42.config.json"), "utf8"));
+  assert.equal(
+    config.organization.faviconUrl,
+    `/themes/${config.theme}/mark.svg`,
+  );
+  const manifest = JSON.parse(
+    fs.readFileSync(path.resolve("public/brand/asset-manifest.json"), "utf8"),
+  );
+  const themeMark = fs.readFileSync(
+    path.resolve("public", config.organization.faviconUrl.slice(1)),
+  );
+  assert.equal(manifest.sources.selectedTheme, config.theme);
+  assert.equal(manifest.sources.faviconUrl, config.organization.faviconUrl);
+  assert.equal(manifest.sources.faviconSha256, sourceSha256(themeMark));
+});
+
+test("Galactic removes default landing ornaments and uses its bundled hero", () => {
+  const styles = fs.readFileSync(path.resolve("app/globals.css"), "utf8");
+  assert.match(
+    styles,
+    /html\[data-theme="06-galactic-guide"\] \.path-card::after\s*\{\s*content:\s*none;/,
+  );
+  assert.match(
+    styles,
+    /html\[data-theme="06-galactic-guide"\] \.hero-map\s*\{[^}]*url\("\/themes\/06-galactic-guide\/hero\.png"\)/s,
+  );
+  assert.match(
+    styles,
+    /html\[data-theme="06-galactic-guide"\] \.footer-grid a\s*\{[^}]*min-height:\s*0;[^}]*padding-block:\s*0\.2rem;/s,
+  );
+});
+
 test("the Galactic compatibility aliases use only its authoritative accents", () => {
   const styles = fs.readFileSync(path.resolve("app/globals.css"), "utf8");
   const galacticBlock = styles.slice(0, styles.indexOf('html[data-theme="00-classic"]'));

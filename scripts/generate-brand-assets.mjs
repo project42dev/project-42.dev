@@ -9,25 +9,36 @@ import {
 
 const root = resolve(import.meta.dirname, "..");
 const checkOnly = process.argv.includes("--check");
-const appIconPath = resolve(root, "public/brand/project-42-app-icon.svg");
-const maskableIconPath = resolve(
-  root,
-  "public/brand/project-42-maskable-icon.svg",
+const portalConfig = JSON.parse(
+  await readFile(resolve(root, "project42.config.json"), "utf8"),
 );
+const selectedTheme = portalConfig.theme;
+const faviconUrl = portalConfig.organization?.faviconUrl;
+const expectedThemePrefix = `/themes/${selectedTheme}/`;
+if (
+  typeof faviconUrl !== "string" ||
+  !faviconUrl.startsWith(expectedThemePrefix) ||
+  !faviconUrl.endsWith(".svg") ||
+  faviconUrl.includes("..")
+) {
+  throw new Error(
+    `organization.faviconUrl must select an SVG from ${expectedThemePrefix}`,
+  );
+}
+const themeIconPath = resolve(root, "public", faviconUrl.slice(1));
 const socialPath = resolve(root, "public/brand/project-42-social.svg");
 const manifestPath = resolve(root, "public/brand/asset-manifest.json");
 
-const appIcon = canonicalizeSvgSource(await readFile(appIconPath));
-const maskableIcon = canonicalizeSvgSource(await readFile(maskableIconPath));
+const themeIcon = canonicalizeSvgSource(await readFile(themeIconPath));
 const social = canonicalizeSvgSource(await readFile(socialPath));
 const rasterAssets = [
-  ["favicon-16x16.png", 16, 16, appIcon],
-  ["favicon-32x32.png", 32, 32, appIcon],
-  ["favicon-48x48.png", 48, 48, appIcon],
-  ["apple-touch-icon.png", 180, 180, appIcon],
-  ["icon-192x192.png", 192, 192, appIcon],
-  ["icon-512x512.png", 512, 512, appIcon],
-  ["icon-maskable-512x512.png", 512, 512, maskableIcon],
+  ["favicon-16x16.png", 16, 16, themeIcon],
+  ["favicon-32x32.png", 32, 32, themeIcon],
+  ["favicon-48x48.png", 48, 48, themeIcon],
+  ["apple-touch-icon.png", 180, 180, themeIcon],
+  ["icon-192x192.png", 192, 192, themeIcon],
+  ["icon-512x512.png", 512, 512, themeIcon],
+  ["icon-maskable-512x512.png", 512, 512, themeIcon],
   ["og.png", 1200, 630, social],
 ];
 
@@ -49,7 +60,7 @@ if (checkOnly) {
   const icoFrames = [];
   for (const size of icoSizes) {
     icoFrames.push(
-      await sharp(appIcon, { density: 384 })
+      await sharp(themeIcon, { density: 384 })
         .resize(size, size, { fit: "fill" })
         .png({ compressionLevel: 9 })
         .toBuffer(),
@@ -60,10 +71,11 @@ if (checkOnly) {
   await writeFile(resolve(root, "public/favicon.ico"), ico);
 
   const manifest = {
-    schemaVersion: "1.0",
+    schemaVersion: "2.0",
     sources: {
-      "project-42-app-icon.svg": sourceSha256(appIcon),
-      "project-42-maskable-icon.svg": sourceSha256(maskableIcon),
+      selectedTheme,
+      faviconUrl,
+      faviconSha256: sourceSha256(themeIcon),
       "project-42-social.svg": sourceSha256(social),
     },
     generated: Object.fromEntries(
@@ -80,22 +92,19 @@ if (checkOnly) {
 
 async function validateCommittedAssets() {
   const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
-  if (manifest.schemaVersion !== "1.0") {
+  if (manifest.schemaVersion !== "2.0") {
     throw new Error("Unsupported brand asset manifest");
   }
-  if (manifest.sources["project-42-app-icon.svg"] !== sourceSha256(appIcon)) {
-    throw new Error("Application icon source changed without regenerating assets");
+  if (
+    manifest.sources.selectedTheme !== selectedTheme ||
+    manifest.sources.faviconUrl !== faviconUrl ||
+    manifest.sources.faviconSha256 !== sourceSha256(themeIcon)
+  ) {
+    throw new Error("Configured theme favicon changed without regenerating assets");
   }
   if (manifest.sources["project-42-social.svg"] !== sourceSha256(social)) {
     throw new Error("Social source changed without regenerating assets");
   }
-  if (
-    manifest.sources["project-42-maskable-icon.svg"] !==
-    sourceSha256(maskableIcon)
-  ) {
-    throw new Error("Maskable icon source changed without regenerating assets");
-  }
-
   for (const [filename, width, height] of rasterAssets) {
     const filePath = resolve(root, "public", filename);
     const file = await readFile(filePath);

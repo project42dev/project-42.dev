@@ -21,13 +21,15 @@ Apache-2.0 with the application code.
 | `project-42-mark.svg` | Full-color transparent mark |
 | `project-42-mark-mono.svg` | One-color light-background treatment |
 | `project-42-mark-reversed.svg` | One-color dark-background treatment |
-| `project-42-app-icon.svg` | Master for favicon, bookmark, Apple, and web-app exports |
-| `project-42-maskable-icon.svg` | Full-bleed safe-zone master for maskable web-app export |
 | `project-42-wordmark.svg` | Horizontal mark and name |
 | `project-42-social.svg` | Editable social-preview master |
 | `asset-manifest.json` | Source and generated-file integrity record |
 
-Run `npm run brand:generate` after changing either raster master. CI runs
+The active theme's `organization.faviconUrl` in `project42.config.json` is the
+single source for favicon, bookmark, Apple, and web-app exports. For Galactic,
+that is `public/themes/06-galactic-guide/mark.svg`, the same mark published by
+the Theme Gallery. Run `npm run brand:generate` after changing the selected
+theme or its mark. CI runs
 `npm run brand:check` to verify source hashes, image dimensions, file integrity, and
 the multi-size ICO directory.
 
@@ -52,9 +54,10 @@ substantive SVG changes.
 Downstream operators may replace Project 42 branding without changing learning
 content:
 
-1. Replace the six SVG sources while preserving their filenames and view boxes.
-2. Update the accessible application name and social text in `app/layout.tsx`,
-   `app/manifest.ts`, and the shared header/footer.
+1. Add the theme mark and set `organization.logoUrl` and
+   `organization.faviconUrl` in `project42.config.json`.
+2. Update the accessible application name and social text in the declarative
+   configuration and shared metadata.
 3. Run `npm run brand:generate`.
 4. Run `npm run check` and verify the header, favicon, Apple icon, manifest icons,
    social preview, and forced-colors treatment.

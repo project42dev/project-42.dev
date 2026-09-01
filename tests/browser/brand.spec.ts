@@ -16,7 +16,11 @@ test("publishes visible accessible branding and complete icon assets", async ({
   await expect(page.locator("svg.brand-mark")).toHaveCount(2);
   await expect(
     page.locator('link[rel="icon"][type="image/svg+xml"]'),
-  ).toHaveAttribute("href", "/brand/project-42-app-icon.svg");
+  ).toHaveAttribute("href", "/themes/06-galactic-guide/mark.svg");
+  await expect(page.locator('link[rel="shortcut icon"]')).toHaveAttribute(
+    "href",
+    "/themes/06-galactic-guide/mark.svg",
+  );
 
   const iconAssets = [
     ["/brand/project-42-mark.svg", "image/svg+xml"],
@@ -52,12 +56,12 @@ test("publishes visible accessible branding and complete icon assets", async ({
   expect(manifest.background_color).toBe("#090d16");
   expect(manifest.icons).toHaveLength(3);
 
-  const appIconResponse = await request.get("/brand/project-42-app-icon.svg");
+  const appIconResponse = await request.get("/themes/06-galactic-guide/mark.svg");
   const appIcon = await appIconResponse.text();
   expect(appIcon).toContain("#090d16");
   expect(appIcon).toContain("#f59e0b");
   expect(appIcon).toContain("#fef3c7");
-  expect(appIcon).not.toMatch(/#(?:c9f25f|63d7e4)/i);
+  expect(appIcon).toContain("Project 42 Galactic Guide concept mark");
 
   const accessibility = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])

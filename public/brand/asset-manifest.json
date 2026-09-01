@@ -1,46 +1,47 @@
 {
-  "schemaVersion": "1.0",
+  "schemaVersion": "2.0",
   "sources": {
-    "project-42-app-icon.svg": "52afdecc90a1cb15058a6376309e510ef6dbbf1d37bf63420d6d26518a085e6f",
-    "project-42-maskable-icon.svg": "6f45edd2bf9dbb815622879a3c8950bb953ad3ad074b78c4a668c2ae641d52ca",
+    "selectedTheme": "06-galactic-guide",
+    "faviconUrl": "/themes/06-galactic-guide/mark.svg",
+    "faviconSha256": "622ee8c6e8f9c8d6e0604a9e6787f82fd0552636250a4b3f0d74bfab6c86a316",
     "project-42-social.svg": "4f86a7675ea558af829d673598830600af1f731f6d73ed04ebe9993d8fec76f7"
   },
   "generated": {
     "favicon-16x16.png": {
-      "bytes": 480,
-      "sha256": "ed44ef87156b177da6540e11a4df4aae776dfe3ad8ac65608ea3f300ab881a52"
+      "bytes": 411,
+      "sha256": "39788fe5eefd92eb89cbf70aa74cc02ef6a62a350ef53fc226ab9890144007c5"
     },
     "favicon-32x32.png": {
-      "bytes": 941,
-      "sha256": "d83b55038ee113d1032fce8a5f85fd7dd0f31455a600085593fd8d6027ee12ab"
+      "bytes": 873,
+      "sha256": "edd4f015b304844c756ea6ab8fb78b1eaa351212fdde6cd7813581340f97314b"
     },
     "favicon-48x48.png": {
-      "bytes": 1376,
-      "sha256": "0889abd224659ee38b429628f24e668835e1c336fc7f16acac06ddaa7921c1fe"
+      "bytes": 1346,
+      "sha256": "23dbd4b9624b1877ef074be3bc5be619fe3026c1e9fe15b6e158a1b058f2dda4"
     },
     "apple-touch-icon.png": {
-      "bytes": 5222,
-      "sha256": "2dce875ac4e65421aeb62f829c3a800909284c93db5fbeed7f8a71361ea95745"
+      "bytes": 4926,
+      "sha256": "e408621bee050d4c636425e875a324d336fdf786d61b7dcb6d8ec7eb43cf582f"
     },
     "icon-192x192.png": {
-      "bytes": 5583,
-      "sha256": "17f21203a89242bd2e93fc6f722b06a0d9d9775610281c4b0b351e9e17eaf21b"
+      "bytes": 5180,
+      "sha256": "3b286241b24b19c49089eeb4b8c4d5e56cbe2426d68eab5b4445f194eeb0093b"
     },
     "icon-512x512.png": {
-      "bytes": 33475,
-      "sha256": "6af0b70eb9198583095c49312d85679dfb03ac8094496cb718e57afa1a9acc4a"
+      "bytes": 15895,
+      "sha256": "673d70cce91ead2254486ee9e0b18cea5d7c67eae05c010546a0fc93b4c47650"
     },
     "icon-maskable-512x512.png": {
-      "bytes": 25845,
-      "sha256": "11a8aa73062c5144ec804dfb4cf1418127c5b1b7058530e0e83b126338e81366"
+      "bytes": 15895,
+      "sha256": "673d70cce91ead2254486ee9e0b18cea5d7c67eae05c010546a0fc93b4c47650"
     },
     "og.png": {
       "bytes": 47704,
       "sha256": "71379ded73b89e0d92f073ee172520f444200e25c2789009e537d2b25ac5925f"
     },
     "favicon.ico": {
-      "bytes": 10254,
-      "sha256": "0b85edc08986ea175a82fff4469ccd87a44564827c5584b19874cf649c6dd91f"
+      "bytes": 9740,
+      "sha256": "45b9f5dc9277ba17184f3dcde5201ca4ebd545a662a2fc5d7358148fb548d608"
     }
   }
 }
