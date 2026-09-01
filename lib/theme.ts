@@ -16,10 +16,7 @@ export interface ThemeMetadata {
 }
 
 export function getActiveThemeId(): string {
-  if (typeof process !== "undefined" && process.env.NEXT_PUBLIC_THEME) {
-    return process.env.NEXT_PUBLIC_THEME;
-  }
-  return config.theme || "06-galactic-guide";
+  return config.theme;
 }
 
 export function getThemeAssets(themeId?: string) {
@@ -35,5 +32,6 @@ export function getThemeAssets(themeId?: string) {
       evidence: "/themes/" + active + "/badges/badge-evidence.svg",
     },
     tokensCss: "/themes/" + active + "/tokens.css",
+    componentsCss: "/themes/" + active + "/portal.css",
   };
 }

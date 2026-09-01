@@ -7,10 +7,13 @@ import { ProgressProvider } from "./components/ProgressProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import { ProfilePreferencesProvider } from "./components/ProfilePreferencesProvider";
 import { CanonicalOriginEnforcer } from "./components/CanonicalOriginEnforcer";
+import { getThemeAssets } from "../lib/theme";
+import { getLayoutAssets } from "../lib/layout";
 
-const configuredTheme = config.theme || "06-galactic-guide";
-const configuredLayout = config.layout.defaultPreset || "standard";
-const configuredFaviconUrl = config.organization.faviconUrl;
+const configuredTheme = config.theme;
+const configuredLayout = config.layout.defaultPreset;
+const themeAssets = getThemeAssets(configuredTheme);
+const layoutAssets = getLayoutAssets(configuredLayout);
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://project-42.dev"),
@@ -25,11 +28,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: configuredFaviconUrl,
+        url: themeAssets.mark,
         type: "image/svg+xml",
       },
     ],
-    shortcut: configuredFaviconUrl,
+    shortcut: themeAssets.mark,
     apple: [
       {
         url: "/apple-touch-icon.png",
@@ -87,6 +90,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" data-theme={configuredTheme} data-layout={configuredLayout} suppressHydrationWarning>
       <head>
+        <link data-project42-theme-tokens rel="stylesheet" href={themeAssets.tokensCss} />
+        <link data-project42-theme-components rel="stylesheet" href={themeAssets.componentsCss} />
+        <link data-project42-layout rel="stylesheet" href={layoutAssets.stylesheet} />
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var defaultTheme="${configuredTheme}";var defaultLayout="${configuredLayout}";var l=localStorage.getItem("project42.layout.v1")||defaultLayout;localStorage.removeItem("project42.theme.v1");document.documentElement.setAttribute("data-theme",defaultTheme);document.documentElement.setAttribute("data-layout",l);}catch(e){}})();`,

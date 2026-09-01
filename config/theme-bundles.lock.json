@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "source": "https://github.com/project42dev/project42-gallery",
+  "gallery": {
+    "commit": "6e44883160d926fc5d9d4c11d2b3f5f4cac5f6c5"
+  },
+  "selectedTheme": "06-galactic-guide",
+  "themes": {
+    "01-cosmic-answer": {
+      "files": {
+        "badges/badge-agentic.svg": "c115f206841f6764c0590ba73235c4220490c3bf287752e1f2f90f4a5a68198b",
+        "badges/badge-evidence.svg": "5aabf7085b3da716b6406355f08899291807f252f154ac7c34b7fbdcf2b3a576",
+        "badges/badge-foundations.svg": "814bab1c23ad68e930a13901df69775008f3e1651c777aba1f0e0e671b59b580",
+        "badges/badge-practitioner.svg": "ec3ebb53a2d7e97e330f75dc2c610b4eb0018686de7bd51ad6e06834b053949f",
+        "hero.png": "d7552a9b14ef788a5c44bc6e826bb59ddc92d4bd12604902d610240c49ac2351",
+        "mark.svg": "a744beaf1f1ecbf9c4b495ef1832182d8c08f5ccb75f16226e5628bfc40397b2",
+        "portal.css": "c1cb7603ce195d45678754d1b66ced26ac76f858f6ce9a6f7259f5b7b41e13a7",
+        "theme.json": "23351352118b8d25026b8bf5c30c474a9cae37e66ead62a04184dd9d6c381bb5",
+        "tokens.css": "05df5fbee89ffee35ca5e57a7b1fb5271ebfebbaa0a1df6e10935f85cec30f81"
+      }
+    },
+    "02-learning-portal": {
+      "files": {
+        "badges/badge-agentic.svg": "407a685371be80e2b103e9850f68dd66a7d42672ac6170f79dcd5b39f3c0ff3d",
+        "badges/badge-evidence.svg": "9daac2ea26671af951dcc2ff992e7ccaac8d41d8bfb29ce9603e505e2871ee97",
+        "badges/badge-foundations.svg": "b6fcb1f7b11ce84150f8bf8c44073a6317248e43d8a9b2a521c40955fedbf8ed",
+        "badges/badge-practitioner.svg": "5f2e00e4974769ac3c75678543748fa3d7ac4903c236b347d4fcaa7156419e31",
+        "hero.png": "c5be86656e85f1fcafc119df503e7b13864e9591d7b85dbada2e8fcdacfcf557",
+        "mark.svg": "dc06d06f48ecc58c65f8130f293916a3a4489ff29b91612bd6de94dd91c806c3",
+        "portal.css": "c5178f99e56293bc6efdacfdb3b0be6d852bb3bcae616958e2a00380767069ef",
+        "theme.json": "017dd41ed2fc314747a84c444e3b1dc176c07dae417344b6178e15277703ebb3",
+        "tokens.css": "e5f464f7ed691c8040399bccae5bc0bc6dfee9a9cb4f4e024ca0b7840030c3af"
+      }
+    },
+    "03-model-constellation": {
+      "files": {
+        "badges/badge-agentic.svg": "c12431d0ce78d65de8023da6c79be8fe02db9dc1b5fed79df73d2bc57a2dc4b9",
+        "badges/badge-evidence.svg": "5fa9f9d5234846bc1ce20dbe1d646387be317369d155934002bfd0954004b721",
+        "badges/badge-foundations.svg": "6f5df18c99146da8ecf112791ebc43ca790840d0b7229a1929d0f327a44097c1",
+        "badges/badge-practitioner.svg": "aae96b389dc8914febb58a1f72cb4674a848e9f3e7e8da70fa9431a9343b82c5",
+        "hero.png": "cd6ed94d8aa2c8b4f9ad0c18d8153d457b4d7246a1967b2e47f4106b22a67570",
+        "mark.svg": "80d70f4f85011e3c8803d8596614330e2b6b970f6429bf3a4256df0c0a05a7f4",
+        "portal.css": "d474b07e2aa70655597c2d0bce5e33d18e25228a1f63b3193eaaa6254439f19a",
+        "theme.json": "ca65577c8fbc34d8bfbf4bcd50f9c3708828f46c1340567cbb00659c9d011769",
+        "tokens.css": "296362d416c639082b17f01107646d360d43dfb4ab5922b18766859460b24ace"
+      }
+    },
+    "04-field-signal": {
+      "files": {
+        "badges/badge-agentic.svg": "0fcd0fcdc2777bd48ff3bf38c0bc164e13e63b396914a32d1df5625477a53e9d",
+        "badges/badge-evidence.svg": "9454698f3d7b3d9081663b76871556b15dd118385ec57f9216d53508e7324d5f",
+        "badges/badge-foundations.svg": "686cc48c34c8b6b69e3a1d307776f2425a91466a63c9cf0b18d1e558ebc988c4",
+        "badges/badge-practitioner.svg": "e26e438bc4b61b097508cfb152fedd2a47b4e8cb6cb14dbeb4bd57d3a471571f",
+        "hero.png": "899db63e8475fea73b1291136d5552d7c6edb92d55d63dbb9683b1ae61987d29",
+        "mark.svg": "dc659ef308b30d97aa84e60a29a4ac68fe3c79f4073d9178a259b1238a91285e",
+        "portal.css": "074a2e39c51ead7a4998771938cb7b6408c9b77bbb74f0f50aa4a9554c00bd81",
+        "theme.json": "9d577c9da533389558e82e8cd958fe84845630030376b0ed3de212b695931c59",
+        "tokens.css": "06c1ffee18393b20e15830d3c304e62d44a27dbeac5cb5a769c03bb2d42af879"
+      }
+    },
+    "05-open-orbit": {
+      "files": {
+        "badges/badge-agentic.svg": "4d33efc2cb9a4ca71a20b49e6aabeeac417170bb18374006c2091d8fd3a89cad",
+        "badges/badge-evidence.svg": "73e8e25357784d1b09472f9cee5f333975396a1b9de1563f008a02518e5f7a1a",
+        "badges/badge-foundations.svg": "db4ce71cd45c55c3b020fc5ba57a6d1c0f81fe65acb465d6d9d32b0f2a2796d9",
+        "badges/badge-practitioner.svg": "abe10a2f4188474ae0cc28faa4e4495f34caff499f7d96ad1b81f867cbb8349e",
+        "hero.png": "2286d9dc684f2a65f91f42bfa20d3bdc5e23d0c1545f467f9663ab2c452cec1b",
+        "mark.svg": "ce95e2d77389bcf5292dcbd84b8faa24d693b1a54878bcff7d0fff3b4a9ff2c9",
+        "portal.css": "29149a911f8886b018ddf88ed5a49da1818280c3981fc39f15a06a30686203d4",
+        "theme.json": "9bbe07494283d086f9e0fc24cd502f5fd1aa413d03b25e038f7158dbe8df10c3",
+        "tokens.css": "fe11b8a77b47058ffa432ec29254fbeff92c15ed99e8a77e0238339071dda815"
+      }
+    },
+    "06-galactic-guide": {
+      "files": {
+        "badges/badge-agentic.svg": "9e261b6383e7294874d90d218b28592433a5327127ce5f7c3fb7dca134807870",
+        "badges/badge-evidence.svg": "ef390138ad46ca2b26d18a0103c939c51605238402f683e974c2bee77fc13725",
+        "badges/badge-foundations.svg": "dad85801b9ac9c680a3d1b67731663203b530d9509e7dfbdbb3801fa4e96fe18",
+        "badges/badge-practitioner.svg": "9853b02e157a52a37c4029852ff47abfdcda25ef42ac7d62906c5537d0a463eb",
+        "hero.png": "74fb0023d71db5f9ca44d2da057980847d5003bd12d53dac6476db84c5705c5f",
+        "mark.svg": "622ee8c6e8f9c8d6e0604a9e6787f82fd0552636250a4b3f0d74bfab6c86a316",
+        "portal.css": "14b5ce1a2cd302f799fe84b42fae338ea15e51fd089017f60b6ffbd0a2539b95",
+        "theme.json": "ac412c1ca2d18cefaa2d23e6378a944848ffa2600a5d55bf5b572d0ed0b130b6",
+        "tokens.css": "747fd02b7bd7165655da16c9bd8d67b68fcda57cf35ef0fc64f3b006b6405e06"
+      }
+    }
+  }
+}

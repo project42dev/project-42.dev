@@ -23,8 +23,6 @@
   "organization": {
     "name": "Project 42",
     "tagline": "Learn to ask better questions of an expanding universe.",
-    "supportUrl": "https://github.com/project42dev/project-42.dev/issues",
-    "logoUrl": "/themes/06-galactic-guide/mark.svg",
-    "faviconUrl": "/themes/06-galactic-guide/mark.svg"
+    "supportUrl": "https://github.com/project42dev/project-42.dev/issues"
   }
 }

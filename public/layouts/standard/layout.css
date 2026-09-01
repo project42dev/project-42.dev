@@ -1,0 +1,4 @@
+/* Project 42 standard layout bundle. */
+:root[data-layout="standard"] {
+  --shell: min(1180px, calc(100vw - 40px));
+}
