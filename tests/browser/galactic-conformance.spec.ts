@@ -141,6 +141,10 @@ test("discards a stale browser theme instead of blending it into Galactic", asyn
     "background-color",
     "rgb(16, 185, 129)",
   );
+  const aboutAccessibility = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(aboutAccessibility.violations).toEqual([]);
 });
 
 test("keeps the About and profile disclosures aligned and inside the viewport", async ({
