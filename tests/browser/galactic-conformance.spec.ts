@@ -58,7 +58,7 @@ const protectedRouteFamilies = [
   "/import-progress",
 ] as const;
 
-test("matches the authoritative Galactic Gallery poster and design tokens", async ({
+test("uses Galactic presentation without Gallery specimen content", async ({
   page,
   request,
 }) => {
@@ -81,29 +81,28 @@ test("matches the authoritative Galactic Gallery poster and design tokens", asyn
     "background-color",
     "rgb(245, 158, 11)",
   );
-  await expect(page.locator(".galactic-system-bar")).toHaveCSS(
-    "background-color",
-    "rgb(12, 18, 32)",
-  );
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
-    "The Answer to AI, Agents, and Everything.",
+    /Start curious\.\s*Become capable\./,
   );
-  await expect(page.locator(".galactic-badge-card")).toHaveCount(4);
+  await expect(
+    page.locator(".galactic-actions").getByRole("link", { name: "Start learning" }),
+  ).toHaveAttribute("href", "/learn");
+  await expect(
+    page.locator(
+      ".galactic-system-bar, .galactic-subbrands, .galactic-palette, .galactic-badges-bar, .galactic-badge-card",
+    ),
+  ).toHaveCount(0);
+  await expect(page.getByText("Identity idea", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("Palette", { exact: true })).toHaveCount(0);
 
-  const loadedAssets = await page
-    .locator(".galactic-brand-mark, .galactic-badge-card img")
-    .evaluateAll((images) =>
-      images.every((image) => image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0),
-    );
-  expect(loadedAssets).toBe(true);
+  const brandMarkLoaded = await page.locator(".galactic-brand-mark").evaluate((image) =>
+    image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0,
+  );
+  expect(brandMarkLoaded).toBe(true);
 
   for (const asset of [
     "hero.png",
     "mark.svg",
-    "badges/badge-foundations.svg",
-    "badges/badge-practitioner.svg",
-    "badges/badge-agentic.svg",
-    "badges/badge-evidence.svg",
   ]) {
     const response = await request.get(`/themes/06-galactic-guide/${asset}`);
     expect(response.status(), `${asset} should load`).toBe(200);
