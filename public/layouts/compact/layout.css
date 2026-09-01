@@ -1,0 +1,4 @@
+/* Project 42 compact layout bundle. */
+:root[data-layout="compact"] {
+  --shell: min(960px, calc(100vw - 48px));
+}

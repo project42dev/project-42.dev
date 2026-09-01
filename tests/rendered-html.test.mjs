@@ -32,12 +32,16 @@ test("renders the Project 42 home page", async () => {
   assert.match(html, /Free, open AI learning/);
   assert.match(html, /href="\/learn"[^>]*>Start learning</);
   assert.match(html, /\/themes\/06-galactic-guide\/mark\.svg/);
+  assert.match(html, /data-project42-theme-tokens="true"[^>]+href="\/themes\/06-galactic-guide\/tokens\.css"/);
+  assert.match(html, /data-project42-theme-components="true"[^>]+href="\/themes\/06-galactic-guide\/portal\.css"/);
+  assert.match(html, /data-project42-layout="true"[^>]+href="\/layouts\/standard\/layout\.css"/);
   assert.match(html, /Learn deeply. Find answers quickly/);
   assert.doesNotMatch(html, /The Answer to AI, Agents, and Everything/);
   assert.doesNotMatch(html, /The Galactic Guide \(Don&#x27;t Panic\)/);
   assert.doesNotMatch(html, /Identity idea|Sub-brands|Palette/);
   assert.doesNotMatch(html, /Hitchhiker Novice|Sub-Etha Scout|Swarm Architect/);
   assert.doesNotMatch(html, /galactic-system-bar|galactic-badges-bar|galactic-badge-card/);
+  assert.doesNotMatch(html, /class="[^"]*galactic-/);
   assert.doesNotMatch(html, /codex-preview|Your site is taking shape/);
   assert.ok(
     html

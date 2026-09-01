@@ -93,19 +93,19 @@ test("uses Galactic presentation without Gallery specimen content", async ({
   await page.goto("/");
 
   await expect(page.locator("html")).toHaveAttribute("data-theme", "06-galactic-guide");
-  await expect(page.locator(".galactic-poster-hero")).toHaveCSS(
+  await expect(page.locator(".portal-poster-hero")).toHaveCSS(
     "background-image",
     /\/themes\/06-galactic-guide\/hero\.png/,
   );
-  await expect(page.locator(".galactic-floating-card")).toHaveCSS(
+  await expect(page.locator(".portal-floating-card")).toHaveCSS(
     "background-color",
     "rgba(13, 20, 36, 0.94)",
   );
-  await expect(page.locator(".galactic-floating-card")).toHaveCSS(
+  await expect(page.locator(".portal-floating-card")).toHaveCSS(
     "border-top-color",
     "rgba(245, 158, 11, 0.45)",
   );
-  await expect(page.locator(".galactic-actions a").first()).toHaveCSS(
+  await expect(page.locator(".portal-actions a").first()).toHaveCSS(
     "background-color",
     "rgb(245, 158, 11)",
   );
@@ -113,7 +113,7 @@ test("uses Galactic presentation without Gallery specimen content", async ({
     /Start curious\.\s*Become capable\./,
   );
   await expect(
-    page.locator(".galactic-actions").getByRole("link", { name: "Start learning" }),
+    page.locator(".portal-actions").getByRole("link", { name: "Start learning" }),
   ).toHaveAttribute("href", "/learn");
   await expect(
     page.locator(
@@ -123,7 +123,7 @@ test("uses Galactic presentation without Gallery specimen content", async ({
   await expect(page.getByText("Identity idea", { exact: true })).toHaveCount(0);
   await expect(page.getByText("Palette", { exact: true })).toHaveCount(0);
 
-  const brandMarkLoaded = await page.locator(".galactic-brand-mark").evaluate((image) =>
+  const brandMarkLoaded = await page.locator(".portal-brand-mark").evaluate((image) =>
     image instanceof HTMLImageElement && image.complete && image.naturalWidth > 0,
   );
   expect(brandMarkLoaded).toBe(true);
@@ -289,7 +289,7 @@ test("preserves accessible focus, hover, reduced-motion, and contrast states", a
   page,
 }) => {
   await page.goto("/");
-  const primaryAction = page.locator(".galactic-actions a").first();
+  const primaryAction = page.locator(".portal-actions a").first();
 
   await primaryAction.hover();
   await expect(primaryAction).toHaveCSS("background-color", "rgb(251, 191, 36)");

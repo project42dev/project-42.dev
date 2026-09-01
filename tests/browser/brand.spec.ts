@@ -21,6 +21,18 @@ test("publishes visible accessible branding and complete icon assets", async ({
     "href",
     "/themes/06-galactic-guide/mark.svg",
   );
+  await expect(page.locator("link[data-project42-theme-tokens]")).toHaveAttribute(
+    "href",
+    "/themes/06-galactic-guide/tokens.css",
+  );
+  await expect(page.locator("link[data-project42-theme-components]")).toHaveAttribute(
+    "href",
+    "/themes/06-galactic-guide/portal.css",
+  );
+  await expect(page.locator("link[data-project42-layout]")).toHaveAttribute(
+    "href",
+    "/layouts/standard/layout.css",
+  );
 
   const iconAssets = [
     ["/brand/project-42-mark.svg", "image/svg+xml"],

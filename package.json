@@ -16,6 +16,8 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "themes:sync": "node scripts/sync-gallery-themes.mjs",
+    "themes:check": "node scripts/sync-gallery-themes.mjs --check",
     "brand:generate": "node scripts/generate-brand-assets.mjs",
     "brand:check": "node --test tests/brand-source-integrity.test.mjs && node scripts/generate-brand-assets.mjs --check",
     "diagrams:generate": "node scripts/generate-diagrams.mjs",
@@ -39,7 +41,7 @@
     "test:browser": "playwright test",
     "test:pages": "playwright test --config playwright.pages.config.ts",
     "test:pages:artifact": "node --test tests/github-pages-export.test.mjs",
-    "check": "npm run facts:check && npm run releases:check && npm run brand:check && npm run diagrams:check && npm run workflows:check && npm run governance:check && npm run release:validate && npm run lint && npm run typecheck && npm run build && npm run test:rendered && npm run test:links && npm run pages:export && npm run test:pages:artifact",
+    "check": "npm run themes:check && npm run facts:check && npm run releases:check && npm run brand:check && npm run diagrams:check && npm run workflows:check && npm run governance:check && npm run release:validate && npm run lint && npm run typecheck && npm run build && npm run test:rendered && npm run test:links && npm run pages:export && npm run test:pages:artifact",
     "audit": "npm run audit:production",
     "audit:production": "npm audit --omit=dev --audit-level=critical",
     "verify": "npm run audit && npm run check",

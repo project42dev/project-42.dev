@@ -13,18 +13,10 @@ const portalConfig = JSON.parse(
   await readFile(resolve(root, "project42.config.json"), "utf8"),
 );
 const selectedTheme = portalConfig.theme;
-const faviconUrl = portalConfig.organization?.faviconUrl;
-const expectedThemePrefix = `/themes/${selectedTheme}/`;
-if (
-  typeof faviconUrl !== "string" ||
-  !faviconUrl.startsWith(expectedThemePrefix) ||
-  !faviconUrl.endsWith(".svg") ||
-  faviconUrl.includes("..")
-) {
-  throw new Error(
-    `organization.faviconUrl must select an SVG from ${expectedThemePrefix}`,
-  );
+if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(selectedTheme)) {
+  throw new Error(`Invalid configured theme id: ${selectedTheme}`);
 }
+const faviconUrl = `/themes/${selectedTheme}/mark.svg`;
 const themeIconPath = resolve(root, "public", faviconUrl.slice(1));
 const socialPath = resolve(root, "public/brand/project-42-social.svg");
 const manifestPath = resolve(root, "public/brand/asset-manifest.json");

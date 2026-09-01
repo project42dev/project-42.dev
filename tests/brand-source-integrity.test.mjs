@@ -70,30 +70,32 @@ test("the configured theme cannot be overridden by stale browser state", () => {
 
 test("favicon provenance follows the declaratively selected theme", () => {
   const config = JSON.parse(fs.readFileSync(path.resolve("project42.config.json"), "utf8"));
-  assert.equal(
-    config.organization.faviconUrl,
-    `/themes/${config.theme}/mark.svg`,
-  );
+  assert.equal(config.organization.faviconUrl, undefined);
+  assert.equal(config.organization.logoUrl, undefined);
+  const faviconUrl = `/themes/${config.theme}/mark.svg`;
   const manifest = JSON.parse(
     fs.readFileSync(path.resolve("public/brand/asset-manifest.json"), "utf8"),
   );
   const themeMark = fs.readFileSync(
-    path.resolve("public", config.organization.faviconUrl.slice(1)),
+    path.resolve("public", faviconUrl.slice(1)),
   );
   assert.equal(manifest.sources.selectedTheme, config.theme);
-  assert.equal(manifest.sources.faviconUrl, config.organization.faviconUrl);
+  assert.equal(manifest.sources.faviconUrl, faviconUrl);
   assert.equal(manifest.sources.faviconSha256, sourceSha256(themeMark));
 });
 
-test("Galactic removes default landing ornaments and uses its bundled hero", () => {
-  const styles = fs.readFileSync(path.resolve("app/globals.css"), "utf8");
+test("Galactic bundle removes default landing ornaments and uses its hero token", () => {
+  const styles = fs.readFileSync(
+    path.resolve("public/themes/06-galactic-guide/portal.css"),
+    "utf8",
+  );
   assert.match(
     styles,
     /html\[data-theme="06-galactic-guide"\] \.path-card::after\s*\{\s*content:\s*none;/,
   );
   assert.match(
     styles,
-    /html\[data-theme="06-galactic-guide"\] \.hero-map\s*\{[^}]*url\("\/themes\/06-galactic-guide\/hero\.png"\)/s,
+    /html\[data-theme="06-galactic-guide"\] \.hero-map\s*\{[^}]*var\(--p42-hero-image\)/s,
   );
   assert.match(
     styles,
@@ -101,11 +103,37 @@ test("Galactic removes default landing ornaments and uses its bundled hero", () 
   );
 });
 
-test("the Galactic compatibility aliases use only its authoritative accents", () => {
-  const styles = fs.readFileSync(path.resolve("app/globals.css"), "utf8");
-  const galacticBlock = styles.slice(0, styles.indexOf('html[data-theme="00-classic"]'));
+test("core contains no named customer theme or layout implementation", () => {
+  const core = [
+    fs.readFileSync(path.resolve("app/globals.css"), "utf8"),
+    fs.readFileSync(path.resolve("app/layout.tsx"), "utf8"),
+    fs.readFileSync(path.resolve("app/page.tsx"), "utf8"),
+    fs.readFileSync(path.resolve("lib/theme.ts"), "utf8"),
+  ].join("\n");
+  assert.doesNotMatch(core, /(?:01-cosmic-answer|02-learning-portal|03-model-constellation|04-field-signal|05-open-orbit|06-galactic-guide)/);
+  assert.doesNotMatch(core, /galactic-/);
+  assert.doesNotMatch(core, /html\[data-layout="(?:standard|wide|compact)"\]/);
+  assert.match(core, /data-project42-theme-tokens/);
+  assert.match(core, /data-project42-theme-components/);
+  assert.match(core, /data-project42-layout/);
+});
 
-  assert.match(galacticBlock, /--cyan:\s*#10b981;/);
-  assert.match(galacticBlock, /--violet:\s*#f59e0b;/);
-  assert.doesNotMatch(galacticBlock, /#(?:38bdf8|63d7e4|39d8ff|754cff)\b/i);
+test("every configured theme can be selected without changing core source", () => {
+  const config = JSON.parse(fs.readFileSync(path.resolve("project42.config.json"), "utf8"));
+  const coreBefore = sourceSha256([
+    fs.readFileSync(path.resolve("app/globals.css"), "utf8"),
+    fs.readFileSync(path.resolve("app/layout.tsx"), "utf8"),
+    fs.readFileSync(path.resolve("app/page.tsx"), "utf8"),
+  ].join("\n"));
+  for (const themeId of config.availableThemes) {
+    for (const relative of ["theme.json", "tokens.css", "portal.css", "mark.svg", "hero.png"]) {
+      assert.equal(fs.existsSync(path.resolve("public/themes", themeId, relative)), true);
+    }
+  }
+  const coreAfter = sourceSha256([
+    fs.readFileSync(path.resolve("app/globals.css"), "utf8"),
+    fs.readFileSync(path.resolve("app/layout.tsx"), "utf8"),
+    fs.readFileSync(path.resolve("app/page.tsx"), "utf8"),
+  ].join("\n"));
+  assert.equal(coreAfter, coreBefore);
 });

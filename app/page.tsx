@@ -2,8 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { starterCatalog } from "@project42/platform";
 import { diagramCatalog } from "./lib/diagrams";
+import { getThemeAssets } from "../lib/theme";
 
 export default function Home() {
+  const themeAssets = getThemeAssets();
   const beginnerPath = starterCatalog.paths.find((path) => path.id === "ai-foundations");
   const practitionerPath = starterCatalog.paths.find(
     (path) => path.id === "providers-in-practice",
@@ -11,32 +13,32 @@ export default function Home() {
 
   return (
     <main>
-      <section className="galactic-showcase shell" aria-labelledby="galactic-headline">
-        <div className="galactic-poster-card">
-          <div className="galactic-poster-hero">
-            <div className="galactic-floating-card">
-              <div className="galactic-brand-row">
+      <section className="portal-showcase shell" aria-labelledby="portal-headline">
+        <div className="portal-poster-card">
+          <div className="portal-poster-hero">
+            <div className="portal-floating-card">
+              <div className="portal-brand-row">
                 <Image
                   alt="Project 42"
-                  className="galactic-brand-mark"
+                  className="portal-brand-mark"
                   height={42}
                   priority
-                  src="/themes/06-galactic-guide/mark.svg"
+                  src={themeAssets.mark}
                   width={42}
                 />
                 <span>Project 42</span>
               </div>
-              <p className="galactic-eyebrow">Free, open AI learning</p>
-              <h1 id="galactic-headline">
+              <p className="portal-eyebrow">Free, open AI learning</p>
+              <h1 id="portal-headline">
                 Start curious.
                 <span>Become capable.</span>
               </h1>
-              <p className="galactic-lede">
+              <p className="portal-lede">
                 Project 42 makes artificial intelligence understandable from your first
                 question to your first reliable agent. Learn at your pace, check what you
                 know, and keep a record of your progress.
               </p>
-              <div className="galactic-actions">
+              <div className="portal-actions">
                 <Link href="/learn">Start learning</Link>
                 <Link href="/guide">Browse the field guide</Link>
                 <Link href="/diagrams">See visual guides</Link>

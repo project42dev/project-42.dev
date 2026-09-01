@@ -1,0 +1,4 @@
+/* Project 42 wide layout bundle. */
+:root[data-layout="wide"] {
+  --shell: min(1560px, calc(100vw - 32px));
+}
