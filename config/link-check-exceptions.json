@@ -57,14 +57,15 @@
       "expires": "2026-09-30"
     },
     {
-      "targetPattern": "https://huggingface.co/docs/hub/en/model-release-checklist*",
+      "targetPattern": "https://huggingface.co/docs/*",
       "expectedStatuses": [
         200,
+        429,
         500
       ],
-      "reason": "Hugging Face documentation server transient 500.",
+      "reason": "Hugging Face documentation rate limits concurrent CI link checks and can return a transient server error.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
+      "verifiedOn": "2026-09-01",
       "expires": "2026-09-30"
     }
   ]
