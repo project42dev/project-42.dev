@@ -53,6 +53,34 @@ test("routes Learn to the landing page and keeps the path catalog distinct", asy
   );
 });
 
+test("uses only Galactic artwork and compact shell treatments on Learn", async ({
+  page,
+}) => {
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/learn");
+
+    const hero = page.locator(".hero-map");
+    await expect(hero).toHaveCSS(
+      "background-image",
+      /\/themes\/06-galactic-guide\/hero\.png/,
+    );
+    await expect(hero.locator(":scope > *").first()).toHaveCSS("opacity", "0");
+
+    const decorations = await page.locator(".path-card").evaluateAll((cards) =>
+      cards.map((card) => getComputedStyle(card, "::after").content),
+    );
+    expect(decorations).toEqual(decorations.map(() => "none"));
+
+    const footerLink = page.locator(".footer-grid > div:nth-child(2) a").first();
+    await expect(footerLink).toHaveCSS("min-height", "0px");
+    expect(await footerLink.evaluate((link) => link.getBoundingClientRect().height)).toBeLessThan(32);
+  }
+});
+
 const protectedRouteFamilies = [
   "/profile",
   "/import-progress",

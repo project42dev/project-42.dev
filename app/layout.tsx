@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import config from "../project42.config.json";
 import "./globals.css";
 import { SiteFooter } from "./components/SiteFooter";
 import { SiteHeader } from "./components/SiteHeader";
@@ -6,6 +7,10 @@ import { ProgressProvider } from "./components/ProgressProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import { ProfilePreferencesProvider } from "./components/ProfilePreferencesProvider";
 import { CanonicalOriginEnforcer } from "./components/CanonicalOriginEnforcer";
+
+const configuredTheme = config.theme || "06-galactic-guide";
+const configuredLayout = config.layout.defaultPreset || "standard";
+const configuredFaviconUrl = config.organization.faviconUrl;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://project-42.dev"),
@@ -20,21 +25,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/brand/project-42-app-icon.svg",
+        url: configuredFaviconUrl,
         type: "image/svg+xml",
       },
-      {
-        url: "/favicon-32x32.png",
-        sizes: "32x32",
-        type: "image/png",
-      },
-      {
-        url: "/favicon-16x16.png",
-        sizes: "16x16",
-        type: "image/png",
-      },
     ],
-    shortcut: "/favicon.ico",
+    shortcut: configuredFaviconUrl,
     apple: [
       {
         url: "/apple-touch-icon.png",
@@ -83,16 +78,12 @@ export const metadata: Metadata = {
   },
 };
 
-import config from "../project42.config.json";
-
 export const viewport: Viewport = {
   colorScheme: "dark light",
   themeColor: "#090d16",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  const configuredTheme = config?.theme || "06-galactic-guide";
-  const configuredLayout = config?.layout?.defaultPreset || "standard";
   return (
     <html lang="en" data-theme={configuredTheme} data-layout={configuredLayout} suppressHydrationWarning>
       <head>

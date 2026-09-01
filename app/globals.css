@@ -8664,11 +8664,24 @@ html[data-theme="06-galactic-guide"] .text-link {
 }
 
 html[data-theme="06-galactic-guide"] .path-card::after {
-  background: #10b981;
+  content: none;
 }
 
-html[data-theme="06-galactic-guide"] .path-card:nth-child(2)::after {
-  background: #f59e0b;
+/* The Learn shell predates declarative themes. Replace its default orbit art
+   with the selected Galactic bundle artwork without changing page content. */
+html[data-theme="06-galactic-guide"] .hero-map {
+  aspect-ratio: 16 / 9;
+  background: url("/themes/06-galactic-guide/hero.png") center / cover no-repeat;
+  border: 1px solid rgba(245, 158, 11, 0.45);
+  border-radius: 18px;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.38);
+  max-width: 640px;
+}
+
+html[data-theme="06-galactic-guide"] .hero-map::before,
+html[data-theme="06-galactic-guide"] .hero-map > * {
+  opacity: 0;
+  pointer-events: none;
 }
 
 html[data-theme="06-galactic-guide"] .card-index,
@@ -8898,6 +8911,16 @@ html[data-theme="06-galactic-guide"] .diagram-viewer-controls output {
 html[data-theme="06-galactic-guide"] .site-footer {
   background: #080c14 !important;
   border-top-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+html[data-theme="06-galactic-guide"] .footer-grid > div:not(:first-child) {
+  gap: 0.2rem;
+}
+
+html[data-theme="06-galactic-guide"] .footer-grid a {
+  line-height: 1.35;
+  min-height: 0;
+  padding-block: 0.2rem;
 }
 
 @media (max-width: 840px) {

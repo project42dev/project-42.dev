@@ -542,10 +542,9 @@ test("publishes accessible document landmarks and discovery metadata", async () 
   assert.match(html, /class="brand-mark"/);
   assert.match(html, /class="brand-mark-four"/);
   assert.match(html, /class="brand-mark-two"/);
-  assert.match(html, /href="\/brand\/project-42-app-icon\.svg"/);
-  assert.match(html, /href="\/favicon-32x32\.png"/);
-  assert.match(html, /href="\/favicon-16x16\.png"/);
-  assert.match(html, /href="\/favicon\.ico"/);
+  assert.match(html, /rel="icon" href="\/themes\/06-galactic-guide\/mark\.svg"/);
+  assert.match(html, /rel="shortcut icon" href="\/themes\/06-galactic-guide\/mark\.svg"/);
+  assert.doesNotMatch(html, /rel="icon" href="\/brand\//);
   assert.match(html, /href="\/apple-touch-icon\.png"/);
   assert.match(html, /href="\/manifest\.webmanifest"/);
   assert.match(html, /name="theme-color" content="#090d16"/);
