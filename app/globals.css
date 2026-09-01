@@ -8749,6 +8749,24 @@ html[data-theme="06-galactic-guide"] .cta > p:not(.eyebrow) {
   color: #090d16 !important;
 }
 
+html[data-theme="06-galactic-guide"] .open-source-banner,
+html[data-theme="06-galactic-guide"] .open-source-banner h2,
+html[data-theme="06-galactic-guide"] .open-source-banner .eyebrow,
+html[data-theme="06-galactic-guide"] .open-source-banner > div > p {
+  color: var(--p42-primary-fg) !important;
+}
+
+html[data-theme="06-galactic-guide"] .open-source-banner .button-secondary {
+  border-color: var(--p42-primary-fg);
+  color: var(--p42-primary-fg);
+}
+
+html[data-theme="06-galactic-guide"] .open-source-banner .button-secondary:hover {
+  background: var(--p42-primary-fg);
+  border-color: var(--p42-primary-fg);
+  color: var(--p42-text-title);
+}
+
 /* Components inherited from the multi-theme portal used literal light-theme
    status and activity surfaces. Keep their semantics, but render every public
    interaction state inside the authoritative Galactic palette. */
