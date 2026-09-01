@@ -8,7 +8,7 @@ export default function manifest(): MetadataRoute.Manifest {
       "Free, open, provider-neutral AI learning paths and practical assessments.",
     start_url: "/",
     display: "standalone",
-    background_color: "#f6f3eb",
+    background_color: "#090d16",
     theme_color: "#090d16",
     icons: [
       {

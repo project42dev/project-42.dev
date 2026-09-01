@@ -14,6 +14,9 @@ test("publishes visible accessible branding and complete icon assets", async ({
     "true",
   );
   await expect(page.locator("svg.brand-mark")).toHaveCount(2);
+  await expect(
+    page.locator('link[rel="icon"][type="image/svg+xml"]'),
+  ).toHaveAttribute("href", "/brand/project-42-app-icon.svg");
 
   const iconAssets = [
     ["/brand/project-42-mark.svg", "image/svg+xml"],
@@ -45,7 +48,16 @@ test("publishes visible accessible branding and complete icon assets", async ({
   expect(manifestResponse.status()).toBe(200);
   const manifest = await manifestResponse.json();
   expect(manifest.short_name).toBe("Project 42");
+  expect(manifest.theme_color).toBe("#090d16");
+  expect(manifest.background_color).toBe("#090d16");
   expect(manifest.icons).toHaveLength(3);
+
+  const appIconResponse = await request.get("/brand/project-42-app-icon.svg");
+  const appIcon = await appIconResponse.text();
+  expect(appIcon).toContain("#090d16");
+  expect(appIcon).toContain("#f59e0b");
+  expect(appIcon).toContain("#fef3c7");
+  expect(appIcon).not.toMatch(/#(?:c9f25f|63d7e4)/i);
 
   const accessibility = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])

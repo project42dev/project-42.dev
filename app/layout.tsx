@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       {
-        url: "/brand/project-42-mark.svg",
+        url: "/brand/project-42-app-icon.svg",
         type: "image/svg+xml",
       },
       {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
       {
         rel: "mask-icon",
         url: "/brand/project-42-mark-mono.svg",
-        color: "#0b1225",
+        color: "#f59e0b",
       },
     ],
   },
@@ -98,7 +98,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var defaultTheme="${configuredTheme}";var defaultLayout="${configuredLayout}";var t=localStorage.getItem("project42.theme.v1")||defaultTheme;var l=localStorage.getItem("project42.layout.v1")||defaultLayout;document.documentElement.setAttribute("data-theme",t);document.documentElement.setAttribute("data-layout",l);}catch(e){}})();`,
+            __html: `(function(){try{var defaultTheme="${configuredTheme}";var defaultLayout="${configuredLayout}";var l=localStorage.getItem("project42.layout.v1")||defaultLayout;localStorage.removeItem("project42.theme.v1");document.documentElement.setAttribute("data-theme",defaultTheme);document.documentElement.setAttribute("data-layout",l);}catch(e){}})();`,
           }}
         />
       </head>

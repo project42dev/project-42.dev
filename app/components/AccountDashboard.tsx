@@ -3549,7 +3549,7 @@ export function OwnerAdministration({
               <h4 style={{ margin: "0 0 12px 0", fontSize: "16px" }}>
                 Registration and tenant policy
               </h4>
-              <p style={{ color: "#cbd5e1", margin: 0 }}>
+              <p className="account-muted-copy">
                 Identity, registration, and session policy are enforced by the
                 account API and deployment configuration. This page intentionally
                 exposes no client-side controls that could imply a security change.

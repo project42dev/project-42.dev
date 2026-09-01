@@ -36,9 +36,17 @@ async function installSignedOutApi(page: Page) {
 test("keeps the shared sign-in option in the profile menu", async ({ page }) => {
   await installSignedOutApi(page);
   await page.goto("/");
-  await page.getByRole("button", { name: "Your account" }).click();
+  const profileTrigger = page.getByRole("button", { name: "Account and profile" });
+  const initialUrl = page.url();
+  await profileTrigger.click();
 
+  await expect(page).toHaveURL(initialUrl);
+  await expect(profileTrigger).toHaveAttribute("aria-expanded", "true");
   await expect(page.getByText("Sign in", { exact: true })).toBeVisible();
+  await expect(page.getByRole("link", { name: "My progress" })).toHaveAttribute(
+    "href",
+    "/profile",
+  );
 });
 
 test("renders the account state selected by public account-API configuration", async ({

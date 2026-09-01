@@ -116,6 +116,85 @@ test("uses Galactic presentation without Gallery specimen content", async ({
   expect(computedTokens).toEqual(galacticTokens);
 });
 
+test("discards a stale browser theme instead of blending it into Galactic", async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    window.localStorage.setItem("project42.theme.v1", "01-cosmic-answer");
+  });
+  await page.goto("/");
+
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme",
+    "06-galactic-guide",
+  );
+  await expect(page.locator("body")).toHaveCSS(
+    "background-color",
+    "rgb(9, 13, 22)",
+  );
+  expect(
+    await page.evaluate(() => window.localStorage.getItem("project42.theme.v1")),
+  ).toBeNull();
+
+  await page.goto("/about");
+  await expect(page.locator(".open-source-banner")).toHaveCSS(
+    "background-color",
+    "rgb(16, 185, 129)",
+  );
+});
+
+test("keeps the About and profile disclosures aligned and inside the viewport", async ({
+  page,
+}) => {
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 390, height: 844 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.goto("/");
+
+    const about = page.getByRole("button", { name: "About" });
+    await about.click();
+    const aboutPanel = page.locator(".header-menu-panel").filter({
+      has: page.getByRole("link", { name: "About Project 42" }),
+    });
+    await expect(aboutPanel).toBeVisible();
+    const geometry = await aboutPanel.evaluate((panel) => {
+      const bounds = panel.getBoundingClientRect();
+      const links = [...panel.querySelectorAll("a")];
+      return {
+        left: bounds.left,
+        right: bounds.right,
+        linkAlignment: links.map((link) => getComputedStyle(link).justifyContent),
+      };
+    });
+    expect(geometry.left).toBeGreaterThanOrEqual(0);
+    expect(geometry.right).toBeLessThanOrEqual(viewport.width);
+    expect(geometry.linkAlignment).not.toContain("center");
+    expect(new Set(geometry.linkAlignment)).toEqual(new Set(["flex-start"]));
+
+    await page.keyboard.press("Escape");
+    await expect(about).toBeFocused();
+    await expect(aboutPanel).toBeHidden();
+
+    const profile = page.getByRole("button", { name: "Account and profile" });
+    const initialUrl = page.url();
+    await profile.click();
+    await expect(page).toHaveURL(initialUrl);
+    await expect(profile).toHaveAttribute("aria-expanded", "true");
+    const profilePanel = page.locator(".header-menu-panel").filter({
+      has: page.getByRole("link", { name: "My progress" }),
+    });
+    await expect(profilePanel).toBeVisible();
+    const profileBounds = await profilePanel.boundingBox();
+    expect(profileBounds).not.toBeNull();
+    expect(profileBounds!.x).toBeGreaterThanOrEqual(0);
+    expect(profileBounds!.x + profileBounds!.width).toBeLessThanOrEqual(
+      viewport.width,
+    );
+  }
+});
+
 test("keeps every public route family inside the Galactic presentation boundary", async ({
   page,
 }) => {

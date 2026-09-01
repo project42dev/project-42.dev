@@ -98,11 +98,11 @@ export function ProfilePreferencesProvider({
       setReady(true);
     }, 0);
 
-    // Apply active design theme and layout preset
+    // Theme selection is deployment-owned by project42.config.json. A stale
+    // browser value must never override the configured public presentation.
+    // Layout density remains a browser preference.
     if (typeof window !== "undefined") {
-      const activeTheme = localStorage.getItem("project42.theme.v1") || "06-galactic-guide";
       const activeLayout = localStorage.getItem("project42.layout.v1") || "standard";
-      document.documentElement.setAttribute("data-theme", activeTheme);
       document.documentElement.setAttribute("data-layout", activeLayout);
     }
 
