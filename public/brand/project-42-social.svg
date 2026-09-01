@@ -1,53 +1,24 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img">
   <title>Project 42 — Start curious. Become capable.</title>
-  <rect width="1200" height="630" fill="#f6f3eb" />
-  <circle cx="1060" cy="86" r="260" fill="#63d7e4" opacity=".2" />
-  <circle cx="1130" cy="610" r="300" fill="#c9f25f" opacity=".22" />
-  <g transform="translate(92 82) scale(2.35)">
-    <rect width="64" height="64" rx="13" fill="#0b1225" />
-    <path
-      fill="#c9f25f"
-      fill-rule="evenodd"
-      d="M7 36 23 9h10v26h6v10h-6v10H22V45H7v-9Zm15-1V25l-6 10h6Z"
-    />
-    <path
-      fill="#63d7e4"
-      d="M36 21c0-8 5-13 14-13 8 0 14 5 14 13 0 6-3 10-9 14l-7 5h16v10H35V39l13-10c4-3 5-5 5-8 0-3-1-5-4-5s-4 2-4 6h-9Z"
-    />
+  <rect width="1200" height="630" fill="#090d16" />
+  <circle cx="1080" cy="78" r="290" fill="#f59e0b" opacity=".09" />
+  <circle cx="1135" cy="620" r="330" fill="#10b981" opacity=".1" />
+  <g fill="#fef3c7" opacity=".7">
+    <circle cx="710" cy="95" r="3" />
+    <circle cx="880" cy="170" r="2" />
+    <circle cx="1040" cy="320" r="4" />
+    <circle cx="760" cy="470" r="2.5" />
+    <circle cx="1120" cy="520" r="2" />
   </g>
-  <text
-    x="284"
-    y="175"
-    fill="#0b1225"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="72"
-    font-weight="780"
-    letter-spacing="-3"
-  >Project 42</text>
-  <text
-    x="92"
-    y="350"
-    fill="#0b1225"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="78"
-    font-weight="820"
-    letter-spacing="-3.5"
-  >Start curious.</text>
-  <text
-    x="92"
-    y="438"
-    fill="#0b1225"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="78"
-    font-weight="820"
-    letter-spacing="-3.5"
-  >Become capable.</text>
-  <text
-    x="96"
-    y="535"
-    fill="#455066"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="31"
-    font-weight="620"
-  >Free, open, provider-neutral AI learning and field guides.</text>
+  <g transform="translate(92 72) scale(2.35)">
+    <rect width="64" height="64" rx="14" fill="#090d16" />
+    <rect x="9" y="9" width="46" height="46" rx="10" fill="#0d1829" stroke="#f59e0b" stroke-width="2.5" />
+    <circle cx="50" cy="14" r="2.2" fill="#10b981" />
+    <circle cx="14" cy="50" r="2.2" fill="#10b981" />
+    <text x="31.5" y="40" text-anchor="middle" fill="#fef3c7" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="900" letter-spacing="-2">42</text>
+  </g>
+  <text x="284" y="167" fill="#fef3c7" font-family="Arial, Helvetica, sans-serif" font-size="72" font-weight="800" letter-spacing="-3">Project 42</text>
+  <text x="92" y="350" fill="#fef3c7" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="850" letter-spacing="-3.5">Start curious.</text>
+  <text x="92" y="438" fill="#f59e0b" font-family="Arial, Helvetica, sans-serif" font-size="78" font-weight="850" letter-spacing="-3.5">Become capable.</text>
+  <text x="96" y="535" fill="#e2e8f0" font-family="Arial, Helvetica, sans-serif" font-size="31" font-weight="620">Free, open, provider-neutral AI learning and field guides.</text>
 </svg>

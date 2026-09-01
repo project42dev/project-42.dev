@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import test from "node:test";
 import {
   canonicalizeSvgSource,
@@ -30,4 +32,47 @@ test("canonical SVG bytes and hashes are identical for LF and CRLF checkouts", (
 test("canonical SVG hashing still detects substantive source changes", () => {
   const changedSource = lfSource.replace("#c9f25f", "#ffffff");
   assert.notEqual(sourceSha256(changedSource), sourceSha256(lfSource));
+});
+
+test("public React surfaces do not embed legacy theme colors", () => {
+  const appRoot = path.resolve("app");
+  const legacyColors = /#(?:f6f3eb|fffdf7|0b1225|455066|c9f25f|63d7e4|38bdf8|080d2a|39d8ff|754cff)\b/i;
+  const violations = [];
+
+  function visit(directory) {
+    for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {
+      const absolutePath = path.join(directory, entry.name);
+      const relativePath = path.relative(appRoot, absolutePath);
+      if (entry.isDirectory()) {
+        if (relativePath === "admin") continue;
+        visit(absolutePath);
+      } else if (entry.name.endsWith(".tsx")) {
+        if (legacyColors.test(fs.readFileSync(absolutePath, "utf8"))) {
+          violations.push(relativePath);
+        }
+      }
+    }
+  }
+
+  visit(appRoot);
+  assert.deepEqual(violations, []);
+});
+
+test("the configured theme cannot be overridden by stale browser state", () => {
+  const publicSources = [
+    fs.readFileSync(path.resolve("app/layout.tsx"), "utf8"),
+    fs.readFileSync(path.resolve("app/components/ProfilePreferencesProvider.tsx"), "utf8"),
+  ].join("\n");
+
+  assert.doesNotMatch(publicSources, /getItem\(["']project42\.theme\.v1["']\)/);
+  assert.match(publicSources, /removeItem\(["']project42\.theme\.v1["']\)/);
+});
+
+test("the Galactic compatibility aliases use only its authoritative accents", () => {
+  const styles = fs.readFileSync(path.resolve("app/globals.css"), "utf8");
+  const galacticBlock = styles.slice(0, styles.indexOf('html[data-theme="00-classic"]'));
+
+  assert.match(galacticBlock, /--cyan:\s*#10b981;/);
+  assert.match(galacticBlock, /--violet:\s*#f59e0b;/);
+  assert.doesNotMatch(galacticBlock, /#(?:38bdf8|63d7e4|39d8ff|754cff)\b/i);
 });

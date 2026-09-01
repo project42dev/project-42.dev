@@ -542,7 +542,7 @@ test("publishes accessible document landmarks and discovery metadata", async () 
   assert.match(html, /class="brand-mark"/);
   assert.match(html, /class="brand-mark-four"/);
   assert.match(html, /class="brand-mark-two"/);
-  assert.match(html, /href="\/brand\/project-42-mark\.svg"/);
+  assert.match(html, /href="\/brand\/project-42-app-icon\.svg"/);
   assert.match(html, /href="\/favicon-32x32\.png"/);
   assert.match(html, /href="\/favicon-16x16\.png"/);
   assert.match(html, /href="\/favicon\.ico"/);
@@ -555,6 +555,7 @@ test("publishes accessible document landmarks and discovery metadata", async () 
   const webManifest = await manifest.json();
   assert.equal(webManifest.short_name, "Project 42");
   assert.equal(webManifest.theme_color, "#090d16");
+  assert.equal(webManifest.background_color, "#090d16");
   assert.deepEqual(
     webManifest.icons.map(({ src, sizes, purpose }) => ({
       src,

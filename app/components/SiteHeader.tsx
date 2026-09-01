@@ -29,6 +29,7 @@ export function SiteHeader() {
           <Link href="/guide">Field Guide</Link>
           <Link href="/guide/diagrams">Visual guides</Link>
           <HeaderMenu
+            align="end"
             label={
               <>
                 About

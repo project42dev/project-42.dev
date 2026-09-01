@@ -160,11 +160,11 @@ export default function OnDemandPage() {
           if (areaEntries.length === 0) return null;
 
           return (
-            <section className="focus-area-group" key={area.id} aria-labelledby={`focus-area-ondemand-${area.id}`} style={{ marginBottom: "3.5rem" }}>
-              <div className="focus-area-header" style={{ marginBottom: "1.5rem", borderBottom: "1px solid rgba(255,255,255,0.1)", paddingBottom: "1rem" }}>
-                <p className="eyebrow" style={{ color: "#38bdf8", marginBottom: "0.25rem" }}>Focus Area {String(area.number).padStart(2, "0")}</p>
-                <h2 id={`focus-area-ondemand-${area.id}`} style={{ fontSize: "1.75rem", margin: "0 0 0.5rem 0" }}>{area.title}</h2>
-                <p style={{ color: "#94a3b8", margin: 0, maxWidth: "800px" }}>{area.summary}</p>
+            <section className="focus-area-group" key={area.id} aria-labelledby={`focus-area-ondemand-${area.id}`}>
+              <div className="focus-area-header">
+                <p className="eyebrow">Focus Area {String(area.number).padStart(2, "0")}</p>
+                <h2 id={`focus-area-ondemand-${area.id}`}>{area.title}</h2>
+                <p>{area.summary}</p>
               </div>
 
               <div className="learning-path-list">
