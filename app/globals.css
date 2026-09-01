@@ -8351,8 +8351,7 @@ html[data-theme="06-galactic-guide"] .brand-mark-two {
   flex: 0 0 auto;
 }
 
-.galactic-eyebrow,
-.galactic-system-title {
+.galactic-eyebrow {
   color: #f59e0b;
   font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.72rem;
@@ -8373,6 +8372,11 @@ html[data-theme="06-galactic-guide"] .brand-mark-two {
   letter-spacing: -0.04em;
   line-height: 1.05;
   margin: 0 0 16px;
+}
+
+.galactic-floating-card h1 span {
+  color: #f59e0b;
+  display: block;
 }
 
 .galactic-lede {
@@ -8407,106 +8411,6 @@ html[data-theme="06-galactic-guide"] .brand-mark-two {
 .galactic-actions a:hover {
   background: #fbbf24;
   transform: translateY(-2px);
-}
-
-.galactic-system-bar {
-  align-items: center;
-  background: #0c1220;
-  border-top: 1px solid rgba(245, 158, 11, 0.25);
-  display: grid;
-  gap: 24px;
-  grid-template-columns: 1.4fr 1.1fr 0.9fr;
-  padding: 24px 40px 28px;
-}
-
-.galactic-system-bar p {
-  color: #e2e8f0;
-  font-size: 0.82rem;
-  line-height: 1.55;
-  margin: 0;
-}
-
-.galactic-system-bar .galactic-system-title,
-.galactic-badges-bar .galactic-system-title {
-  color: #f59e0b;
-  margin-bottom: 8px;
-}
-
-.galactic-subbrands,
-.galactic-palette {
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.galactic-subbrands span {
-  background: #17243c;
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: 8px;
-  color: #fef3c7;
-  font-size: 0.78rem;
-  font-weight: 700;
-  padding: 6px 12px;
-}
-
-.galactic-swatch {
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-  display: block;
-  height: 28px;
-  width: 28px;
-}
-
-.galactic-swatch-bg { background: #090d16; }
-.galactic-swatch-amber { background: #f59e0b; }
-.galactic-swatch-emerald { background: #10b981; }
-.galactic-swatch-cream { background: #fef3c7; }
-
-.galactic-badges-bar {
-  background: rgba(0, 0, 0, 0.2);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 22px 40px 28px;
-}
-
-.galactic-badge-grid {
-  display: grid;
-  gap: 16px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin-top: 12px;
-}
-
-.galactic-badge-card {
-  align-items: center;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px 12px;
-  text-align: center;
-}
-
-.galactic-badge-card img {
-  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
-}
-
-.galactic-badge-card strong {
-  color: #fef3c7;
-  font-size: 0.82rem;
-}
-
-.galactic-badge-level {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 4px;
-  color: #fef3c7;
-  font-family: "JetBrains Mono", ui-monospace, monospace;
-  font-size: 0.64rem;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-  padding: 2px 6px;
-  text-transform: uppercase;
 }
 
 html[data-theme="06-galactic-guide"] .progress-strip,
@@ -8642,13 +8546,6 @@ html[data-theme="06-galactic-guide"] .site-footer {
     max-width: 540px;
   }
 
-  .galactic-system-bar {
-    grid-template-columns: 1fr;
-  }
-
-  .galactic-badge-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 
 @media (max-width: 560px) {
@@ -8674,14 +8571,6 @@ html[data-theme="06-galactic-guide"] .site-footer {
     font-size: clamp(2.25rem, 12vw, 3rem);
   }
 
-  .galactic-system-bar,
-  .galactic-badges-bar {
-    padding: 22px;
-  }
-
-  .galactic-badge-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
