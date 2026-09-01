@@ -145,6 +145,16 @@ test("discards a stale browser theme instead of blending it into Galactic", asyn
     .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
     .analyze();
   expect(aboutAccessibility.violations).toEqual([]);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto("/platform");
+  await expect(
+    page.locator('pre[aria-label="Self-hosting quickstart commands"]'),
+  ).toHaveAttribute("tabindex", "0");
+  const platformAccessibility = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])
+    .analyze();
+  expect(platformAccessibility.violations).toEqual([]);
 });
 
 test("keeps the About and profile disclosures aligned and inside the viewport", async ({

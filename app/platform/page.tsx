@@ -100,7 +100,7 @@ export default function OpenSourcePlatformPage() {
           Run Project 42 locally or deploy it to private infrastructure using the
           official platform package <code>@project42/platform</code>:
         </p>
-        <pre>
+        <pre aria-label="Self-hosting quickstart commands" tabIndex={0}>
           <code>{`# 1. Clone the Open-Source Platform
 git clone https://github.com/project42dev/project42-platform.git
 cd project42-platform
