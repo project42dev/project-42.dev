@@ -39,7 +39,12 @@ async function filesUnder(directory, prefix = "") {
 }
 
 async function hashFile(file) {
-  return createHash("sha256").update(await readFile(file)).digest("hex");
+  const bytes = await readFile(file);
+  const extension = path.extname(file).toLowerCase();
+  const content = [".css", ".json", ".svg"].includes(extension)
+    ? bytes.toString("utf8").replace(/^\uFEFF/, "").replaceAll("\r\n", "\n")
+    : bytes;
+  return createHash("sha256").update(content).digest("hex");
 }
 
 async function inventoryTheme(id, directory) {

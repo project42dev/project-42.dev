@@ -13,10 +13,10 @@
         "badges/badge-foundations.svg": "814bab1c23ad68e930a13901df69775008f3e1651c777aba1f0e0e671b59b580",
         "badges/badge-practitioner.svg": "ec3ebb53a2d7e97e330f75dc2c610b4eb0018686de7bd51ad6e06834b053949f",
         "hero.png": "d7552a9b14ef788a5c44bc6e826bb59ddc92d4bd12604902d610240c49ac2351",
-        "mark.svg": "a744beaf1f1ecbf9c4b495ef1832182d8c08f5ccb75f16226e5628bfc40397b2",
-        "portal.css": "c1cb7603ce195d45678754d1b66ced26ac76f858f6ce9a6f7259f5b7b41e13a7",
-        "theme.json": "23351352118b8d25026b8bf5c30c474a9cae37e66ead62a04184dd9d6c381bb5",
-        "tokens.css": "05df5fbee89ffee35ca5e57a7b1fb5271ebfebbaa0a1df6e10935f85cec30f81"
+        "mark.svg": "47fe9e709434ae68ca8a534f26e951c43c51527da017f2ba4ddce141259f3247",
+        "portal.css": "efd7c26a065f9992ddb7baa03ec6d95826b91d74df8ddaca94fc5e1dd2a6fa23",
+        "theme.json": "4d1e5124485685255ebb18d97216d3f66eb2377687d4a71d5105c7730b050795",
+        "tokens.css": "f4b7b4c28e5aa46f6bf2cc04463085196744ce4d2709770a7de184ab89903f22"
       }
     },
     "02-learning-portal": {
@@ -26,10 +26,10 @@
         "badges/badge-foundations.svg": "b6fcb1f7b11ce84150f8bf8c44073a6317248e43d8a9b2a521c40955fedbf8ed",
         "badges/badge-practitioner.svg": "5f2e00e4974769ac3c75678543748fa3d7ac4903c236b347d4fcaa7156419e31",
         "hero.png": "c5be86656e85f1fcafc119df503e7b13864e9591d7b85dbada2e8fcdacfcf557",
-        "mark.svg": "dc06d06f48ecc58c65f8130f293916a3a4489ff29b91612bd6de94dd91c806c3",
-        "portal.css": "c5178f99e56293bc6efdacfdb3b0be6d852bb3bcae616958e2a00380767069ef",
-        "theme.json": "017dd41ed2fc314747a84c444e3b1dc176c07dae417344b6178e15277703ebb3",
-        "tokens.css": "e5f464f7ed691c8040399bccae5bc0bc6dfee9a9cb4f4e024ca0b7840030c3af"
+        "mark.svg": "d7b30a2dfd3c3b98a7270f0e7ce9843939108a9725c05170820dd73e0eb2e577",
+        "portal.css": "f45aa805e60089ea42f60f8b62de08d331d5b5bc3106ee61110f8629009b7e14",
+        "theme.json": "208611818a6305b51aca55e696b2c4cb1139e2a9007d6c004ee9446b4441eb22",
+        "tokens.css": "d43b740cc7b534d1770da58d1cb414939467e367d6d5e7da87fbbe40f0c14c50"
       }
     },
     "03-model-constellation": {
@@ -39,10 +39,10 @@
         "badges/badge-foundations.svg": "6f5df18c99146da8ecf112791ebc43ca790840d0b7229a1929d0f327a44097c1",
         "badges/badge-practitioner.svg": "aae96b389dc8914febb58a1f72cb4674a848e9f3e7e8da70fa9431a9343b82c5",
         "hero.png": "cd6ed94d8aa2c8b4f9ad0c18d8153d457b4d7246a1967b2e47f4106b22a67570",
-        "mark.svg": "80d70f4f85011e3c8803d8596614330e2b6b970f6429bf3a4256df0c0a05a7f4",
-        "portal.css": "d474b07e2aa70655597c2d0bce5e33d18e25228a1f63b3193eaaa6254439f19a",
-        "theme.json": "ca65577c8fbc34d8bfbf4bcd50f9c3708828f46c1340567cbb00659c9d011769",
-        "tokens.css": "296362d416c639082b17f01107646d360d43dfb4ab5922b18766859460b24ace"
+        "mark.svg": "53338cc13799dddc5c7628d26bff6e671053ecb12feacd5a0385024ebe9f4e66",
+        "portal.css": "64ef65fd6b07da75eb4f3be096b17eee86ed2f212f553e812b8bb671ecb5e5cf",
+        "theme.json": "20bf9f3c07d28798211230aae152b24aa3efb293de877f5cd8ed7195f7dbb9c4",
+        "tokens.css": "752567a4a739da6e75b9c4f208f618c7ff08cb45a74b9691aa6e357d4493d431"
       }
     },
     "04-field-signal": {
@@ -52,10 +52,10 @@
         "badges/badge-foundations.svg": "686cc48c34c8b6b69e3a1d307776f2425a91466a63c9cf0b18d1e558ebc988c4",
         "badges/badge-practitioner.svg": "e26e438bc4b61b097508cfb152fedd2a47b4e8cb6cb14dbeb4bd57d3a471571f",
         "hero.png": "899db63e8475fea73b1291136d5552d7c6edb92d55d63dbb9683b1ae61987d29",
-        "mark.svg": "dc659ef308b30d97aa84e60a29a4ac68fe3c79f4073d9178a259b1238a91285e",
-        "portal.css": "074a2e39c51ead7a4998771938cb7b6408c9b77bbb74f0f50aa4a9554c00bd81",
-        "theme.json": "9d577c9da533389558e82e8cd958fe84845630030376b0ed3de212b695931c59",
-        "tokens.css": "06c1ffee18393b20e15830d3c304e62d44a27dbeac5cb5a769c03bb2d42af879"
+        "mark.svg": "decbd4b10e068cc0fc56c84ce5c5e3576a51685263ba2866b2cdb20c421aed7a",
+        "portal.css": "cbfc0816aea357ebea70a8239cff2c3b9fcbbdefaaeb0fe8b849bf1eea86d34b",
+        "theme.json": "d13f2323287741ea637b359a384812e412272d38f7b068fe9bbc5d9ffd27436f",
+        "tokens.css": "90a2bdd04186867bfdec5cff6b73e958cc7ba494700f6ce2ff73b659a53798a3"
       }
     },
     "05-open-orbit": {
@@ -65,10 +65,10 @@
         "badges/badge-foundations.svg": "db4ce71cd45c55c3b020fc5ba57a6d1c0f81fe65acb465d6d9d32b0f2a2796d9",
         "badges/badge-practitioner.svg": "abe10a2f4188474ae0cc28faa4e4495f34caff499f7d96ad1b81f867cbb8349e",
         "hero.png": "2286d9dc684f2a65f91f42bfa20d3bdc5e23d0c1545f467f9663ab2c452cec1b",
-        "mark.svg": "ce95e2d77389bcf5292dcbd84b8faa24d693b1a54878bcff7d0fff3b4a9ff2c9",
-        "portal.css": "29149a911f8886b018ddf88ed5a49da1818280c3981fc39f15a06a30686203d4",
-        "theme.json": "9bbe07494283d086f9e0fc24cd502f5fd1aa413d03b25e038f7158dbe8df10c3",
-        "tokens.css": "fe11b8a77b47058ffa432ec29254fbeff92c15ed99e8a77e0238339071dda815"
+        "mark.svg": "658ee8cb1a09a064384f7bd5016f64aef8d36f1bec8310d3b2ee875fe192a919",
+        "portal.css": "40037d9c4122c757f4dd12c8467e8b30823d083d811400c593e15d7ea97d1fb4",
+        "theme.json": "cd70b2813846d86fc490313cecba78f7fd0dfa769f91ace4c891cee99764f384",
+        "tokens.css": "4a3753b12fef639b96386cc6bf9cff686f9754bed1580319f1a1c438b7408964"
       }
     },
     "06-galactic-guide": {
@@ -79,9 +79,9 @@
         "badges/badge-practitioner.svg": "9853b02e157a52a37c4029852ff47abfdcda25ef42ac7d62906c5537d0a463eb",
         "hero.png": "74fb0023d71db5f9ca44d2da057980847d5003bd12d53dac6476db84c5705c5f",
         "mark.svg": "622ee8c6e8f9c8d6e0604a9e6787f82fd0552636250a4b3f0d74bfab6c86a316",
-        "portal.css": "14b5ce1a2cd302f799fe84b42fae338ea15e51fd089017f60b6ffbd0a2539b95",
-        "theme.json": "ac412c1ca2d18cefaa2d23e6378a944848ffa2600a5d55bf5b572d0ed0b130b6",
-        "tokens.css": "747fd02b7bd7165655da16c9bd8d67b68fcda57cf35ef0fc64f3b006b6405e06"
+        "portal.css": "2d8d3edb34e3c57c1904d450bf9b5205159a7c2128e4a79d1f80ea87e9b85966",
+        "theme.json": "ba22fcb9166fd268f771257eeda0f064368d48c6cdb6e4be559afa400ec48bce",
+        "tokens.css": "dec5295f13cda1107f4da09be5d22de3641065b317fe4ba2703c6a8e1c620dcd"
       }
     }
   }
