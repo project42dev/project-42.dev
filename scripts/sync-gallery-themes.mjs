@@ -81,11 +81,11 @@ async function inventoryLayout(id, directory) {
 
 const layoutsRoot = path.join(root, "public", "layouts");
 const sourceLayouts = path.join(sourceRoot, "layouts");
-const layoutIds = (await readdir(sourceLayouts, { withFileTypes: true }))
-  .filter((entry) => entry.isDirectory())
-  .map((entry) => entry.name)
-  .sort();
 
+// The Gallery checkout only exists when installing. Check mode verifies the
+// INSTALLED bundles against the lock and must never read the source -- CI does
+// not check the Gallery out at all, so touching it here fails the build with
+// ENOENT rather than reporting anything useful about the lock.
 if (checkOnly) {
   const lock = JSON.parse(await readFile(lockPath, "utf8"));
   if (lock.selectedTheme !== config.theme) throw new Error("Selected theme differs from theme lock");
@@ -139,6 +139,11 @@ for (const id of themeIds) {
   await cp(source, target, { recursive: true, errorOnExist: true });
   lock.themes[id] = { files: await inventoryTheme(id, target) };
 }
+
+const layoutIds = (await readdir(sourceLayouts, { withFileTypes: true }))
+  .filter((entry) => entry.isDirectory())
+  .map((entry) => entry.name)
+  .sort();
 
 await mkdir(layoutsRoot, { recursive: true });
 for (const id of layoutIds) {
