@@ -394,7 +394,7 @@ async function fetchExternal(
           accept: "text/html,application/xhtml+xml,application/json;q=0.9,*/*;q=0.1",
           range: "bytes=0-2047",
           "user-agent":
-            "Project42-Learn-LinkChecker/0.1 (+https://github.com/project42dev/learn.project-42.dev)",
+            "Project42-LinkChecker/0.1 (+https://github.com/project42dev/project-42.dev)",
         },
       });
       try {

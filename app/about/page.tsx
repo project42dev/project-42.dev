@@ -118,9 +118,9 @@ export default function AboutPage() {
           </div>
           {/*
             No "Practical resources" tile. Learn's count is legitimately 0
-            because the references moved to guide.project-42.dev, but rendering
+            because the references live under /guide, but rendering
             that reads as "Project 42 has no practical resources", which is
-            false: there are 83 of them one subdomain over. The fact stays in
+            false: there are 83 of them on this same site. The fact stays in
             release-facts.json; it just is not a stat this site should display.
           */}
           <div>

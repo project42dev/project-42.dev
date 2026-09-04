@@ -63,7 +63,7 @@ function outputPathForRoute(route) {
 // This is deliberately an export-time transform rather than runtime
 // headers().get("host") branching inside the pages: a previous attempt at the
 // runtime version broke CI, because Playwright drives a live `vinext start`
-// server whose per-request Host is not learn.project-42.dev, so any
+// server whose per-request Host is not the canonical origin, so any
 // host-conditional redirect either fired for the tests or would have had to
 // special-case them. Only the published artifact needs to redirect, and only
 // the default full-site export produces it.
