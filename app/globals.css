@@ -228,7 +228,7 @@ a {
 }
 
 .site-header {
-  background: rgba(246, 243, 235, 0.92);
+  background: var(--p42-surface);
   border-bottom: 1px solid rgba(17, 24, 39, 0.12);
   overflow-x: clip;
   position: sticky;
@@ -2212,7 +2212,7 @@ a {
 }
 
 .copy-code-control button:hover {
-  background: rgb(255 255 255 / 10%);
+  background: var(--p42-interactive-muted);
 }
 
 .copy-code-status {
@@ -2396,7 +2396,7 @@ a {
 }
 
 .answer-choice:has(input:checked) {
-  background: rgba(99, 215, 228, 0.12);
+  background: var(--p42-info-bg);
   border-color: var(--cyan);
 }
 
@@ -2419,27 +2419,27 @@ a {
 }
 
 .answer-correct {
-  background: rgba(201, 242, 95, 0.13);
+  background: var(--p42-success-bg);
   border-color: var(--lime);
 }
 
 .answer-wrong {
-  background: rgba(255, 140, 90, 0.13);
+  background: var(--p42-danger-bg);
   border-color: var(--orange);
 }
 
 .answer-explanation {
-  background: rgba(255, 140, 90, 0.12);
+  background: var(--p42-danger-bg);
   border-radius: 8px;
-  color: #f2c9b8;
+  color: var(--p42-danger-fg);
   font-size: 0.78rem;
   line-height: 1.55;
   padding: 0.8rem;
 }
 
 .answer-explanation.is-correct {
-  background: rgba(201, 242, 95, 0.1);
-  color: #dff5a6;
+  background: var(--p42-success-bg);
+  color: var(--p42-success-fg);
 }
 
 .check-result {
@@ -2638,8 +2638,8 @@ a {
 }
 
 .freshness-stale {
-  background: #ffe2df;
-  color: #902d2d;
+  background: var(--p42-danger-bg);
+  color: var(--p42-danger-fg);
 }
 
 .resource-foot {
@@ -3109,8 +3109,8 @@ a {
 }
 
 .prerequisite-note {
-  background: #f4f8e8;
-  border: 1px solid #bfca92;
+  background: var(--p42-success-bg);
+  border: 1px solid var(--p42-success-border);
   border-radius: var(--radius-small);
   margin-bottom: 2rem;
   padding: 1.25rem 1.4rem;
@@ -3302,7 +3302,7 @@ a {
   banners on this page are consistent: surface background, hairline border,
   light text, and a soft accent-tinted highlight that keeps the accent as an
   accent. The eyebrow and body colours had to change with it -- they were
-  dark-on-light (--navy, #25565d) and assumed the old light accent fill.
+  dark-on-light (--navy, var(--p42-text-body)) and assumed the old light accent fill.
 */
 .open-source-banner {
   align-items: center;
@@ -3337,7 +3337,7 @@ a {
   background:
     radial-gradient(circle at 92% 8%, rgb(99 215 228 / 18%), transparent 32%),
     var(--navy);
-  border: 1px solid rgb(255 255 255 / 14%);
+  border: 1px solid var(--p42-border-soft);
   border-radius: var(--radius);
   color: var(--p42-text-title);
   display: grid;
@@ -3357,15 +3357,15 @@ a {
 }
 
 .future-platform-banner > div > p:last-child {
-  color: #c8d2e6;
+  color: var(--p42-text-body);
   line-height: 1.65;
   max-width: 800px;
 }
 
 .future-platform-banner aside {
   align-self: end;
-  background: rgb(255 255 255 / 8%);
-  border: 1px solid rgb(255 255 255 / 16%);
+  background: var(--p42-interactive-muted);
+  border: 1px solid var(--p42-border-soft);
   border-radius: calc(var(--radius) - 8px);
   padding: clamp(1.4rem, 3vw, 2rem);
 }
@@ -3378,7 +3378,7 @@ a {
 }
 
 .future-platform-banner aside p {
-  color: #dfe7f5;
+  color: var(--p42-text-body);
   line-height: 1.6;
   margin-bottom: 0;
 }
@@ -3649,7 +3649,7 @@ a {
 }
 
 .site-footer {
-  background: #080c14;
+  background: var(--p42-surface);
   border-top: 1px solid var(--p42-border-soft);
   color: var(--p42-text-body);
   padding: 4rem 0 1.5rem;
@@ -5407,9 +5407,9 @@ a {
 
 .migration-disposition.will-add,
 .migration-disposition.will-merge {
-  background: #e7f8ef;
-  border-color: #7ab894;
-  color: #145a32;
+  background: var(--p42-success-bg);
+  border-color: var(--p42-success-border);
+  color: var(--p42-success-fg);
 }
 
 .migration-disposition.already-in-account {
@@ -5617,7 +5617,7 @@ a {
 }
 
 .open-source-banner>div>p:last-child {
-  color: #25565d;
+  color: var(--p42-text-body);
   line-height: 1.6;
   max-width: 700px;
 }
@@ -5911,7 +5911,7 @@ a {
 }
 
 .account-state {
-  background: #ecebe5;
+  background: var(--p42-surface-elevated);
   border: 1px solid var(--line);
   border-radius: 999px;
   display: inline-flex;
@@ -5923,24 +5923,24 @@ a {
 }
 
 .account-state-approved {
-  background: #e3f7cf;
-  border-color: #b5d98d;
+  background: var(--p42-success-bg);
+  border-color: var(--p42-success-border);
 }
 
 .account-state-pending {
-  background: #fff1c2;
-  border-color: #e5ca6e;
+  background: var(--p42-warning-bg);
+  border-color: var(--p42-warning-border);
 }
 
 .account-state-rejected {
-  background: #f4e8dc;
-  border-color: #d6b08b;
+  background: var(--p42-warning-bg);
+  border-color: var(--p42-warning-border);
 }
 
 .account-state-suspended,
 .account-state-revoked {
-  background: #ffe0dc;
-  border-color: #e3a59b;
+  background: var(--p42-danger-bg);
+  border-color: var(--p42-danger-border);
 }
 
 .admin-portal-root .account-state {
@@ -7044,7 +7044,7 @@ html[data-project42-reduced-motion="true"] *::after {
 
 .lesson-preview-video {
   aspect-ratio: 16 / 9;
-  background: #11181f;
+  background: var(--p42-surface-code);
   border-radius: 8px;
   display: block;
   width: 100%;
@@ -7591,7 +7591,7 @@ html[data-project42-reduced-motion="true"] *::after {
 }
 
 .diagram-fullscreen-close:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--p42-overlay-fg);
   outline-offset: 2px;
 }
 
