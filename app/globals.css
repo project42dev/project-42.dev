@@ -4794,11 +4794,63 @@ a {
 
 /* Integrated Learn and Field Guide additions; original portal rules above remain authoritative. */
 
+/*
+  Admin is never themed. It is a plain, functional, legible interface and must
+  look identical no matter which Gallery bundle the public portal selected. A
+  support call is not the moment to find the console unreadable because
+  someone picked a light theme.
+
+  The whole --p42-* vocabulary is redeclared here, not just the legacy aliases
+  further down. Core CSS reads the --p42-* tokens directly, so overriding only
+  the aliases would let the selected theme's palette leak straight into the
+  console. The theme stylesheets are still linked on these routes; this block
+  is what makes them inert.
+*/
 html:has(.admin-portal-root),
 body:has(.admin-portal-root),
 .admin-portal-root,
 html[data-theme="admin-control"],
 [data-theme="admin-control"] {
+  --p42-bg: #0b1220;
+  --p42-surface: #0f172a;
+  --p42-surface-card: #172033;
+  --p42-surface-elevated: #1e293b;
+  --p42-surface-code: #020617;
+  --p42-card-border: #334155;
+  --p42-border-soft: #334155;
+  --p42-primary: #38bdf8;
+  --p42-primary-fg: #0b1220;
+  --p42-primary-hover: #7dd3fc;
+  --p42-accent: #38bdf8;
+  --p42-accent-fg: #0b1220;
+  --p42-text-title: #f8fafc;
+  --p42-text-body: #e2e8f0;
+  --p42-text-muted: #94a3b8;
+  --p42-eyebrow: #38bdf8;
+  --p42-secondary-btn-bg: transparent;
+  --p42-secondary-btn-fg: #e2e8f0;
+  --p42-secondary-btn-border: #334155;
+  --p42-interactive-muted: rgba(56, 189, 248, 0.12);
+  --p42-hero-image: none;
+  --p42-success-bg: #0f2a1a;
+  --p42-success-border: #2f6b45;
+  --p42-success-fg: #86efac;
+  --p42-warning-bg: #2c2008;
+  --p42-warning-border: #7c5a17;
+  --p42-warning-fg: #fcd34d;
+  --p42-danger-bg: #2d1315;
+  --p42-danger-border: #7f2c31;
+  --p42-danger-fg: #fca5a5;
+  --p42-info-bg: #0d2a2e;
+  --p42-info-border: #2f6a72;
+  --p42-info-fg: #7dd3dc;
+  --p42-overlay-scrim: rgba(6, 10, 22, 0.96);
+  --p42-overlay-fg: #ffffff;
+  --p42-overlay-surface: rgba(255, 255, 255, 0.1);
+  --p42-overlay-border: rgba(255, 255, 255, 0.2);
+  --p42-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --p42-shadow-raised: 0 12px 30px rgba(0, 0, 0, 0.55);
+  --p42-font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
   --ink: #f8fafc;
   --ink-soft: #94a3b8;
   --navy: #090d16;
