@@ -522,7 +522,7 @@ a {
   align-items: center;
   background: var(--navy);
   border-radius: 999px;
-  color: white;
+  color: var(--p42-text-title);
   display: inline-flex;
   font-size: 0.82rem;
   font-weight: 800;
@@ -609,7 +609,7 @@ a {
 .button-primary {
   background: var(--navy);
   box-shadow: 0 8px 24px rgba(11, 18, 37, 0.2);
-  color: white;
+  color: var(--p42-text-title);
 }
 
 .button-primary:hover {
@@ -654,7 +654,7 @@ a {
   background: var(--navy);
   border-radius: 50%;
   box-shadow: var(--shadow);
-  color: white;
+  color: var(--p42-text-title);
   max-width: 510px;
   position: relative;
   width: 100%;
@@ -871,7 +871,7 @@ a {
 
 .pillar-learn {
   background: var(--navy);
-  color: white;
+  color: var(--p42-text-title);
 }
 
 .pillar-reference {
@@ -1006,7 +1006,7 @@ a {
   align-items: start;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 4rem;
   grid-template-columns: 0.75fr 1.25fr;
@@ -1052,7 +1052,7 @@ a {
   align-items: center;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 2rem;
   grid-template-columns: 1fr 1fr auto;
@@ -1324,7 +1324,7 @@ a {
   align-items: center;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: flex;
   flex-direction: column;
   min-height: 260px;
@@ -1676,7 +1676,7 @@ a {
 
 .comparison-table thead th {
   background: var(--navy);
-  color: white;
+  color: var(--p42-text-title);
   font-size: 0.68rem;
   letter-spacing: 0.045em;
   text-transform: uppercase;
@@ -2319,7 +2319,7 @@ a {
 .knowledge-check {
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   margin-top: 2rem;
   padding: clamp(2rem, 5vw, 4rem);
 }
@@ -2854,7 +2854,7 @@ a {
 .profile-stats div {
   background: var(--navy);
   border-radius: var(--radius-small);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 0.4rem;
   padding: 2rem;
@@ -3168,7 +3168,7 @@ a {
 .release-facts {
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   margin-bottom: 1rem;
   padding: clamp(2rem, 5vw, 4rem);
 }
@@ -3181,7 +3181,7 @@ a {
 }
 
 .release-facts-heading h2 {
-  color: white;
+  color: var(--p42-text-title);
   font-size: clamp(2.2rem, 5vw, 4rem);
   margin-top: 0.45rem;
 }
@@ -3244,7 +3244,7 @@ a {
 }
 
 .provider-fact-section h3 {
-  color: white;
+  color: var(--p42-text-title);
   font-size: 1.6rem;
   margin-top: 0.4rem;
 }
@@ -3286,7 +3286,7 @@ a {
 }
 
 .release-fact-links a {
-  color: white;
+  color: var(--p42-text-title);
   font-size: 0.78rem;
   font-weight: 720;
 }
@@ -3339,7 +3339,7 @@ a {
     var(--navy);
   border: 1px solid rgb(255 255 255 / 14%);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: clamp(2rem, 5vw, 5rem);
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
@@ -3395,7 +3395,7 @@ a {
   align-items: start;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 3rem;
   grid-template-columns: 1.2fr 0.8fr;
@@ -3405,7 +3405,7 @@ a {
 
 .policy-status h2,
 .policy-machine-readable h2 {
-  color: white;
+  color: var(--p42-text-title);
   font-size: clamp(2rem, 4vw, 3.4rem);
   letter-spacing: -0.045em;
   line-height: 1;
@@ -3625,7 +3625,7 @@ a {
   align-items: center;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 3rem;
   grid-template-columns: 1fr auto;
@@ -4170,7 +4170,7 @@ a {
   align-items: start;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 3rem;
   grid-template-columns: 1.2fr 0.8fr;
@@ -4179,7 +4179,7 @@ a {
 }
 
 .legal-review-notice h2 {
-  color: white;
+  color: var(--p42-text-title);
   font-size: clamp(2rem, 4vw, 3.4rem);
   letter-spacing: -0.045em;
   line-height: 1;
@@ -4517,7 +4517,7 @@ a {
 .diagram-source-card {
   background: var(--navy);
   border-radius: var(--radius-small);
-  color: white;
+  color: var(--p42-text-title);
   display: grid;
   gap: 0.55rem;
   padding: 1.4rem;
@@ -4968,7 +4968,7 @@ a {
 
 .pillar-selfpaced {
   background: var(--navy);
-  color: white;
+  color: var(--p42-text-title);
 }
 
 .pillar-ondemand {
@@ -5032,7 +5032,7 @@ a {
   align-items: center;
   background: var(--navy);
   border-radius: var(--radius);
-  color: white;
+  color: var(--p42-text-title);
   display: flex;
   flex-direction: column;
   min-height: 260px;
@@ -5624,7 +5624,7 @@ a {
 
 .policy-status h2,
 .policy-machine-readable h2 {
-  color: white;
+  color: var(--p42-text-title);
   font-size: clamp(2rem, 4vw, 3.4rem);
   letter-spacing: -0.045em;
   line-height: 1;
@@ -6788,7 +6788,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-viewer-trigger-label {
   background: var(--navy);
   border-radius: 999px;
-  color: white;
+  color: var(--p42-text-title);
   font-size: 0.72rem;
   font-weight: 800;
   padding: 0.55rem 0.8rem;
@@ -7191,7 +7191,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .step-badge {
   background: var(--violet);
   border-radius: var(--radius-small);
-  color: #fff;
+  color: var(--p42-primary-fg);
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.25rem 0.75rem;
@@ -7241,7 +7241,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-autoplay-btn.active {
   background: var(--violet);
   border-color: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 .diagram-autoplay-btn:focus-visible {
@@ -7404,7 +7404,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-step-list-item.active {
   background: var(--violet);
   border-color: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 .diagram-step-list-number {
@@ -7518,12 +7518,12 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-btn-icon.autoplay-active {
   background: var(--violet);
   border-color: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 .diagram-btn-icon.autoplay-active:hover:not(:disabled) {
   background: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
   opacity: 0.85;
 }
 
@@ -7637,7 +7637,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-fullscreen-overlay .diagram-btn-icon.autoplay-active {
   background: var(--violet);
   border-color: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 .diagram-fullscreen-overlay .step-dot {
@@ -7673,7 +7673,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .diagram-fullscreen-overlay .diagram-autoplay-btn.active {
   background: var(--violet-400);
   border-color: var(--violet-400);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 @media (max-width: 768px){
@@ -7878,7 +7878,7 @@ html[data-project42-reduced-motion="true"] *::after {
 .orchard-step-badge {
   background: var(--violet);
   border-radius: var(--radius-small);
-  color: #fff;
+  color: var(--p42-primary-fg);
   font-size: 0.8125rem;
   font-weight: 600;
   padding: 0.25rem 0.75rem;
@@ -8170,7 +8170,7 @@ button.orchard-node:hover {
 .orchard-step-list-item.active {
   background: var(--violet);
   border-color: var(--violet);
-  color: #fff;
+  color: var(--p42-primary-fg);
 }
 
 .orchard-step-list-number {
