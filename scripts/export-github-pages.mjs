@@ -2,7 +2,9 @@ import { access, cp, mkdir, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
+import { execFileSync } from "node:child_process";
 import { buildRouteInventory } from "./link-integrity.mjs";
+import { serviceWorkerSource } from "./service-worker.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const clientRoot = path.join(projectRoot, "dist", "client");
@@ -42,6 +44,19 @@ const endpointFiles = new Map([
   ["/robots.txt", "robots.txt"],
   ["/sitemap.xml", "sitemap.xml"],
 ]);
+
+function exportVersion() {
+  try {
+    return execFileSync("git", ["rev-parse", "--short=12", "HEAD"], {
+      cwd: projectRoot,
+      encoding: "utf8",
+    }).trim();
+  } catch {
+    // No git in the environment: fall back to the package version so the
+    // worker still gets a stable, non-empty cache namespace.
+    return process.env.npm_package_version ?? "0";
+  }
+}
 
 async function exists(filePath) {
   try {
@@ -99,9 +114,49 @@ document.addEventListener("click",function(event){
   window.location.assign(url.href);
 },true);
 </script>`;
-  return html
-    .replaceAll('href="/learner-data/policy"', 'href="/learner-data/policy.json"')
-    .replace("</head>", `${navigation}</head>`);
+  return applyInstallableMetadata(
+    html
+      .replaceAll('href="/learner-data/policy"', 'href="/learner-data/policy.json"')
+      .replace("</head>", `${navigation}</head>`),
+  );
+}
+
+// Two tags the installed app needs that Next 16 does not produce.
+//
+// 1. viewport-fit=cover. `viewport.viewportFit` is a documented Viewport key
+//    and Next maps it to "viewport-fit" in its constants, but this pipeline
+//    emits the viewport meta without it. Without the attribute the page is
+//    letterboxed inside the display cutout on a notched device and the
+//    env(safe-area-inset-*) padding in globals.css all resolves to 0.
+//
+// 2. apple-mobile-web-app-capable. Next now emits only the standard
+//    "mobile-web-app-capable", which iOS Safari does not read. iOS has no
+//    install prompt and ignores the manifest for standalone mode, so without
+//    the apple-prefixed tag Add to Home Screen on an iPhone or iPad produces a
+//    bookmark that opens in Safari chrome rather than a standalone app.
+//
+// This is an export-time transform for the same reason the retired Admin
+// routes are: only the published artifact needs it, and the alternative --
+// hand-writing a second <meta name="viewport"> in the layout -- would leave
+// two viewport tags on the page and let the framework's win.
+function applyInstallableMetadata(html) {
+  let output = html.replace(
+    /(<meta name="viewport" content=")([^"]*)(")/,
+    (match, open, content, close) =>
+      content.includes("viewport-fit")
+        ? match
+        : `${open}${content}, viewport-fit=cover${close}`,
+  );
+
+  if (!output.includes('name="apple-mobile-web-app-capable"')) {
+    output = output.replace(
+      '<meta name="mobile-web-app-capable" content="yes"/>',
+      '<meta name="mobile-web-app-capable" content="yes"/>' +
+        '<meta name="apple-mobile-web-app-capable" content="yes"/>',
+    );
+  }
+
+  return output;
 }
 
 async function writeRoute(route, content) {
@@ -209,6 +264,17 @@ async function main() {
         `</body></html>\n`,
     );
   }
+  // The service worker is stamped with the commit being published, so every
+  // artifact owns its own cache namespace and activation deletes the previous
+  // one. A filtered export (admin/account subdomains) gets no worker: those are
+  // operational consoles, not installable apps, and must not cache.
+  if (!isFilteredExport) {
+    await writeFile(
+      path.join(outputRoot, "sw.js"),
+      serviceWorkerSource(exportVersion()),
+    );
+  }
+
   await writeFile(path.join(outputRoot, ".nojekyll"), "");
   await writeFile(path.join(outputRoot, "CNAME"), `${canonicalDomain}\n`);
   await writeFile(

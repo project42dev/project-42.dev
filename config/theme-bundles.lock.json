@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "source": "https://github.com/project42dev/project42-gallery",
   "gallery": {
-    "commit": "540738dfcfecb22c920e5a5818a4d98648f55c57"
+    "commit": "af83f835accdf1fb140b1ab5f51de7fba7d982bc"
   },
   "selectedTheme": "06-galactic-guide",
   "selectedLayout": "standard",
@@ -17,7 +17,7 @@
         "mark.svg": "47fe9e709434ae68ca8a534f26e951c43c51527da017f2ba4ddce141259f3247",
         "portal.css": "efd7c26a065f9992ddb7baa03ec6d95826b91d74df8ddaca94fc5e1dd2a6fa23",
         "theme.json": "d80adb472074e107a2803f8e53d3a431dd22f06050a80a4604d1bfdc9e86f806",
-        "tokens.css": "d41afdc18222b0f95fc716606845395f0c33338776762ec1cbfc0253941e9f1a"
+        "tokens.css": "5f0fc7e93f2a3d252a0c53d33a8c40b646ae5995f195b916f3183c1023100396"
       }
     },
     "02-learning-portal": {
@@ -30,7 +30,7 @@
         "mark.svg": "d7b30a2dfd3c3b98a7270f0e7ce9843939108a9725c05170820dd73e0eb2e577",
         "portal.css": "f45aa805e60089ea42f60f8b62de08d331d5b5bc3106ee61110f8629009b7e14",
         "theme.json": "884e31bd6bf0dd271a36040bd3f18072599c019848a5242ace542e15539d6b1b",
-        "tokens.css": "cfb3245d5f35e4afd580073b7521953623e4d445b005237be7a51e32f8135661"
+        "tokens.css": "c9fa4f5dd16afc098b22deda7e854cd375f6042b5ffe873e8f9a34f07d5cb27d"
       }
     },
     "03-model-constellation": {
@@ -43,7 +43,7 @@
         "mark.svg": "53338cc13799dddc5c7628d26bff6e671053ecb12feacd5a0385024ebe9f4e66",
         "portal.css": "64ef65fd6b07da75eb4f3be096b17eee86ed2f212f553e812b8bb671ecb5e5cf",
         "theme.json": "a3c94c57b850e0575f4da054e65ec6b5f8d402d4110e86b1834ecddd910e5af3",
-        "tokens.css": "c767b2cd57be26a856caf16b90362f5d7b0b41a11588d0d9226c404005e1077b"
+        "tokens.css": "72f440de2cc21bbbd28eda3071c5ed4057d16b0c05c84476df1ea7d955cb0086"
       }
     },
     "04-field-signal": {
@@ -56,7 +56,7 @@
         "mark.svg": "decbd4b10e068cc0fc56c84ce5c5e3576a51685263ba2866b2cdb20c421aed7a",
         "portal.css": "cbfc0816aea357ebea70a8239cff2c3b9fcbbdefaaeb0fe8b849bf1eea86d34b",
         "theme.json": "1a9c9b09ddef648f60cf6259b55ef5434576e621b9395097d8161712f102fce9",
-        "tokens.css": "7716370613387d1558238c57d95e91e5d6ca371677b2d244ae1ba6543d61ffa8"
+        "tokens.css": "0f090e15fd80a90f713f0ff47954eca0e73e0931c56086210484e3f850b93216"
       }
     },
     "05-open-orbit": {
@@ -69,7 +69,7 @@
         "mark.svg": "658ee8cb1a09a064384f7bd5016f64aef8d36f1bec8310d3b2ee875fe192a919",
         "portal.css": "40037d9c4122c757f4dd12c8467e8b30823d083d811400c593e15d7ea97d1fb4",
         "theme.json": "693b00fcf8047ec0f53cae125d2aea6edf2a9591454f824b2aaa42639a76371c",
-        "tokens.css": "d0a645af1676eef702e906f0cdee899ffffe758d4251af5248961cc0a22ffdb3"
+        "tokens.css": "a1b4276ea832e2c31f9ca69a9f287cb170dc376ad3bbcf069b8ed6a8611d3116"
       }
     },
     "06-galactic-guide": {
@@ -82,7 +82,7 @@
         "mark.svg": "622ee8c6e8f9c8d6e0604a9e6787f82fd0552636250a4b3f0d74bfab6c86a316",
         "portal.css": "2d8d3edb34e3c57c1904d450bf9b5205159a7c2128e4a79d1f80ea87e9b85966",
         "theme.json": "77dee44123526ae698f21670379c9e2999e90460dff321e5186fb3c67cd65df4",
-        "tokens.css": "169f5336a9dc22225daabe0991946bf6c039e6694c41b197828ef372544ddc4f"
+        "tokens.css": "b8832a085d533839ec4d317e7c42b58e55f76b717380bb3d9d89eed5c6eb1cf8"
       }
     }
   },

@@ -76,6 +76,10 @@ export function buildRouteInventory(
     "/learn/paths",
     "/learner-data",
     "/legal-transparency",
+    // Served by the service worker when a navigation fails offline. It is
+    // never linked from the site, so it has to be listed here or the export
+    // would not produce it and the worker would cache nothing to fall back to.
+    "/offline",
     "/ondemand",
     "/platform",
     "/profile",

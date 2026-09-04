@@ -7,13 +7,16 @@ import { ProgressProvider } from "./components/ProgressProvider";
 import { AuthProvider } from "./components/AuthProvider";
 import { ProfilePreferencesProvider } from "./components/ProfilePreferencesProvider";
 import { CanonicalOriginEnforcer } from "./components/CanonicalOriginEnforcer";
+import { ServiceWorkerRegistration } from "./components/ServiceWorkerRegistration";
 import { getThemeAssets } from "../lib/theme";
 import { getLayoutAssets } from "../lib/layout";
+import { getThemeBrandColors } from "../lib/themeBrand";
 
 const configuredTheme = config.theme;
 const configuredLayout = config.layout.defaultPreset;
 const themeAssets = getThemeAssets(configuredTheme);
 const layoutAssets = getLayoutAssets(configuredLayout);
+const brand = getThemeBrandColors(configuredTheme);
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://project-42.dev"),
@@ -25,6 +28,17 @@ export const metadata: Metadata = {
     "Free, open, provider-neutral AI learning paths, knowledge checks, and practical activities.",
   applicationName: "Project 42",
   manifest: "/manifest.webmanifest",
+  // iOS has no install prompt and ignores the manifest when deciding how an
+  // added-to-home-screen page behaves. These meta tags are the only thing that
+  // makes the installed result a standalone app there rather than a bookmark.
+  appleWebApp: {
+    capable: true,
+    title: config.organization.name,
+    // Lets the page paint behind the status bar. Only safe because every edge
+    // that matters is padded with env(safe-area-inset-*) in globals.css.
+    statusBarStyle: "black-translucent",
+  },
+  formatDetection: { telephone: false },
   icons: {
     icon: [
       {
@@ -44,7 +58,7 @@ export const metadata: Metadata = {
       {
         rel: "mask-icon",
         url: "/brand/project-42-mark-mono.svg",
-        color: "#f59e0b",
+        color: brand.mask,
       },
     ],
   },
@@ -82,8 +96,16 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   colorScheme: "dark light",
-  themeColor: "#090d16",
+  // Browser and OS chrome tint comes from the configured theme bundle, so an
+  // installed app never keeps the previous theme's splash screen and status
+  // bar after the config field changes.
+  themeColor: brand.theme,
+  // Paint into the display cutout and home-indicator areas instead of sitting
+  // inside letterboxes. Only safe with the safe-area padding in globals.css.
+  viewportFit: "cover",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -113,6 +135,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           canonicalOrigin={config.portal.canonicalOrigin}
           legacyOrigins={config.portal.legacyOrigins}
         />
+        <ServiceWorkerRegistration canonicalOrigin={config.portal.canonicalOrigin} />
         <a className="skip-link" href="#main-content">
           Skip to content
         </a>

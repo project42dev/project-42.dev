@@ -126,6 +126,65 @@ test("contains GitHub Pages controls without server or Sites metadata", async ()
   await assert.rejects(access(path.join(outputRoot, "server")));
 });
 
+test("publishes a versioned service worker at the scope root with an offline fallback", async () => {
+  // The worker must sit at the export root: one served from a subdirectory can
+  // only control that subdirectory, so the site would silently stop being
+  // installable with no error anywhere.
+  const worker = await readFile(path.join(outputRoot, "sw.js"), "utf8");
+
+  // Stamped per artifact, so activation deletes the previous deploy's caches
+  // and a stale response can never outlive the deploy that replaced it.
+  const version = worker.match(/const VERSION = "([^"]+)";/)?.[1];
+  assert.ok(version, "the published worker carries no version");
+  assert.match(version, /^[A-Za-z0-9._-]+$/);
+  assert.match(worker, /const RUNTIME = "p42-runtime-" \+ VERSION;/);
+
+  // The fallback it caches on install has to be a route the export produced.
+  const offlineUrl = worker.match(/OFFLINE_URL = "([^"]+)"/)?.[1];
+  assert.equal(offlineUrl, "/offline/");
+  await access(path.join(outputRoot, "offline", "index.html"));
+
+  const manifest = JSON.parse(
+    await readFile(path.join(outputRoot, "manifest.webmanifest"), "utf8"),
+  );
+  assert.equal(manifest.scope, "/");
+  assert.equal(manifest.start_url, "/");
+  assert.equal(manifest.display, "standalone");
+  assert.ok(
+    manifest.icons.some((icon) => icon.purpose === "maskable"),
+    "an installable manifest needs a maskable icon",
+  );
+});
+
+test("every published page carries the metadata iOS needs to install it", async () => {
+  // Asserted on the EXPORTED HTML, not on the source. Both of these were
+  // declared correctly in app/layout.tsx and silently not emitted: Next 16
+  // dropped viewport-fit from the viewport meta, and replaced
+  // apple-mobile-web-app-capable with the standard name that iOS Safari does
+  // not read. A source-level assertion passed the whole time.
+  for (const page of ["index.html", "about/index.html", "offline/index.html", "404.html"]) {
+    const html = await readFile(path.join(outputRoot, page), "utf8");
+
+    const viewport = html.match(/<meta name="viewport" content="([^"]*)"/)?.[1];
+    assert.ok(viewport, `${page} has no viewport meta`);
+    assert.match(
+      viewport,
+      /viewport-fit=cover/,
+      `${page} is letterboxed inside the display cutout, and every ` +
+        `env(safe-area-inset-*) in globals.css resolves to 0 without this`,
+    );
+    // Exactly one, or the framework's tag wins over ours.
+    assert.equal((html.match(/<meta name="viewport"/g) ?? []).length, 1);
+
+    assert.match(
+      html,
+      /<meta name="apple-mobile-web-app-capable" content="yes"\/?>/,
+      `${page} would be added to an iPhone home screen as a Safari bookmark, ` +
+        `not as a standalone app`,
+    );
+  }
+});
+
 test("a filtered --domain/--routes export publishes only its own routes with cross-subdomain nav links AB#6851", async () => {
   const filteredOutputRoot = path.join(projectRoot, "dist", "pages-account-test");
   execFileSync(
@@ -160,6 +219,11 @@ test("a filtered --domain/--routes export publishes only its own routes with cro
   await assert.rejects(
     access(path.join(filteredOutputRoot, "learner-data")),
     "a filtered export skips site-wide endpoints, not just unowned HTML routes",
+  );
+  await assert.rejects(
+    access(path.join(filteredOutputRoot, "sw.js")),
+    "admin and account are operational consoles, not installable apps: a " +
+      "worker there would cache session-adjacent pages on a session-bearing origin",
   );
 
   const accountPage = await readFile(
