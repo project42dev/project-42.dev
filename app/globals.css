@@ -53,9 +53,9 @@
   --violet: var(--p42-primary);
   --danger: #ef4444;
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
-  --radius: 24px;
-  --radius-small: 14px;
-  --shell: min(1180px, calc(100vw - 40px));
+  --radius: var(--p42-radius, 24px);
+  --radius-small: var(--p42-radius-small, 14px);
+  --shell: var(--p42-shell, min(1180px, calc(100vw - 40px)));
   --surface-2: var(--p42-surface);
   --muted: var(--p42-text-body);
 }

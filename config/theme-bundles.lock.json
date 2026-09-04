@@ -2,9 +2,10 @@
   "schemaVersion": 1,
   "source": "https://github.com/project42dev/project42-gallery",
   "gallery": {
-    "commit": "7ab6dc8cfcff5264998a3230263d0ffa8bc314e1"
+    "commit": "540738dfcfecb22c920e5a5818a4d98648f55c57"
   },
   "selectedTheme": "06-galactic-guide",
+  "selectedLayout": "standard",
   "themes": {
     "01-cosmic-answer": {
       "files": {
@@ -82,6 +83,26 @@
         "portal.css": "2d8d3edb34e3c57c1904d450bf9b5205159a7c2128e4a79d1f80ea87e9b85966",
         "theme.json": "77dee44123526ae698f21670379c9e2999e90460dff321e5186fb3c67cd65df4",
         "tokens.css": "169f5336a9dc22225daabe0991946bf6c039e6694c41b197828ef372544ddc4f"
+      }
+    }
+  },
+  "layouts": {
+    "compact": {
+      "files": {
+        "layout.css": "408e9a84e469fcbeba446f593e07e280075c3545b9daaca457c360631cba5ed4",
+        "layout.json": "18204d15b4d8bb5a03272be304f931cba0c6429b7567d314917c6052fb747dab"
+      }
+    },
+    "standard": {
+      "files": {
+        "layout.css": "89ef61cf5c1df0be8385cd710e57e8147a411b0c151ef66e9723d99f0361124c",
+        "layout.json": "c16f818963e58e109a893f531fe52e5dfc97f3a790bdafb8e25a8d1dd65bc48c"
+      }
+    },
+    "wide": {
+      "files": {
+        "layout.css": "8fddfffd9d780ce476955a61eb9e5dd469cc0d926a82d9368ea83ee698930dbe",
+        "layout.json": "29c00cd46bb01cd57d30dba83ff5072c68b21a39751374e50c0599732ead2cbf"
       }
     }
   }
