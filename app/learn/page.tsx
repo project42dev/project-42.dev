@@ -14,48 +14,77 @@ export default function LearnPage() {
     (path) => path.id === "providers-in-practice",
   );
 
+  const pathCount = starterCatalog.paths.length;
+  const moduleCount = starterCatalog.modules.length;
+  // Rounded to hours: the raw minute total reads like a bug rather than a size.
+  const hours = Math.round(
+    starterCatalog.modules.reduce(
+      (total, module) => total + (module.estimatedMinutes ?? 0),
+      0,
+    ) / 60,
+  );
+
   return (
     <main>
-      <section className="hero shell">
-        <div className="hero-copy">
-          <p className="eyebrow">Free, open AI learning</p>
-          <h1>
-            Start curious.
-            <span>Become capable.</span>
-          </h1>
-          <p className="hero-lede">
-            Project 42 makes artificial intelligence understandable from your first
-            question to your first reliable agent. Learn at your pace, check what you
-            know, and keep a record of your progress.
-          </p>
-          <div className="button-row">
-            <Link className="button button-primary" href="/learn/ai-foundations">
-              Start AI Foundations
-            </Link>
-            <Link className="button button-secondary" href="/guide">
-              Browse the field guide
-            </Link>
-            <Link className="button button-secondary" href="/guide/diagrams">
-              See visual guides
-            </Link>
-          </div>
-          <ul className="trust-list" aria-label="Project 42 promises">
-            <li>Beginner-friendly</li>
-            <li>Provider-neutral</li>
-            <li>Evidence-linked</li>
-            <li>Open source</li>
-          </ul>
-        </div>
-        <div className="hero-map" aria-label="Learning journey preview">
-          <div className="map-orbit map-orbit-one" />
-          <div className="map-orbit map-orbit-two" />
-          <div className="map-node map-node-start"><span>01</span>Understand</div>
-          <div className="map-node map-node-build"><span>02</span>Practice</div>
-          <div className="map-node map-node-prove"><span>03</span>Prove it</div>
-          <div className="map-center">
-            <span className="map-mark">42</span>
-            <small>Your path</small>
-          </div>
+      {/*
+        This page's job is the choice between the two renderings (ADR-0020),
+        not a second copy of the site's home page. It carried a duplicate of
+        the project-42.dev hero from commit 0bbfe97 until this was restored,
+        so arriving here from the main site showed you the page you had just
+        left.
+
+        ADR-0020: these are two RENDERINGS of one course, never two
+        catalogues. Same modules, same knowledge checks, one learner record
+        whichever you pick. Nothing here may describe them as separate
+        curricula.
+      */}
+      <header className="page-hero landing-hero shell">
+        <p className="eyebrow">Project 42 Academy</p>
+        <h1>Two ways to take the same course.</h1>
+        <p>
+          The same modules, the same knowledge checks, the same sources, and one
+          record of what you have finished. Read it, or watch it taught. Switch
+          whenever you like: your progress does not care which one you picked.
+        </p>
+      </header>
+
+      <section className="section shell" aria-label="Choose how you want to learn">
+        <div className="pillar-grid">
+          <article className="pillar-card pillar-selfpaced">
+            <div className="card-index">Self-paced / Available now</div>
+            <h2>Read it at your own pace.</h2>
+            <p>
+              Short written modules in plain language, worked examples you can copy,
+              and a knowledge check at the end of every one. Stop and start whenever
+              you want.
+            </p>
+            <ul>
+              <li>
+                {pathCount} learning paths, {moduleCount} assessed modules
+              </li>
+              <li>About {hours} hours of material</li>
+              <li>Every claim carries its source and a verification date</li>
+              <li>Account-backed progress across browsers and devices</li>
+            </ul>
+            <Link href="/learn/paths">Browse learning paths →</Link>
+          </article>
+
+          <article className="pillar-card pillar-ondemand">
+            <div className="card-index">Instructor-led / Preview</div>
+            <h2>Watch it taught.</h2>
+            <p>
+              The same material presented as a lesson rather than a page. A virtual
+              instructor works through each module on video, with captions and a
+              full transcript.
+            </p>
+            <ul>
+              <li>Captions embedded in the video</li>
+              <li>Full transcript you can search and copy</li>
+              <li>The same knowledge check at the end</li>
+              <li>Nothing is generated while you watch</li>
+            </ul>
+            <Link href="/ondemand">See the on-demand classroom →</Link>
+          </article>
         </div>
       </section>
 
