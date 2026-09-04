@@ -95,6 +95,15 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link data-project42-layout rel="stylesheet" href={layoutAssets.stylesheet} />
         <script
           dangerouslySetInnerHTML={{
+            // Theme is DEPLOYMENT-owned: it comes from project42.config.json
+            // and nothing else, which is what makes "change one config field"
+            // the whole interface for changing the site's identity. A stale
+            // browser value must never override the configured presentation,
+            // so any leftover key is cleared rather than read.
+            //
+            // Layout density IS a per-visitor preference and is read from
+            // storage with the configured preset as the fallback. The two
+            // axes are independent, and they are deliberately NOT symmetric.
             __html: `(function(){try{var defaultTheme="${configuredTheme}";var defaultLayout="${configuredLayout}";var l=localStorage.getItem("project42.layout.v1")||defaultLayout;localStorage.removeItem("project42.theme.v1");document.documentElement.setAttribute("data-theme",defaultTheme);document.documentElement.setAttribute("data-layout",l);}catch(e){}})();`,
           }}
         />

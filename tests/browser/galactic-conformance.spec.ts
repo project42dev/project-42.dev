@@ -1,15 +1,40 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const galacticTokens = {
-  "--p42-bg": "#090d16",
-  "--p42-surface": "#0c1220",
-  "--p42-primary": "#f59e0b",
-  "--p42-accent": "#10b981",
-  "--p42-text-title": "#fef3c7",
-  "--p42-text-body": "#e2e8f0",
-  "--p42-text-muted": "#94a3b8",
-} as const;
+import portalConfig from "../../project42.config.json" with { type: "json" };
+
+// Expected token values come from the SELECTED theme's own manifest rather
+// than a hardcoded Galactic palette. Those literals previously pinned the
+// portal to 06-galactic-guide: changing the theme field in
+// project42.config.json failed this required gate and could not deploy, which
+// is the opposite of the contract this suite exists to protect.
+const selectedTheme: string = portalConfig.theme;
+const selectedLayout: string = portalConfig.layout.defaultPreset;
+
+const themeManifest = JSON.parse(
+  readFileSync(resolve(`public/themes/${selectedTheme}/theme.json`), "utf8"),
+) as { tokens?: Record<string, string> };
+
+// Surface and text colour tokens are asserted; a theme declaring extras is
+// free to do so, and a theme that omits one is not failed on that basis here.
+const assertedTokenNames = [
+  "--p42-bg",
+  "--p42-surface",
+  "--p42-primary",
+  "--p42-accent",
+  "--p42-text-title",
+  "--p42-text-body",
+  "--p42-text-muted",
+] as const;
+
+const galacticTokens: Record<string, string> = Object.fromEntries(
+  assertedTokenNames
+    .filter((name) => themeManifest.tokens?.[name])
+    .map((name) => [name, themeManifest.tokens![name]!]),
+);
 
 const publicRouteFamilies = [
   "/",
@@ -43,10 +68,16 @@ test("routes Learn to the landing page and keeps the path catalog distinct", asy
   await page.goto("/");
   await page.getByRole("link", { name: "Learn", exact: true }).click();
   await expect(page).toHaveURL(/\/learn\/?$/);
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Start curious");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Become capable");
+  // /learn is the choice between the two renderings (ADR-0020), NOT a second
+  // copy of the home page hero. It asserted "Start curious / Become capable"
+  // while /learn was duplicating the landing page after commit 0bbfe97.
+  await expect(page.getByRole("heading", { level: 1 })).toContainText(
+    "Two ways to take the same course",
+  );
+  await expect(page.getByRole("heading", { level: 2, name: /Read it at your own pace/ })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: /Watch it taught/ })).toBeVisible();
 
-  await page.getByRole("link", { name: "Explore learning paths" }).click();
+  await page.getByRole("link", { name: "Browse learning paths →" }).click();
   await expect(page).toHaveURL(/\/learn\/paths\/?$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "Learning paths with a clear next step.",
@@ -66,7 +97,7 @@ test("uses only Galactic artwork and compact shell treatments on Learn", async (
     const hero = page.locator(".hero-map");
     await expect(hero).toHaveCSS(
       "background-image",
-      /\/themes\/06-galactic-guide\/hero\.png/,
+      new RegExp(`/themes/${selectedTheme}/hero\\.png`),
     );
     await expect(hero.locator(":scope > *").first()).toHaveCSS("opacity", "0");
 
@@ -92,10 +123,10 @@ test("uses Galactic presentation without Gallery specimen content", async ({
 }) => {
   await page.goto("/");
 
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "06-galactic-guide");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", selectedTheme);
   await expect(page.locator(".portal-poster-hero")).toHaveCSS(
     "background-image",
-    /\/themes\/06-galactic-guide\/hero\.png/,
+    new RegExp(`/themes/${selectedTheme}/hero\\.png`),
   );
   await expect(page.locator(".portal-floating-card")).toHaveCSS(
     "background-color",
@@ -132,7 +163,7 @@ test("uses Galactic presentation without Gallery specimen content", async ({
     "hero.png",
     "mark.svg",
   ]) {
-    const response = await request.get(`/themes/06-galactic-guide/${asset}`);
+    const response = await request.get(`/themes/${selectedTheme}/${asset}`);
     expect(response.status(), `${asset} should load`).toBe(200);
     expect((await response.body()).length, `${asset} should not be empty`).toBeGreaterThan(100);
   }
@@ -144,7 +175,11 @@ test("uses Galactic presentation without Gallery specimen content", async ({
   expect(computedTokens).toEqual(galacticTokens);
 });
 
-test("discards a stale browser theme instead of blending it into Galactic", async ({
+// Theme is deployment-owned: it comes from project42.config.json only, so a
+// stale browser value is discarded rather than blended in. Layout density is
+// the axis that IS a per-visitor preference. The two are deliberately not
+// symmetric.
+test("discards a stale browser theme in favour of the configured theme", async ({
   page,
 }) => {
   await page.addInitScript(() => {
@@ -154,18 +189,17 @@ test("discards a stale browser theme instead of blending it into Galactic", asyn
 
   await expect(page.locator("html")).toHaveAttribute(
     "data-theme",
-    "06-galactic-guide",
-  );
-  await expect(page.locator("body")).toHaveCSS(
-    "background-color",
-    "rgb(9, 13, 22)",
+    selectedTheme,
   );
   expect(
     await page.evaluate(() => window.localStorage.getItem("project42.theme.v1")),
   ).toBeNull();
 
   await page.goto("/about");
-  await expect(page.locator(".open-source-banner")).toHaveCSS(
+  // The banner uses a surface background, not the accent. Filling a whole
+  // section with the accent colour dropped a solid slab into the page that
+  // read as a mismatched box; the accent is now a soft tint over the surface.
+  await expect(page.locator(".open-source-banner")).not.toHaveCSS(
     "background-color",
     "rgb(16, 185, 129)",
   );
@@ -251,7 +285,7 @@ test("keeps every public route family inside the Galactic presentation boundary"
       expect(response?.status(), route).toBe(200);
       await expect(page.locator("html"), route).toHaveAttribute(
         "data-theme",
-        "06-galactic-guide",
+        selectedTheme,
       );
       await expect(page.locator("body"), route).toHaveCSS(
         "background-color",

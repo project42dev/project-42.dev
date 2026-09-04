@@ -4,6 +4,16 @@ import { defaultLearnerDataPolicy, starterCatalog } from "@project42/platform";
 import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import diagramOverrides from "../config/diagram-catalog-overrides.json" with { type: "json" };
 import releaseFacts from "../public/release-facts.json" with { type: "json" };
+import portalConfig from "../project42.config.json" with { type: "json" };
+
+// The selected theme and layout are read from config, never hardcoded. These
+// assertions used to name 06-galactic-guide and standard literally, which
+// meant changing the theme field in project42.config.json failed a REQUIRED CI
+// gate and could not deploy -- the exact opposite of the "change one field"
+// contract these tests exist to protect. They now validate whichever bundle is
+// selected, so any of the six themes passes.
+const selectedTheme = portalConfig.theme;
+const selectedLayout = portalConfig.layout.defaultPreset;
 
 const hostedIdentityConfigured = Boolean(
   process.env.NEXT_PUBLIC_PROJECT42_API_ORIGIN,
@@ -31,10 +41,10 @@ test("renders the Project 42 home page", async () => {
   assert.match(html, /Become capable/);
   assert.match(html, /Free, open AI learning/);
   assert.match(html, /href="\/learn"[^>]*>Start learning</);
-  assert.match(html, /\/themes\/06-galactic-guide\/mark\.svg/);
-  assert.match(html, /data-project42-theme-tokens="true"[^>]+href="\/themes\/06-galactic-guide\/tokens\.css"/);
-  assert.match(html, /data-project42-theme-components="true"[^>]+href="\/themes\/06-galactic-guide\/portal\.css"/);
-  assert.match(html, /data-project42-layout="true"[^>]+href="\/layouts\/standard\/layout\.css"/);
+  assert.match(html, new RegExp(`/themes/${selectedTheme}/mark\\.svg`));
+  assert.match(html, new RegExp(`data-project42-theme-tokens="true"[^>]+href="/themes/${selectedTheme}/tokens\\.css"`));
+  assert.match(html, new RegExp(`data-project42-theme-components="true"[^>]+href="/themes/${selectedTheme}/portal\\.css"`));
+  assert.match(html, new RegExp(`data-project42-layout="true"[^>]+href="/layouts/${selectedLayout}/layout\\.css"`));
   assert.match(html, /Learn deeply. Find answers quickly/);
   assert.doesNotMatch(html, /The Answer to AI, Agents, and Everything/);
   assert.doesNotMatch(html, /The Galactic Guide \(Don&#x27;t Panic\)/);
@@ -546,8 +556,8 @@ test("publishes accessible document landmarks and discovery metadata", async () 
   assert.match(html, /class="brand-mark"/);
   assert.match(html, /class="brand-mark-four"/);
   assert.match(html, /class="brand-mark-two"/);
-  assert.match(html, /rel="icon" href="\/themes\/06-galactic-guide\/mark\.svg"/);
-  assert.match(html, /rel="shortcut icon" href="\/themes\/06-galactic-guide\/mark\.svg"/);
+  assert.match(html, new RegExp(`rel="icon" href="/themes/${selectedTheme}/mark\\.svg"`));
+  assert.match(html, new RegExp(`rel="shortcut icon" href="/themes/${selectedTheme}/mark\\.svg"`));
   assert.doesNotMatch(html, /rel="icon" href="\/brand\//);
   assert.match(html, /href="\/apple-touch-icon\.png"/);
   assert.match(html, /href="\/manifest\.webmanifest"/);

@@ -6,6 +6,12 @@ import {
   canonicalizeSvgSource,
   sourceSha256,
 } from "../scripts/brand-source-integrity.mjs";
+import portalConfig from "../project42.config.json" with { type: "json" };
+
+// Read from config, never hardcoded: the point of these gates is to protect
+// the "change one field and the visual system changes" contract, so they must
+// pass for whichever theme is selected.
+const selectedTheme = portalConfig.theme;
 
 const lfSource = [
   '<svg viewBox="0 0 64 64">',
@@ -84,9 +90,32 @@ test("favicon provenance follows the declaratively selected theme", () => {
   assert.equal(manifest.sources.faviconSha256, sourceSha256(themeMark));
 });
 
-test("Galactic bundle removes default landing ornaments and uses its hero token", () => {
+// Portable invariant: whatever theme is selected, its component bundle may
+// only scope rules to its OWN id. A bundle that styles another theme's id
+// would leak across selections. This replaces a hardcoded 06-galactic-guide
+// assertion that made changing the theme field fail a required CI gate.
+test("the selected theme bundle scopes its rules to its own id", () => {
   const styles = fs.readFileSync(
-    path.resolve("public/themes/06-galactic-guide/portal.css"),
+    path.resolve(`public/themes/${selectedTheme}/portal.css`),
+    "utf8",
+  );
+  const foreignScopes = (styles.match(/html\[data-theme="([^"]+)"\]/g) ?? [])
+    .filter((scope) => !scope.includes(`"${selectedTheme}"`));
+  assert.deepEqual(
+    foreignScopes,
+    [],
+    `${selectedTheme}/portal.css scopes rules to another theme: ${[...new Set(foreignScopes)].join(", ")}`,
+  );
+});
+
+// Galactic is currently the only bundle with real component CSS -- the other
+// five ship a ~70-byte placeholder portal.css (tokens and hero art only). Its
+// specific ornament/hero rules are therefore asserted only when Galactic is
+// the selected theme, rather than unconditionally, which previously pinned the
+// whole portal to that one theme.
+test("Galactic bundle removes default landing ornaments and uses its hero token", { skip: selectedTheme !== "06-galactic-guide" }, () => {
+  const styles = fs.readFileSync(
+    path.resolve(`public/themes/${selectedTheme}/portal.css`),
     "utf8",
   );
   assert.match(
