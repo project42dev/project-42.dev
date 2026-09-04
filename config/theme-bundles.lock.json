@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "source": "https://github.com/project42dev/project42-gallery",
   "gallery": {
-    "commit": "6e44883160d926fc5d9d4c11d2b3f5f4cac5f6c5"
+    "commit": "1f3ed55efb80d671d1b5901ca5d8cae9a79099fb"
   },
   "selectedTheme": "06-galactic-guide",
   "themes": {
@@ -15,8 +15,8 @@
         "hero.png": "d7552a9b14ef788a5c44bc6e826bb59ddc92d4bd12604902d610240c49ac2351",
         "mark.svg": "47fe9e709434ae68ca8a534f26e951c43c51527da017f2ba4ddce141259f3247",
         "portal.css": "efd7c26a065f9992ddb7baa03ec6d95826b91d74df8ddaca94fc5e1dd2a6fa23",
-        "theme.json": "4d1e5124485685255ebb18d97216d3f66eb2377687d4a71d5105c7730b050795",
-        "tokens.css": "f4b7b4c28e5aa46f6bf2cc04463085196744ce4d2709770a7de184ab89903f22"
+        "theme.json": "c2629e7635b8be51c98fb18d467e2803abd3a315f41f538ff6fdd90ba29fc6a2",
+        "tokens.css": "51b6ffe14054ea8fdd49f8873f0a39570de392b6cd01c9fa39644f70a239d8ea"
       }
     },
     "02-learning-portal": {
@@ -28,8 +28,8 @@
         "hero.png": "c5be86656e85f1fcafc119df503e7b13864e9591d7b85dbada2e8fcdacfcf557",
         "mark.svg": "d7b30a2dfd3c3b98a7270f0e7ce9843939108a9725c05170820dd73e0eb2e577",
         "portal.css": "f45aa805e60089ea42f60f8b62de08d331d5b5bc3106ee61110f8629009b7e14",
-        "theme.json": "208611818a6305b51aca55e696b2c4cb1139e2a9007d6c004ee9446b4441eb22",
-        "tokens.css": "d43b740cc7b534d1770da58d1cb414939467e367d6d5e7da87fbbe40f0c14c50"
+        "theme.json": "3a2b5ada002d3e639ebf93a762228662c27cbeb19f3748a947794a8ca93f2751",
+        "tokens.css": "08e48d4f8b7c0bfed8c4025f56157ea7aa507c388cd1c4d61343b4cf23e8bf66"
       }
     },
     "03-model-constellation": {
@@ -41,8 +41,8 @@
         "hero.png": "cd6ed94d8aa2c8b4f9ad0c18d8153d457b4d7246a1967b2e47f4106b22a67570",
         "mark.svg": "53338cc13799dddc5c7628d26bff6e671053ecb12feacd5a0385024ebe9f4e66",
         "portal.css": "64ef65fd6b07da75eb4f3be096b17eee86ed2f212f553e812b8bb671ecb5e5cf",
-        "theme.json": "20bf9f3c07d28798211230aae152b24aa3efb293de877f5cd8ed7195f7dbb9c4",
-        "tokens.css": "752567a4a739da6e75b9c4f208f618c7ff08cb45a74b9691aa6e357d4493d431"
+        "theme.json": "ac8f6bc4567e5c4dd61a146457f8a19c9fef280da86530653eb21a8eab122949",
+        "tokens.css": "79d3ad545a881d8f75d8cd8a2b98cf5ae008db6b6138388157203e9195ae2e71"
       }
     },
     "04-field-signal": {
@@ -54,8 +54,8 @@
         "hero.png": "899db63e8475fea73b1291136d5552d7c6edb92d55d63dbb9683b1ae61987d29",
         "mark.svg": "decbd4b10e068cc0fc56c84ce5c5e3576a51685263ba2866b2cdb20c421aed7a",
         "portal.css": "cbfc0816aea357ebea70a8239cff2c3b9fcbbdefaaeb0fe8b849bf1eea86d34b",
-        "theme.json": "d13f2323287741ea637b359a384812e412272d38f7b068fe9bbc5d9ffd27436f",
-        "tokens.css": "90a2bdd04186867bfdec5cff6b73e958cc7ba494700f6ce2ff73b659a53798a3"
+        "theme.json": "7001b403ef9dfa88323c2763f5755ee9f43ee4f6c1aa92c431bf2bf2059b8e70",
+        "tokens.css": "c2be33f604e0819e6520b25755fff552e79fdcbcc5dda39df6a25fe299441d4a"
       }
     },
     "05-open-orbit": {
@@ -67,8 +67,8 @@
         "hero.png": "2286d9dc684f2a65f91f42bfa20d3bdc5e23d0c1545f467f9663ab2c452cec1b",
         "mark.svg": "658ee8cb1a09a064384f7bd5016f64aef8d36f1bec8310d3b2ee875fe192a919",
         "portal.css": "40037d9c4122c757f4dd12c8467e8b30823d083d811400c593e15d7ea97d1fb4",
-        "theme.json": "cd70b2813846d86fc490313cecba78f7fd0dfa769f91ace4c891cee99764f384",
-        "tokens.css": "4a3753b12fef639b96386cc6bf9cff686f9754bed1580319f1a1c438b7408964"
+        "theme.json": "09b4ccfc682065f2b46117e3f5072eaf67ef7d37b0b9a1968bbec6752a585484",
+        "tokens.css": "2dfcbe474428740c403601490bedb92cfc1ac3e82e3addb0b4e864a15e8a3eca"
       }
     },
     "06-galactic-guide": {
@@ -80,8 +80,8 @@
         "hero.png": "74fb0023d71db5f9ca44d2da057980847d5003bd12d53dac6476db84c5705c5f",
         "mark.svg": "622ee8c6e8f9c8d6e0604a9e6787f82fd0552636250a4b3f0d74bfab6c86a316",
         "portal.css": "2d8d3edb34e3c57c1904d450bf9b5205159a7c2128e4a79d1f80ea87e9b85966",
-        "theme.json": "ba22fcb9166fd268f771257eeda0f064368d48c6cdb6e4be559afa400ec48bce",
-        "tokens.css": "dec5295f13cda1107f4da09be5d22de3641065b317fe4ba2703c6a8e1c620dcd"
+        "theme.json": "a0bb3601b78b82e39617b58cb2fe61b63f91b5bac41a9fef784764f047fb5cd1",
+        "tokens.css": "b4ab0c6c813b883ed34ef218586a679a7fde1bac31ec88d04046a8d46947bd0e"
       }
     }
   }
