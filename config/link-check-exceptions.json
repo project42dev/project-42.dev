@@ -13,7 +13,7 @@
       "expires": "2026-09-30"
     },
     {
-      "targetPattern": "https://docs.vllm.ai/en/latest/serving/openai_compatible_server/*",
+      "targetPattern": "https://docs.vllm.ai/*",
       "expectedStatuses": [
         200,
         429
@@ -41,17 +41,6 @@
         403
       ],
       "reason": "OpenAI corporate pages block automated HEAD/GET bot requests.",
-      "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
-      "expires": "2026-09-30"
-    },
-    {
-      "targetPattern": "https://www.trulens.org/tru_lens_eval/core_concepts_rag_triad/*",
-      "expectedStatuses": [
-        200,
-        404
-      ],
-      "reason": "TruLens doc restructure.",
       "owner": "Project 42 maintainers",
       "verifiedOn": "2026-08-31",
       "expires": "2026-09-30"
