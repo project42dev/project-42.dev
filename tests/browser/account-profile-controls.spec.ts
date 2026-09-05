@@ -4,11 +4,6 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 const apiOrigin = process.env.NEXT_PUBLIC_PROJECT42_API_ORIGIN;
 const hostedIdentityConfigured = Boolean(apiOrigin);
 const now = "2026-07-29T12:00:00.000Z";
-const onePixelPng = Buffer.from(
-  "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=",
-  "base64",
-);
-
 const account = {
   id: "profile-controls-account",
   installationId: "test",
@@ -36,8 +31,6 @@ interface Profile {
   timeZone: string | null;
   reducedMotion: boolean;
   highContrast: boolean;
-  photoAvailable: boolean;
-  photoUpdatedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -54,8 +47,6 @@ function initialProfile(): Profile {
     timeZone: "UTC",
     reducedMotion: false,
     highContrast: false,
-    photoAvailable: false,
-    photoUpdatedAt: null,
     createdAt: now,
     updatedAt: now,
   };
@@ -118,14 +109,12 @@ test.describe("hosted profile and learner-data controls", () => {
     );
   });
 
-  test("edits the existing profile and photo while applying accessible browser preferences", async ({
+  test("edits the existing profile while applying accessible browser preferences", async ({
     page,
   }) => {
     let profile = initialProfile();
     const profilePatches: Array<Record<string, unknown>> = [];
     const preferencePatches: Array<Record<string, unknown>> = [];
-    const photoWrites: Array<{ contentType: string; size: number }> = [];
-    let photoRemovals = 0;
 
     await installBaselineApi(page, async (route, pathname) => {
       const request = route.request();
@@ -160,40 +149,6 @@ test.describe("hosted profile and learner-data controls", () => {
         await fulfillJson(route, { profile });
         return true;
       }
-      if (pathname === "/v1/me/profile/photo" && request.method() === "PUT") {
-        photoWrites.push({
-          contentType: request.headers()["content-type"] ?? "",
-          size: request.postDataBuffer()?.byteLength ?? 0,
-        });
-        profile = {
-          ...profile,
-          photoAvailable: true,
-          photoUpdatedAt: "2026-07-29T12:06:00.000Z",
-        };
-        await fulfillJson(route, { photo: { available: true } });
-        return true;
-      }
-      if (pathname === "/v1/me/profile/photo" && request.method() === "GET") {
-        await route.fulfill({
-          status: 200,
-          headers: {
-            ...jsonHeaders(route),
-            "content-type": "image/png",
-          },
-          body: onePixelPng,
-        });
-        return true;
-      }
-      if (pathname === "/v1/me/profile/photo" && request.method() === "DELETE") {
-        photoRemovals += 1;
-        profile = {
-          ...profile,
-          photoAvailable: false,
-          photoUpdatedAt: null,
-        };
-        await fulfillJson(route, { photo: { available: false } });
-        return true;
-      }
       return false;
     });
 
@@ -220,22 +175,6 @@ test.describe("hosted profile and learner-data controls", () => {
       },
     ]);
 
-    await page.getByLabel("Profile photo").setInputFiles({
-      name: "profile.png",
-      mimeType: "image/png",
-      buffer: onePixelPng,
-    });
-    await page.getByRole("button", { name: "Upload photo" }).click();
-    await expect(page.getByText("Profile photo saved.")).toBeVisible();
-    await expect(page.getByAltText("Current profile")).toBeVisible();
-    expect(photoWrites).toEqual([
-      { contentType: "image/png", size: onePixelPng.byteLength },
-    ]);
-
-    page.once("dialog", (dialog) => dialog.accept());
-    await page.getByRole("button", { name: "Remove photo" }).click();
-    await expect(page.getByText("Profile photo removed.")).toBeVisible();
-    expect(photoRemovals).toBe(1);
 
     await page.getByLabel("Language tag for dates and times").fill("en-GB");
     await page.getByLabel("Time zone").fill("America/Los_Angeles");
@@ -737,14 +676,6 @@ test.describe("hosted profile and learner-data controls", () => {
         );
         return true;
       }
-      if (pathname === "/v1/me/profile/photo" && request.method() === "PUT") {
-        await fulfillJson(
-          route,
-          { error: { code: "storage_error", message: privateDetail } },
-          500,
-        );
-        return true;
-      }
       if (pathname === "/v1/me/consents" && request.method() === "GET") {
         await fulfillJson(route, {
           consents: [
@@ -791,17 +722,6 @@ test.describe("hosted profile and learner-data controls", () => {
       ),
     ).toBeVisible();
 
-    await page.getByLabel("Profile photo").setInputFiles({
-      name: "profile.png",
-      mimeType: "image/png",
-      buffer: onePixelPng,
-    });
-    await page.getByRole("button", { name: "Upload photo" }).click();
-    await expect(
-      page.getByText(
-        "Profile photo could not be uploaded. The selected file was not retained by this page.",
-      ),
-    ).toBeVisible();
 
     await page
       .getByRole("switch", { name: "Product improvement" })

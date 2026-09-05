@@ -476,7 +476,7 @@ a {
 }
 
 .profile-trigger {
-  /* The photo fills the circle, so clip it and drop the button padding. */
+  /* The initials fill the circle, so clip and drop the button padding. */
   overflow: hidden;
   padding: 0;
   background: var(--p42-surface-card);
@@ -504,13 +504,6 @@ a {
   height: 22px;
   width: 22px;
 }
-.profile-photo {
-  border-radius: 50%;
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
-}
-
 .profile-initials {
   font-size: 0.82rem;
   font-weight: 850;
@@ -6478,42 +6471,6 @@ a {
 
 .deletion-status-result dd {
   margin: 0.25rem 0 0;
-}
-
-.account-photo-editor {
-  align-items: start;
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 5rem minmax(0, 1fr);
-  margin-top: 1rem;
-}
-
-.account-photo-editor form {
-  display: grid;
-  gap: 0.55rem;
-}
-
-.account-photo-editor input[type="file"] {
-  max-width: 100%;
-}
-
-.account-photo-preview {
-  align-items: center;
-  aspect-ratio: 1;
-  background: var(--surface-soft);
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  display: flex;
-  font-size: 1.8rem;
-  font-weight: 700;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.account-photo-preview img {
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
 }
 
 .linked-identity-list {

@@ -1076,7 +1076,6 @@ export function LinkedIdentityEditor() {
 function ProfileEditor() {
   const { apiFetch, refreshAccount } = useAuth();
   const [profile, setProfile] = useState<LearnerProfile | null>(null);
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [message, setMessage] = useState("Loading profile…");
   const [hasError, setHasError] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -1108,28 +1107,6 @@ function ProfileEditor() {
     const timer = window.setTimeout(() => void load(), 0);
     return () => window.clearTimeout(timer);
   }, [load]);
-
-  useEffect(() => {
-    if (!profile?.photoAvailable) return;
-    let cancelled = false;
-    let objectUrl: string | null = null;
-    void apiFetch("/v1/me/profile/photo")
-      .then(async (response) => {
-        if (!response.ok) throw new Error("Profile photo could not be loaded.");
-        objectUrl = URL.createObjectURL(await response.blob());
-        if (!cancelled) setPhotoUrl(objectUrl);
-      })
-      .catch(() => {
-        if (!cancelled) {
-          setHasError(true);
-          setMessage("Your private profile photo could not be loaded.");
-        }
-      });
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [apiFetch, profile?.photoAvailable, profile?.photoUpdatedAt]);
 
   async function saveProfile(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -1166,79 +1143,6 @@ function ProfileEditor() {
     }
   }
 
-  async function uploadPhoto(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formElement = event.currentTarget;
-    const form = new FormData(formElement);
-    const photo = form.get("photo");
-    if (!(photo instanceof File) || photo.size === 0) {
-      setHasError(true);
-      setMessage("Choose a JPEG, PNG, or WebP photo first.");
-      return;
-    }
-    const extension = photo.name.split(".").pop()?.toLowerCase();
-    const contentType =
-      photo.type ||
-      (extension === "jpg" || extension === "jpeg"
-        ? "image/jpeg"
-        : extension === "png"
-          ? "image/png"
-          : extension === "webp"
-            ? "image/webp"
-            : "");
-    if (!["image/jpeg", "image/png", "image/webp"].includes(contentType)) {
-      setHasError(true);
-      setMessage("Choose a JPEG, PNG, or WebP photo.");
-      return;
-    }
-    setBusy(true);
-    try {
-      const response = await apiFetch("/v1/me/profile/photo", {
-        method: "PUT",
-        headers: { "content-type": contentType },
-        body: photo,
-      });
-      const body = (await response.json()) as {
-        photo?: { available: boolean };
-      };
-      if (!response.ok || !body.photo?.available) {
-        throw new Error("photo_upload_failed");
-      }
-      setPhotoUrl(null);
-      formElement.reset();
-      await load();
-      setHasError(false);
-      setMessage("Profile photo saved.");
-    } catch {
-      setHasError(true);
-      setMessage(
-        "Profile photo could not be uploaded. The selected file was not retained by this page.",
-      );
-    } finally {
-      setBusy(false);
-    }
-  }
-
-  async function removePhoto() {
-    if (!window.confirm("Remove your Project 42 profile photo?")) return;
-    setBusy(true);
-    try {
-      const response = await apiFetch("/v1/me/profile/photo", { method: "DELETE" });
-      if (!response.ok) {
-        throw new Error("photo_remove_failed");
-      }
-      setPhotoUrl(null);
-      await load();
-      setHasError(false);
-      setMessage("Profile photo removed.");
-    } catch {
-      setHasError(true);
-      setMessage("Profile photo could not be removed. Your existing photo is unchanged.");
-    } finally {
-      setBusy(false);
-    }
-  }
-
   return (
     <section className="profile-card" aria-labelledby="hosted-profile-title">
       <p className="eyebrow">Hosted profile</p>
@@ -1252,45 +1156,6 @@ function ProfileEditor() {
       </p>
       {profile ? (
         <>
-          <div className="account-photo-editor">
-            <div className="account-photo-preview">
-              {photoUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img alt="Current profile" src={photoUrl} />
-              ) : (
-                <span aria-hidden="true">
-                  {(profile.displayName?.trim().charAt(0) || "?").toUpperCase()}
-                </span>
-              )}
-            </div>
-            <form onSubmit={uploadPhoto}>
-              <label htmlFor="profile-photo">Profile photo</label>
-              <input
-                accept="image/jpeg,image/png,image/webp"
-                disabled={busy}
-                id="profile-photo"
-                name="photo"
-                required
-                type="file"
-              />
-              <small>JPEG, PNG, or WebP; 2 MB maximum. Stored privately.</small>
-              <div className="button-row">
-                <button className="button button-secondary" disabled={busy} type="submit">
-                  Upload photo
-                </button>
-                {profile.photoAvailable ? (
-                  <button
-                    className="button button-secondary"
-                    disabled={busy}
-                    onClick={() => void removePhoto()}
-                    type="button"
-                  >
-                    Remove photo
-                  </button>
-                ) : null}
-              </div>
-            </form>
-          </div>
           <form className="account-profile-form" key={profile.updatedAt} onSubmit={saveProfile}>
             <label htmlFor="profile-display-name">Display name</label>
             <input

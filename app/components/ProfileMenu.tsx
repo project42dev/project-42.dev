@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useAuth } from "./AuthProvider";
 import { HeaderMenu } from "./HeaderMenu";
 
@@ -45,70 +44,22 @@ function initialsFor(name: string): string {
  * authentication when opened. An unconfigured self-host can still reach its
  * account entry page without presenting a nonfunctional hosted sign-in action.
  *
- * The trigger shows the learner's own photo when they have uploaded one. The
- * photo is private: it is not a public URL, it is fetched as a blob through the
- * authenticated apiFetch and held as an object URL for the life of the page,
- * the same way the account page loads it. That is why this cannot be a plain
- * <img src> and why the object URL is revoked on cleanup.
+ * The trigger shows the learner's initials, or a generic icon when there is no
+ * name to take them from. Profile photos were removed in September 2026: they
+ * appeared only here and on the account page, and carried an entire
+ * object-storage dependency for a single avatar.
  */
 export function ProfileMenu({
   accountHref,
   profileHref,
   learnerDataHref,
 }: ProfileMenuProps) {
-  const { configured, status, account, apiFetch, signIn, signOut } = useAuth();
+  const { configured, status, account, signIn, signOut } = useAuth();
   const signedIn = status === "signed-in" && Boolean(account);
   const name = account?.displayName ?? account?.primaryEmail ?? null;
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
-
-  useEffect(() => {
-    // No synchronous reset on sign-out. Setting state during an effect
-    // triggers a cascading render, and it is unnecessary here: the trigger
-    // below only shows the photo while signed in, and the cleanup revokes the
-    // object URL either way.
-    if (!signedIn) return undefined;
-    let cancelled = false;
-    let objectUrl: string | null = null;
-
-    void (async () => {
-      try {
-        const response = await apiFetch("/v1/me/profile");
-        const body = (await response.json()) as {
-          profile?: { photoAvailable?: boolean };
-        };
-        if (!response.ok || !body.profile?.photoAvailable) return;
-        const photo = await apiFetch("/v1/me/profile/photo");
-        if (!photo.ok) return;
-        objectUrl = URL.createObjectURL(await photo.blob());
-        if (cancelled) {
-          URL.revokeObjectURL(objectUrl);
-          return;
-        }
-        setPhotoUrl(objectUrl);
-      } catch {
-        // The header is not the place to report this. The account page owns
-        // profile errors and says so there; a broken avatar here just falls
-        // back to initials.
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-      if (objectUrl) URL.revokeObjectURL(objectUrl);
-    };
-  }, [apiFetch, signedIn, account?.id]);
 
   const initials = signedIn && name ? initialsFor(name) : "";
-  const trigger = signedIn && photoUrl ? (
-    // Decorative: the button itself carries the accessible name, so announcing
-    // the image as well would say the person's name twice.
-    //
-    // A plain <img>, not next/image: this is a blob object URL for a private
-    // photo fetched through the authenticated API, so there is no remote URL
-    // for an optimizer to fetch and nothing it could usefully do.
-    // eslint-disable-next-line @next/next/no-img-element
-    <img alt="" className="profile-photo" src={photoUrl} />
-  ) : initials ? (
+  const trigger = initials ? (
     <span aria-hidden="true" className="profile-initials">
       {initials}
     </span>
