@@ -14,7 +14,12 @@ const supportOptions = [
     title: "Request new content",
     description:
       "Propose an AI topic, orchestration pattern, or interactive exercise for the learning paths and field guide.",
-    href: "https://github.com/project42dev/project42-platform/issues/new?title=Content+Request%3A+&labels=content%2Cenhancement",
+    // The curriculum lives in project42-content; project42-platform is the
+    // product. A request filed on the platform repo reached nobody who could
+    // act on it. The template is not decoration either: its field labels are
+    // parsed straight into an authoring proposal, so a request filed through
+    // the form needs no human to retype it.
+    href: "https://github.com/project42dev/project42-content/issues/new?template=content-request.yml",
     label: "Submit content request",
     external: true,
   },
