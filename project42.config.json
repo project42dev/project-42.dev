@@ -23,5 +23,13 @@
     "name": "Project 42",
     "tagline": "Learn to ask better questions of an expanding universe.",
     "supportUrl": "https://github.com/project42dev/project-42.dev/issues"
+  },
+  "content": {
+    "instructorMedia": {
+      "baseUrl": "/preview/",
+      "availableKeys": [
+        "agents-and-guardrails-preview.mp4"
+      ]
+    }
   }
 }
