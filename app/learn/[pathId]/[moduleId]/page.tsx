@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import {
   getLearningModule,
   getLearningPath,
@@ -13,15 +13,24 @@ import { LessonSections } from "../../../components/LessonSections";
 import { ModuleVisitTracker } from "../../../components/ModuleVisitTracker";
 import { ProviderComparisonMatrix } from "../../../components/ProviderComparisonMatrix";
 import { ProviderPills } from "../../../components/ProviderPills";
+import { retiredLearningPaths, retiredPathTarget } from "../../../lib/retiredPaths";
 
 interface ModulePageProps {
   params: Promise<{ pathId: string; moduleId: string }>;
 }
 
 export function generateStaticParams() {
-  return starterCatalog.paths.flatMap((path) =>
-    path.moduleIds.map((moduleId) => ({ pathId: path.id, moduleId })),
-  );
+  return [
+    ...starterCatalog.paths.flatMap((path) =>
+      path.moduleIds.map((moduleId) => ({ pathId: path.id, moduleId })),
+    ),
+    ...retiredLearningPaths.flatMap((entry) =>
+      entry.retiredModuleIds.map((moduleId) => ({
+        pathId: entry.pathId,
+        moduleId,
+      })),
+    ),
+  ];
 }
 
 export async function generateMetadata({ params }: ModulePageProps): Promise<Metadata> {
@@ -36,7 +45,13 @@ export default async function ModulePage({ params }: ModulePageProps) {
   const { pathId, moduleId } = await params;
   const path = getLearningPath(pathId);
   const lessonModule = getLearningModule(moduleId);
-  if (!path || !lessonModule || !path.moduleIds.includes(lessonModule.id)) notFound();
+  if (!path || !lessonModule || !path.moduleIds.includes(lessonModule.id)) {
+    // A module URL under a retired path is a previously published URL too, so
+    // it follows its path rather than dying with it.
+    const target = retiredPathTarget(pathId, moduleId);
+    if (target) permanentRedirect(target);
+    notFound();
+  }
   const position = path.moduleIds.indexOf(lessonModule.id);
   const nextModuleId = path.moduleIds[position + 1];
   const nextHref = nextModuleId ? `/learn/${path.id}/${nextModuleId}` : undefined;

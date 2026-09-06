@@ -3,7 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { pathToFileURL } from "node:url";
 import { execFileSync } from "node:child_process";
-import { buildRouteInventory } from "./link-integrity.mjs";
+import { buildRetiredRouteRedirects, buildRouteInventory } from "./link-integrity.mjs";
 import { serviceWorkerSource } from "./service-worker.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
@@ -194,6 +194,12 @@ async function main() {
 
   const fullInventory = buildRouteInventory();
   const htmlRoutes = fullInventory.htmlRoutes.filter(matchesRoutePrefix);
+  // Retired learning-path URLs. The worker answers these with a 308, which a
+  // static artifact cannot express, so the export writes the same meta-refresh
+  // document the retired Admin routes get. Without this the previously
+  // published catalogue URLs would 404 on the Pages artifact even though they
+  // redirect correctly on the hosted origin.
+  const retiredLearningRedirects = buildRetiredRouteRedirects();
   if (isFilteredExport && htmlRoutes.length === 0) {
     throw new Error(`--routes matched no known route: ${routePrefixes.join(",")}`);
   }
@@ -218,6 +224,11 @@ async function main() {
       throw new Error(`Cannot export ${route}: expected HTML, received ${contentType}`);
     }
     await writeRoute(route, addStaticNavigation(await response.text()));
+  }
+
+  for (const [route, target] of retiredLearningRedirects) {
+    if (!matchesRoutePrefix(route)) continue;
+    await writeRoute(route, redirectDocument(route, target));
   }
 
   const exportedEndpoints = [];
@@ -284,6 +295,9 @@ async function main() {
         schemaVersion: 1,
         canonicalDomain,
         htmlRoutes,
+        redirectRoutes: [...retiredLearningRedirects.keys()]
+          .filter(matchesRoutePrefix)
+          .sort(),
         endpoints: exportedEndpoints,
       },
       null,
@@ -292,7 +306,8 @@ async function main() {
   );
 
   console.log(
-    `GitHub Pages export ready: ${htmlRoutes.length} HTML routes and ` +
+    `GitHub Pages export ready: ${htmlRoutes.length} HTML routes, ` +
+      `${retiredLearningRedirects.size} retired-path redirects and ` +
       `${exportedEndpoints.length} endpoints in ${outputRoot}.`,
   );
 }

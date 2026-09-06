@@ -1,0 +1,118 @@
+{
+  "$schemaVersion": 1,
+  "note": "Learning path IDs that were published in an earlier catalogue and no longer exist. Every entry keeps its URLs alive with a permanent redirect instead of a 404. successorPathId is null where the subject has no surviving path; those redirect to the catalogue index. retiredModuleIds are the module IDs that were published beneath the retired path, so their URLs are known to the route inventory and the static export.",
+  "catalogueIndex": "/learn/paths",
+  "retired": [
+    {
+      "pathId": "advanced-rag-engineering",
+      "title": "Advanced RAG Engineering",
+      "successorPathId": "rag-and-fine-tuning-engineering",
+      "reason": "Merged into Advanced RAG & Model Fine-Tuning Engineering, which still carries graph-rag-and-knowledge-graphs and covers hybrid search and retrieval evaluation.",
+      "retiredModuleIds": [
+        "chunking-strategies-in-practice",
+        "hybrid-search-and-reranking",
+        "graph-rag-and-knowledge-graphs",
+        "rag-evaluation-and-triad",
+        "advanced-rag-capstone"
+      ]
+    },
+    {
+      "pathId": "model-customization-and-fine-tuning",
+      "title": "Model Customization & Fine-Tuning",
+      "successorPathId": "rag-and-fine-tuning-engineering",
+      "reason": "Merged into the same path; its LoRA/QLoRA and evaluation material is now lora-qlora-fine-tuning and dpo-and-model-evaluation.",
+      "retiredModuleIds": [
+        "customization-decision-matrix",
+        "lora-and-qlora-tuning",
+        "dataset-curation-and-dpo",
+        "fine-tuning-eval-and-quantization",
+        "model-customization-capstone"
+      ]
+    },
+    {
+      "pathId": "adversarial-ai-security-and-red-teaming",
+      "title": "Adversarial AI Security & Red-Teaming",
+      "successorPathId": "ai-security-and-governance",
+      "reason": "Renamed and widened to AI Security, Red-Teaming & Enterprise Governance; the OWASP LLM material is now owasp-top-10-llm-attacks.",
+      "retiredModuleIds": [
+        "owasp-top-10-for-llms",
+        "jailbreaking-and-prompt-injection",
+        "llm-red-teaming-methodology",
+        "adversarial-security-capstone"
+      ]
+    },
+    {
+      "pathId": "agent-frameworks-and-protocols",
+      "title": "Agent Frameworks & Protocols",
+      "successorPathId": "agentic-systems-and-mcp",
+      "reason": "Superseded by Frontier Agentic Systems & Model Context Protocol, which carries the MCP and multi-agent orchestration material.",
+      "retiredModuleIds": [
+        "model-context-protocol-tool-interoperability",
+        "agent-orchestration-and-multi-agent-patterns",
+        "mapping-our-orchestration-patterns-onto-named-frameworks",
+        "voice-agents-virtual-instructors-accessible-media"
+      ]
+    },
+    {
+      "pathId": "applied-ai-engineering",
+      "title": "Applied AI Engineering & Retrieval",
+      "successorPathId": "developer-and-practitioner-ai",
+      "reason": "Its surviving subject, embeddings and vector stores, is now vector-embeddings-and-pgvector in Developer & Application AI Engineering.",
+      "retiredModuleIds": [
+        "embeddings-and-vector-stores",
+        "agent-evaluation-and-trajectory-scoring",
+        "p42-create-01a01d34-7009-7adc-8379-9f42f9e47ffa",
+        "p42-create-01a01d34-7143-772b-8799-fcceb0c7a408"
+      ]
+    },
+    {
+      "pathId": "deepseek-in-practice",
+      "title": "DeepSeek in Practice",
+      "successorPathId": "providers-in-practice",
+      "reason": "The per-provider DeepSeek path was withdrawn. Providers in Practice is the surviving path about choosing, comparing and migrating between providers.",
+      "retiredModuleIds": [
+        "navigate-deepseek-ecosystem",
+        "deepseek-reasoning-and-moe-patterns",
+        "deepseek-api-and-cost-optimization"
+      ]
+    },
+    {
+      "pathId": "mistral-in-practice",
+      "title": "Mistral in Practice",
+      "successorPathId": "providers-in-practice",
+      "reason": "The per-provider Mistral path was withdrawn. Providers in Practice is the surviving path about choosing, comparing and migrating between providers.",
+      "retiredModuleIds": [
+        "navigate-mistral-ecosystem",
+        "mistral-function-calling-and-codestral",
+        "mistral-multimodal-and-embeddings"
+      ]
+    },
+    {
+      "pathId": "microsoft-foundry-practice",
+      "title": "Microsoft AI Foundry in Practice",
+      "successorPathId": "providers-in-practice",
+      "reason": "The per-provider Foundry path was withdrawn. Providers in Practice is the surviving path about choosing, comparing and migrating between providers.",
+      "retiredModuleIds": [
+        "p42-create-01a01d34-715c-7e21-8090-3d123eb470f0",
+        "p42-create-01a01d34-70d2-7389-9c19-4358fc25c0cf"
+      ]
+    },
+    {
+      "pathId": "ai-executive-strategy",
+      "title": "AI Strategy & Executive Leadership",
+      "successorPathId": null,
+      "reason": "No surviving path teaches executive AI strategy. Sent to the catalogue index rather than to a path that would not answer the learner's question.",
+      "retiredModuleIds": ["ai-for-executives-leaders-and-decision-makers"]
+    },
+    {
+      "pathId": "discovery",
+      "title": "Newly Discovered Topics",
+      "successorPathId": null,
+      "reason": "A staging bucket for Orchard discoveries, not a taught path. Removed in project42-content 757739b. Sent to the catalogue index.",
+      "retiredModuleIds": [
+        "embeddings-and-vector-stores",
+        "p42-create-01a01d34-70d2-7389-9c19-4358fc25c0cf"
+      ]
+    }
+  ]
+}

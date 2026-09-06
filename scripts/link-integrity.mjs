@@ -6,6 +6,7 @@ import { starterCatalog } from "@project42/platform";
 import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import diagramOverrides from "../config/diagram-catalog-overrides.json" with { type: "json" };
 import instructorRenderingConfig from "../config/instructor-renderings.json" with { type: "json" };
+import retiredPathConfig from "../config/retired-learning-paths.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const defaultBaseUrl = "https://project-42.dev";
@@ -52,6 +53,35 @@ function sourceLabel(reference) {
 const mergedDiagrams = [...new Map(
   [...diagramConfig.diagrams, ...diagramOverrides.diagrams].map((diagram) => [diagram.id, diagram]),
 ).values()];
+
+// Previously published learning-path URLs that now answer with a permanent
+// redirect. They are deliberately not htmlRoutes: the export fetches every
+// htmlRoute and fails on anything that is not a 200, and these never return
+// 200. They are still part of the published surface, so the export has to write
+// something for each of them rather than leaving a hole where a page was.
+export function buildRetiredRouteRedirects(
+  catalog = starterCatalog,
+  retired = retiredPathConfig.retired,
+  catalogueIndex = retiredPathConfig.catalogueIndex,
+) {
+  const redirects = new Map();
+  for (const entry of retired) {
+    const successor = entry.successorPathId
+      ? catalog.paths.find((path) => path.id === entry.successorPathId)
+      : undefined;
+    const pathTarget = successor ? `/learn/${successor.id}` : catalogueIndex;
+    redirects.set(`/learn/${entry.pathId}`, pathTarget);
+    for (const moduleId of entry.retiredModuleIds) {
+      redirects.set(
+        `/learn/${entry.pathId}/${moduleId}`,
+        successor && successor.moduleIds.includes(moduleId)
+          ? `/learn/${successor.id}/${moduleId}`
+          : pathTarget,
+      );
+    }
+  }
+  return redirects;
+}
 
 export function buildRouteInventory(
   catalog = starterCatalog,
@@ -110,6 +140,7 @@ export function buildRouteInventory(
   }
   return {
     htmlRoutes: [...htmlRoutes].sort(),
+    redirectRoutes: [...buildRetiredRouteRedirects(catalog).keys()].sort(),
     endpointRoutes: [
       "/learner-data/policy",
       "/manifest.webmanifest",

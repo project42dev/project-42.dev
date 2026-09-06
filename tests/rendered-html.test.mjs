@@ -3,6 +3,7 @@ import test from "node:test";
 import { defaultLearnerDataPolicy, starterCatalog } from "@project42/platform";
 import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import diagramOverrides from "../config/diagram-catalog-overrides.json" with { type: "json" };
+import { buildRetiredRouteRedirects } from "../scripts/link-integrity.mjs";
 import releaseFacts from "../public/release-facts.json" with { type: "json" };
 import portalConfig from "../project42.config.json" with { type: "json" };
 
@@ -308,6 +309,37 @@ test("publishes an on-demand route only for lessons that were filmed", async () 
   // thirty-nine lessons nobody can watch.
   const unfilmed = await render("/ondemand/ai-foundations/what-ai-does");
   assert.equal(unfilmed.status, 404);
+});
+
+// The catalogue was restructured three times and each restructure changed path
+// IDs. Ten path IDs and the module URLs beneath them were published and then
+// stopped existing. A learner following an old link, or a search result, has to
+// land on the material rather than on a 404.
+test("keeps every previously published learning-path URL alive", async () => {
+  const redirects = buildRetiredRouteRedirects();
+  assert.ok(redirects.size > 0, "retired-path map is empty");
+  for (const [route, target] of redirects) {
+    const response = await render(route);
+    assert.equal(response.status, 308, `${route} must redirect, not 404`);
+    assert.equal(
+      new URL(response.headers.get("location"), "http://localhost").pathname,
+      target,
+      `${route} must redirect to ${target}`,
+    );
+    // The successor has to exist, or the redirect only moves the 404.
+    const landing = await render(target);
+    assert.equal(landing.status, 200, `${target} must resolve`);
+  }
+});
+
+test("still answers 404 for a learning path that was never published", async () => {
+  // The redirect map may not become a catch-all: an ID nobody ever published
+  // is a broken link somewhere, and hiding it behind a redirect makes the
+  // catalogue unfalsifiable.
+  const unknownPath = await render("/learn/no-such-path");
+  assert.equal(unknownPath.status, 404);
+  const unknownModule = await render("/learn/ai-foundations/no-such-module");
+  assert.equal(unknownModule.status, 404);
 });
 
 test("points the header's navigation links to relative routes", async () => {

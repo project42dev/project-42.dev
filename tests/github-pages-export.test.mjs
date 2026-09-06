@@ -7,7 +7,10 @@ import {
   defaultLearnerDataPolicy,
   starterCatalog,
 } from "@project42/platform";
-import { buildRouteInventory } from "../scripts/link-integrity.mjs";
+import {
+  buildRetiredRouteRedirects,
+  buildRouteInventory,
+} from "../scripts/link-integrity.mjs";
 
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const outputRoot = path.join(projectRoot, "dist", "pages");
@@ -27,6 +30,26 @@ test("exports every governed route for GitHub Pages", async () => {
   for (const route of inventory.htmlRoutes) {
     const relative = route === "/" ? "index.html" : `${route.slice(1)}/index.html`;
     await access(path.join(outputRoot, relative));
+  }
+});
+
+test("keeps previously published learning-path URLs alive in the artifact", async () => {
+  // The hosted worker answers a retired path ID with a 308. A static artifact
+  // cannot send a status code, so the export writes the same meta-refresh
+  // document the retired Admin routes get. Without this the Pages copy would
+  // still 404 on every URL the redirect map exists to rescue.
+  const redirects = buildRetiredRouteRedirects(starterCatalog);
+  const manifest = JSON.parse(
+    await readFile(path.join(outputRoot, "pages-manifest.json"), "utf8"),
+  );
+  assert.deepEqual(manifest.redirectRoutes, [...redirects.keys()].sort());
+  for (const [route, target] of redirects) {
+    const html = await readFile(
+      path.join(outputRoot, `${route.slice(1)}`, "index.html"),
+      "utf8",
+    );
+    assert.match(html, new RegExp(`content="0; url=${target}"`));
+    assert.match(html, /name="robots" content="noindex"/);
   }
 });
 
