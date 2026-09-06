@@ -4,12 +4,35 @@ The unified Project 42 public portal. The gateway, learning paths, Field Guide,
 learner profile, and ecosystem pages all use same-origin routes under
 `project-42.dev`. Gallery and Admin remain intentionally separate portals.
 
+## This repository is a deployment, not the application
+
+Branding, configuration and release records live here. The rendering
+application — `app/`, `lib/`, `copy/`, `worker/`, `scripts/`, `tests/` and the
+build configuration — is **product**: it lives in
+[`project42dev/project42-platform`](https://github.com/project42dev/project42-platform)
+under `web/`, and is installed here by `project42-portal materialise`, which
+`postinstall` runs. Those paths are git-ignored build inputs.
+
+- To change a **page, component, style or gate**: change it in the platform and
+  bump the pin in `package.json`.
+- To change **wording**: put the leaf you want into `project42.copy.json`.
+  Anything you leave out keeps the platform's default.
+- To change **appearance**: change `theme` or `layout.defaultPreset` in
+  `project42.config.json`, then `npm run brand:generate`.
+
+`REPO-BOUNDARY.md` has the full inventory. `npm run doctor` reports anything
+this repository is missing.
+
 ## Develop
 
 ```bash
 npm ci
 npm run dev
 ```
+
+`npm run app:materialise` reinstalls the application by hand after a platform
+bump. It refuses to overwrite anything git tracks, so forking a product file is
+a deliberate act rather than an accident.
 
 ## Verify
 
@@ -46,7 +69,7 @@ accessibility, and security contract.
 ## Current ecosystem facts
 
 - Site release `0.19.0`
-- Platform package `0.102.0`
+- Platform package `0.103.0`
 - Content release `0.42.0`
 - 14 learning paths, 94 assessed modules, 91 evidence activities, and 385 reviewed questions
 - 91 practical resources and 4 provider scopes

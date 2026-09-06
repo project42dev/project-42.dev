@@ -1,0 +1,3 @@
+{
+  "$comment": "Override any string from the platform's copy defaults. Leaves you omit keep the shipped wording. The full vocabulary is node_modules/@project42/platform/web/copy/."
+}

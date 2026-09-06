@@ -1,35 +1,49 @@
 # Repo intent — project-42.dev
 
-**The public Project 42 gateway.**
+**One deployment of the Project 42 platform.**
 
 ## What this repo is
 
-Introduces the Project 42 project and routes visitors to the separate Learn and
-Field Guide experiences, while preserving legacy route redirects and a
-consent-based browser progress transfer. The Project 42 ecosystem includes a
-twelve-module Reliable Agent Workflows path and a sixteen-module AI Foundations
-path, with a practical capstone (calibration packages, required operating
-artifacts, evidence mapping, a 100-point rubric, and the Reliable Agent Operator
-badge).
+The owner's own front end. It holds branding, configuration and release records,
+and the rendering application is installed into it from `@project42/platform` at
+`npm install` time by `project42-portal materialise`. Everything a visitor sees
+is served from this single origin: the gateway, `/learn/*`, `/guide/*`,
+`/ondemand/*`, `/diagrams/*`, `/profile` and `/account`, plus permanent
+redirects for every route the earlier subdomain topology published.
 
 ## Shape
 
-- Next.js app (`app/`, `next.config.ts`, `worker/` for edge deployment)
-- `npm run verify` — full/production dependency audits, lint, type, build,
-  rendered-route, link, browser, GitHub Pages, and accessibility checks (see
-  `docs/dependency-security.md`)
+- Tracked: `project42.config.json`, `project42.copy.json`, `config/`,
+  `public/brand/`, the synced Gallery bundles and their lock, generated brand
+  and diagram artifacts, `.github/`, and this repository's governance and
+  release records.
+- Git-ignored and installed: `app/`, `lib/`, `copy/`, `worker/`, `scripts/`
+  (except `mint-github-app-token.mjs`), `tests/` (except `production/`), and the
+  build configuration.
+- `npm run verify` — production audit plus the full `check` chain: theme
+  boundary, token completeness, surface isolation, PWA, diagrams, workflow and
+  documentation governance, release governance, lint, typecheck, build,
+  performance budget, rendered HTML, link integrity, the Playwright browser
+  suite, and the static-export artifact.
 
 ## How it relates to other repos
 
-- Consumes the versioned open-source learning core from
-  **`project42dev/project42-platform`** — this repo is presentation/routing, not
-  the content source
-- Routes to **`learn.project-42.dev`** and **`guide.project-42.dev`**
+- **`project42dev/project42-platform`** — the product. The application, the
+  learning-record and identity contracts, and the `project42-portal` CLI. Pinned
+  by tag in `package.json`.
+- **`project42dev/project42-content`** — the curriculum, consumed by the
+  platform and hash-locked there.
+- **`project42dev/project42-gallery`** — themes and layouts, synced into
+  `public/` and hash-locked in `config/theme-bundles.lock.json`.
+- **`admin.project-42.dev`** — owner administration, deliberately a separate
+  origin.
 
 ## What this repo is not
 
-- Per `REPO-BOUNDARY.md`: not the platform core, not the PMO/ops repo (`project42dev-ops`)
+Not the product. A change to a route, a component, the design system or a gate
+belongs in `project42-platform/web`; see `REPO-BOUNDARY.md`.
 
 ## Status
 
-Active — the public entry point for the whole Project 42 site family.
+Active — the owner's production deployment, and the reference instance the
+scaffolder emits a template of.

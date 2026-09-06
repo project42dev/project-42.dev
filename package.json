@@ -16,6 +16,10 @@
     "node": ">=22.13.0"
   },
   "scripts": {
+    "postinstall": "node node_modules/@project42/platform/bin/project42-portal.mjs materialise",
+    "app:materialise": "node node_modules/@project42/platform/bin/project42-portal.mjs materialise",
+    "doctor": "node node_modules/@project42/platform/bin/project42-portal.mjs doctor",
+    "bootstrap": "npm run themes:sync && npm run facts:generate && npm run brand:generate && npm run releases:generate",
     "themes:sync": "node scripts/sync-gallery-themes.mjs",
     "themes:check": "node scripts/sync-gallery-themes.mjs --check",
     "brand:generate": "node scripts/generate-brand-assets.mjs",
@@ -57,7 +61,7 @@
     "deferrals:check": "node scripts/dated-deferrals.mjs"
   },
   "dependencies": {
-    "@project42/platform": "github:project42dev/project42-platform#v0.102.0",
+    "@project42/platform": "github:project42dev/project42-platform#v0.103.0",
     "framer-motion": "^13.1.1",
     "next": "16.2.11",
     "react": "19.2.8",
@@ -94,8 +98,7 @@
   },
   "type": "module",
   "allowScripts": {
-    "github:project42dev/project42-platform#v0.100.0": true,
-    "puppeteer": false,
-    "github:project42dev/project42-platform#d905f7c70bbb5c01a5830115d91a6ef29464cfd5": true
+    "github:project42dev/project42-platform#v0.103.0": true,
+    "puppeteer": false
   }
 }

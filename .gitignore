@@ -44,3 +44,28 @@ next-env.d.ts
 /.wrangler/
 /outputs/
 /work/
+
+# --- The front-end application, installed from @project42/platform ------------
+# This repository is branding, configuration and release records. The rendering
+# application -- routes, components, the design system, the build toolchain and
+# the gates that police them -- is product, lives in project42-platform/web, and
+# is written here by `project42-portal materialise` from the postinstall hook.
+#
+# These are build inputs, not source. Change them upstream. The materialiser
+# refuses to overwrite anything git tracks, so un-ignoring a path here is also
+# how a deliberate fork is declared -- and it is a fork you then own.
+/app/
+/copy/
+/lib/
+/worker/
+/scripts/*
+!/scripts/mint-github-app-token.mjs
+/tests/*
+!/tests/production/
+/eslint.config.mjs
+/next.config.ts
+/playwright.config.ts
+/playwright.pages.config.ts
+/postcss.config.mjs
+/tsconfig.json
+/vite.config.ts
