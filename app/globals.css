@@ -7132,6 +7132,15 @@ html[data-project42-reduced-motion="true"] *::after {
   max-width: 68ch;
 }
 
+/* The synthetic-instructor disclosure. It comes from the curriculum's own
+   rendering manifest, not from page copy, so it reads at body weight rather
+   than as fine print. */
+.lesson-video-disclosure {
+  font-size: 0.95rem;
+  margin: 1rem 0 0;
+  max-width: 68ch;
+}
+
 .class-outline {
   margin: 2.5rem 0;
 }
