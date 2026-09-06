@@ -39,6 +39,31 @@ export default function LearnPage() {
         curricula.
       */}
       <header className="page-hero landing-hero shell">
+        {/*
+          The journey art leads the header rather than trailing it: .page-hero
+          styles its lede with "> p:last-child", so anything appended after the
+          paragraph silently strips the lede's treatment. Commit 4446a44
+          replaced this page's two-column hero with the chooser and dropped the
+          element, leaving its stylesheet, the Galactic bundle's
+          --p42-hero-image binding, and the conformance assertion behind with
+          nothing to render. The selected theme paints its hero image over it;
+          the orbit children are what the other bundles show.
+        */}
+        <div
+          className="hero-map"
+          role="img"
+          aria-label="Learning journey preview: understand, practise, prove it"
+        >
+          <div className="map-orbit map-orbit-one" />
+          <div className="map-orbit map-orbit-two" />
+          <div className="map-node map-node-start"><span>01</span>Understand</div>
+          <div className="map-node map-node-build"><span>02</span>Practice</div>
+          <div className="map-node map-node-prove"><span>03</span>Prove it</div>
+          <div className="map-center">
+            <span className="map-mark">42</span>
+            <small>Your path</small>
+          </div>
+        </div>
         <p className="eyebrow">Project 42 Academy</p>
         <h1>Two ways to take the same course.</h1>
         <p>

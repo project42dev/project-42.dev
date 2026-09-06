@@ -93,6 +93,14 @@ test("uses only Galactic artwork and compact shell treatments on Learn", async (
     { width: 390, height: 844 },
   ]) {
     await page.setViewportSize(viewport);
+    // Pointing the element at the artwork is not the same as the artwork
+    // arriving: the theme hero images 404ed behind a correct-looking
+    // background-image for five of the six bundles once already.
+    const heroArtwork = page.waitForResponse(
+      (response) =>
+        new RegExp(`/themes/${selectedTheme}/hero\\.png`).test(response.url()),
+      { timeout: 15_000 },
+    );
     await page.goto("/learn");
 
     const hero = page.locator(".hero-map");
@@ -100,6 +108,7 @@ test("uses only Galactic artwork and compact shell treatments on Learn", async (
       "background-image",
       new RegExp(`/themes/${selectedTheme}/hero\\.png`),
     );
+    expect((await heroArtwork).status()).toBe(200);
     await expect(hero.locator(":scope > *").first()).toHaveCSS("opacity", "0");
 
     const decorations = await page.locator(".path-card").evaluateAll((cards) =>

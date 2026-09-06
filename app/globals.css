@@ -6991,6 +6991,11 @@ html[data-project42-reduced-motion="true"] *::after {
   padding-block: 4.5rem 4rem;
 }
 
+/* The journey art leads the Learn header so the lede stays the header's last
+   child, which is what .page-hero > p:last-child styles. */
+.landing-hero > .hero-map {
+  margin-bottom: 2.75rem;
+}
 
 .learn-format-switch {
   border-top: 1px solid var(--line, #d6dce4);
