@@ -1,24 +1,45 @@
-import instructorRenderingConfig from "../../config/instructor-renderings.json";
+import {
+  getInstructorRendering as getCurriculumRendering,
+  instructorRenderings as curriculumRenderings,
+  type InstructorRenderingManifest,
+} from "@project42/platform";
 
 // Which instructor-led lessons have actually been rendered.
 //
-// This is deliberately a short, explicit list rather than a glob over
-// /public/preview or an assumption that "a class script exists" means "a video
-// exists". Forty modules carry a class script and exactly one has been filmed;
-// a page that inferred availability from the script would advertise
-// thirty-nine lessons nobody can watch.
+// This list is no longer kept here. It used to live in
+// config/instructor-renderings.json beside a TypeScript mirror of its shape,
+// which made "which lessons have been filmed" a fact about this deployment's
+// front end. ADR-0020 settles that instructor-led delivery is a *rendering of
+// the same content item*, not a second catalogue, so it is a fact about the
+// curriculum. project42-content now carries each manifest beside the class
+// script it was rendered from, the platform validates it against that script
+// and exports it, and this file only adapts it for the page.
+//
+// The rule the old list existed to enforce still holds, and now holds upstream:
+// a class script existing does not mean a video exists. Forty modules carry a
+// class script and exactly one has been filmed. A page that inferred
+// availability from the script would advertise thirty-nine lessons nobody can
+// watch.
 //
 // The platform ships a full VirtualInstructorMediaManifest contract for
 // released lessons, which requires a class-script hash, model and voice profile
-// refs, pronunciation-review evidence, and a disclosure string. This render has
-// none of those yet - the class script itself is still releaseStatus "draft" -
-// so claiming that contract here would assert provenance the artifact does not
-// have. When a lesson is produced properly, its manifest becomes the source
-// this list is generated from.
+// refs, pronunciation-review evidence, and four sign-offs. This render has none
+// of those yet - the class script itself is still releaseStatus "draft" - so it
+// is published under the explicit preview tier rather than a contract it cannot
+// meet.
+
+/** Where this deployment serves rendered lessons from. */
+const MEDIA_BASE = "/preview/";
+
 export interface InstructorRendering {
   moduleId: string;
   pathId: string;
-  /** Path under /public. Self-hosted with the site, nothing that expires. */
+  /**
+   * Path under /public, resolved here from the curriculum's bare media key.
+   * The key is a filename, not a URL: the video is tens of megabytes of derived
+   * binary and does not belong in a hash-locked text curriculum, so where it is
+   * served from is this deployment's decision and nobody else's.
+   */
   src: string;
   /** Seconds of video that exist, which is not the planned lesson length. */
   renderedSeconds: number;
@@ -36,22 +57,35 @@ export interface InstructorRendering {
    * lesson otherwise reads as a broken video rather than a preview.
    */
   partial: boolean;
+  /** What the learner is told about the synthetic instructor. */
+  disclosure: string;
 }
 
-// Held in config/ rather than in this file so the route inventory that drives
-// the link check and the GitHub Pages export can read the same list. A
-// TypeScript constant would have forced the build scripts to guess which
-// lessons exist, and a guess there publishes pages that 404.
+function adapt(manifest: InstructorRenderingManifest): InstructorRendering {
+  return {
+    moduleId: manifest.moduleId,
+    pathId: manifest.pathId,
+    src: `${MEDIA_BASE}${manifest.media.key}`,
+    renderedSeconds: manifest.renderedSeconds,
+    renderedSegments: manifest.renderedSegments,
+    avatar: manifest.production.avatar,
+    voice: manifest.production.voice,
+    renderedAt: manifest.renderedAt,
+    captions: manifest.media.captions,
+    partial: manifest.releaseStatus === "preview",
+    disclosure: manifest.production.disclosure,
+  };
+}
+
 export const instructorRenderings: InstructorRendering[] = Object.freeze(
-  instructorRenderingConfig.renderings as InstructorRendering[],
+  curriculumRenderings.map(adapt),
 ) as InstructorRendering[];
 
 export function getInstructorRendering(
   moduleId: string,
 ): InstructorRendering | undefined {
-  return instructorRenderings.find(
-    (rendering) => rendering.moduleId === moduleId,
-  );
+  const manifest = getCurriculumRendering(moduleId);
+  return manifest ? adapt(manifest) : undefined;
 }
 
 export function formatLessonLength(totalSeconds: number): string {

@@ -135,6 +135,11 @@ export default async function OnDemandLessonPage({ params }: LessonPageProps) {
                 .
               </p>
             ) : null}
+            {/* The disclosure travels with the rendering rather than being page
+                copy, so a learner is told the instructor is synthetic wherever
+                the lesson is served and the curriculum's own validator can
+                require it. */}
+            <p className="lesson-video-note">{rendering.disclosure}</p>
             <p className="lesson-video-meta">
               Captions {rendering.captions === "embedded" ? "embedded" : "provided"}{" "}
               · presenter {rendering.avatar} · voice {rendering.voice} · rendered{" "}

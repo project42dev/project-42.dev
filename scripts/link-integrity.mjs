@@ -2,10 +2,9 @@ import { access, readFile } from "node:fs/promises";
 import path from "node:path";
 import process from "node:process";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { starterCatalog } from "@project42/platform";
+import { instructorRenderings as curriculumRenderings, starterCatalog } from "@project42/platform";
 import diagramConfig from "../node_modules/@project42/platform/content/diagrams/catalogue.json" with { type: "json" };
 import diagramOverrides from "../config/diagram-catalog-overrides.json" with { type: "json" };
-import instructorRenderingConfig from "../config/instructor-renderings.json" with { type: "json" };
 import retiredPathConfig from "../config/retired-learning-paths.json" with { type: "json" };
 
 const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -86,7 +85,7 @@ export function buildRetiredRouteRedirects(
 export function buildRouteInventory(
   catalog = starterCatalog,
   diagrams = mergedDiagrams,
-  instructorRenderings = instructorRenderingConfig.renderings,
+  instructorRenderings = curriculumRenderings,
 ) {
   const htmlRoutes = new Set([
     "/",
