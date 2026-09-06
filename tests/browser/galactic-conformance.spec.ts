@@ -5,6 +5,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 import portalConfig from "../../project42.config.json" with { type: "json" };
+import { expectColor, expectNotColor } from "./support/colors";
 
 // Expected token values come from the SELECTED theme's own manifest rather
 // than a hardcoded Galactic palette. Those literals previously pinned the
@@ -128,15 +129,18 @@ test("uses Galactic presentation without Gallery specimen content", async ({
     "background-image",
     new RegExp(`/themes/${selectedTheme}/hero\\.png`),
   );
-  await expect(page.locator(".portal-floating-card")).toHaveCSS(
+  await expectColor(
+    page.locator(".portal-floating-card"),
     "background-color",
     "rgba(13, 20, 36, 0.94)",
   );
-  await expect(page.locator(".portal-floating-card")).toHaveCSS(
+  await expectColor(
+    page.locator(".portal-floating-card"),
     "border-top-color",
     "rgba(245, 158, 11, 0.45)",
   );
-  await expect(page.locator(".portal-actions a").first()).toHaveCSS(
+  await expectColor(
+    page.locator(".portal-actions a").first(),
     "background-color",
     "rgb(245, 158, 11)",
   );
@@ -199,7 +203,8 @@ test("discards a stale browser theme in favour of the configured theme", async (
   // The banner uses a surface background, not the accent. Filling a whole
   // section with the accent colour dropped a solid slab into the page that
   // read as a mismatched box; the accent is now a soft tint over the surface.
-  await expect(page.locator(".open-source-banner")).not.toHaveCSS(
+  await expectNotColor(
+    page.locator(".open-source-banner"),
     "background-color",
     "rgb(16, 185, 129)",
   );
@@ -287,14 +292,15 @@ test("keeps every public route family inside the Galactic presentation boundary"
         "data-theme",
         selectedTheme,
       );
-      await expect(page.locator("body"), route).toHaveCSS(
-        "background-color",
-        "rgb(9, 13, 22)",
-      );
+      await expectColor(page.locator("body"), "background-color", "rgb(9, 13, 22)", {
+        message: route,
+      });
       await expect(page.locator("main"), route).toBeVisible();
-      await expect(page.locator(".site-header"), route).toHaveCSS(
+      await expectColor(
+        page.locator(".site-header"),
         "background-color",
         "rgba(9, 13, 22, 0.96)",
+        { message: route },
       );
 
       const presentation = await page.evaluate(() => {
@@ -326,7 +332,7 @@ test("preserves accessible focus, hover, reduced-motion, and contrast states", a
   const primaryAction = page.locator(".portal-actions a").first();
 
   await primaryAction.hover();
-  await expect(primaryAction).toHaveCSS("background-color", "rgb(251, 191, 36)");
+  await expectColor(primaryAction, "background-color", "rgb(251, 191, 36)");
 
   await primaryAction.focus();
   await expect(primaryAction).toBeFocused();
