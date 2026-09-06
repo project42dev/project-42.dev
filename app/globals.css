@@ -4843,6 +4843,9 @@ html[data-theme="admin-control"],
   --p42-overlay-border: rgba(255, 255, 255, 0.2);
   --p42-shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
   --p42-shadow-raised: 0 12px 30px rgba(0, 0, 0, 0.55);
+  /* Published by every Gallery bundle from the theme-bundle sync onward;
+     admin must pin it too or a theme shadow colour reaches the console. */
+  --p42-shadow-color: #000000;
   --p42-font-heading: Inter, ui-sans-serif, system-ui, sans-serif;
   --ink: #f8fafc;
   --ink-soft: #94a3b8;
@@ -6988,6 +6991,7 @@ html[data-project42-reduced-motion="true"] *::after {
   padding-block: 4.5rem 4rem;
 }
 
+
 .learn-format-switch {
   border-top: 1px solid var(--line, #d6dce4);
   color: var(--muted, #5b6470);
@@ -7208,6 +7212,12 @@ html[data-project42-reduced-motion="true"] *::after {
 
 .step-badge.overview {
   background: var(--slate-600);
+  /* The base badge takes the theme ink chosen for the primary fill. This
+     variant replaces that fill with a fixed slate from the diagram's own
+     palette, so it must state the ink belonging to that fill rather than
+     carry over one measured against a different background. #f8fafc on
+     #475569 is 7.24:1; the ink it was inheriting measured 2.56:1. */
+  color: var(--slate-50);
 }
 
 .diagram-progress-track {
