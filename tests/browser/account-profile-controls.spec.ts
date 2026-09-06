@@ -176,6 +176,19 @@ test.describe("hosted profile and learner-data controls", () => {
     ]);
 
 
+    // Capture the deployment theme's own ink before any preference is applied.
+    // Asserting a literal here silently binds the test to whichever theme was
+    // configured when it was written: the increase-contrast override sets
+    // --ink to #000, so a literal "#000" only passed while the configured
+    // theme also happened to use black ink. The contract is that clearing the
+    // preference restores the theme's value, not that the value is black.
+    const baselineInk = await page.evaluate(() =>
+      getComputedStyle(document.documentElement)
+        .getPropertyValue("--ink")
+        .trim(),
+    );
+    expect(baselineInk).not.toBe("");
+
     await page.getByLabel("Language tag for dates and times").fill("en-GB");
     await page.getByLabel("Time zone").fill("America/Los_Angeles");
     await page.getByLabel("Always reduce motion").check();
@@ -234,7 +247,7 @@ test.describe("hosted profile and learner-data controls", () => {
           .getPropertyValue("--ink")
           .trim(),
       ),
-    ).toBe("#000");
+    ).toBe(baselineInk);
 
     const accessibility = await new AxeBuilder({ page })
       .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"])

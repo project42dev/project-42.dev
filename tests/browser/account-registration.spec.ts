@@ -128,27 +128,51 @@ test.describe("learner account request and private status receipt", () => {
     expect(accessibility.violations).toEqual([]);
   });
 
-  test("allows public catalog browsing but requires sign-in for module participation", async ({
+  // This test used to assert that opening a module while signed out bounced
+  // the browser through /v1/auth/start. That is no longer how the portal
+  // works, and the assertion had gone unenforced because CI never ran the
+  // browser suite: module pages are public reading, and it is *participation*
+  // - answering a knowledge check and having the result recorded - that needs
+  // an approved account. It also read the catalog at /learn, which is now the
+  // self-paced/instructor chooser; the catalog is at /learn/paths.
+  //
+  // What is checked here is therefore the real boundary: the catalog and a
+  // module render for an anonymous browser, no sign-in hand-off is forced on
+  // them, and nothing is written to the hosted account while they read. The
+  // signed-in scoring path is covered by foundations-journey.spec.ts.
+  test("lets an anonymous browser read the catalog and a module without a sign-in hand-off or a hosted write", async ({
     page,
   }) => {
+    const authStarts: string[] = [];
+    const hostedWrites: string[] = [];
+    page.on("request", (request) => {
+      const url = request.url();
+      if (!apiOrigin || !url.startsWith(apiOrigin)) return;
+      if (new URL(url).pathname === "/v1/auth/start") authStarts.push(url);
+      if (!["GET", "HEAD", "OPTIONS"].includes(request.method())) {
+        hostedWrites.push(`${request.method()} ${new URL(url).pathname}`);
+      }
+    });
+
     await installRegistrationApi(page, undefined);
-    await page.goto("/learn");
+    await page.goto("/learn/paths");
     await expect(
       page.getByRole("heading", { name: /learning paths with a clear next step/i }),
     ).toBeVisible();
 
-    const signIn = page.waitForRequest(`${apiOrigin}/v1/auth/start**`);
     await page.goto("/learn/ai-foundations/research-with-evidence");
-    const request = await signIn;
-    const returnTo = new URL(
-      new URL(request.url()).searchParams.get("return_to") ?? "",
-    );
-    // Next.js may include a trailing slash; normalize before comparing.
-    const normalized = returnTo.pathname.replace(/\/$/, "");
-    expect(normalized).toBe("/learn/ai-foundations/research-with-evidence");
     await expect(
-      page.getByRole("heading", { name: "Research with evidence" }),
-    ).toHaveCount(0);
+      page.getByRole("heading", { level: 1, name: /research with evidence/i }),
+    ).toBeVisible();
+
+    // Participation is the gated part, and it is not reachable without first
+    // answering: the submit control stays inert for a reader.
+    await expect(
+      page.getByRole("button", { name: "Check my answers" }),
+    ).toBeDisabled();
+
+    expect(authStarts).toEqual([]);
+    expect(hostedWrites).toEqual([]);
   });
 
   test("renders pending status from the HttpOnly receipt without PII or polling", async ({
@@ -248,7 +272,13 @@ test.describe("learner account request and private status receipt", () => {
     page,
   }) => {
     await installRegistrationApi(page, undefined);
-    await page.goto("/account?auth=pending");
+    // AuthProvider maps a *pending* callback whose status check 401s to the
+    // request form (phase "none") on purpose - a brand-new requester is not
+    // told their receipt is broken. The expired-receipt card is reached by a
+    // browser that already holds a receipt, which here is the rejected
+    // outcome. See the note in the report: whether the pending mapping should
+    // also surface this card is an open product question, not a test detail.
+    await page.goto("/account?auth=rejected");
     await expect(
       page.getByRole("heading", {
         name: "This private request receipt is no longer valid",

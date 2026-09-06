@@ -360,19 +360,50 @@ test("preserves accessible focus, hover, reduced-motion, and contrast states", a
   expect(accessibility.violations).toEqual([]);
 });
 
+// This test used to follow the redirect all the way to
+// project42dev.ciamlogin.com and assert the authorize URL. That only worked
+// because the browser reached the *live* account API and the *live* identity
+// provider: response_type and redirect_uri on that authorize URL are the
+// account API's contract, not the portal's, and the portal cannot produce
+// them without either a production round trip or a stub that would merely
+// assert itself. The API's side of the handshake is covered offline by the
+// OIDC canary in the ops post-deployment smoke (Invoke-PostDeploymentSmoke:
+// oidcStartStatus 302, secure session retained, invalid code rejected).
+//
+// What the portal owns, and what this now checks hermetically, is the
+// boundary itself: a protected route must never render its own content, and
+// must hand the browser to the account API's auth-start endpoint over HTTPS
+// with a return target pointing back at that same route.
 test("preserves the protected-profile authentication boundary", async ({ page }) => {
+  const apiOrigin = process.env.NEXT_PUBLIC_PROJECT42_API_ORIGIN;
+  test.skip(
+    !apiOrigin,
+    "The authentication boundary requires account-API configuration.",
+  );
+
   for (const route of protectedRouteFamilies) {
+    // Hold the hand-off at the account API so the run never depends on
+    // identity-provider DNS. The request the portal makes is the assertion.
+    await page.route(`${apiOrigin}/v1/auth/start**`, async (routeCall) => {
+      await routeCall.fulfill({
+        status: 200,
+        contentType: "text/html",
+        body: "<!doctype html><title>identity provider</title>",
+      });
+    });
+    const authStart = page.waitForRequest(`${apiOrigin}/v1/auth/start**`);
+
     await page.goto(route);
-    await page.waitForURL(/project42dev\.ciamlogin\.com\/.*\/oauth2\/v2\.0\/authorize/);
+    const startUrl = new URL((await authStart).url());
 
-    const authorizationUrl = new URL(page.url());
-    expect(authorizationUrl.protocol).toBe("https:");
-    expect(authorizationUrl.hostname).toBe("project42dev.ciamlogin.com");
-    expect(authorizationUrl.searchParams.get("response_type")).toBe("code");
+    expect(startUrl.protocol).toBe("https:");
+    expect(startUrl.pathname).toBe("/v1/auth/start");
 
-    const returnUrl = authorizationUrl.searchParams.get("redirect_uri");
-    expect(returnUrl).toBeTruthy();
-    expect(new URL(returnUrl!).protocol).toBe("https:");
+    const returnTo = startUrl.searchParams.get("return_to");
+    expect(returnTo).toBeTruthy();
+    expect(new URL(returnTo!).pathname).toBe(route);
+
+    await page.unroute(`${apiOrigin}/v1/auth/start**`);
   }
 });
 

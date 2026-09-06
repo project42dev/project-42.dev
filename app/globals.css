@@ -4864,10 +4864,41 @@ html[data-theme="admin-control"],
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.7);
 }
 
+/* Forced colours replace the palette outright. The block above pins the whole
+   --p42-* vocabulary to literal dark-console values, and core CSS reads those
+   tokens directly, so resetting only the legacy --ink/--paper aliases left the
+   header, hero, eyebrow, brand, footer, primary button and account-state text
+   painting console slate (#f8fafc, #e2e8f0, #94a3b8, #38bdf8) onto the forced
+   Canvas background - 280 axe colour-contrast violations at ratios near 1:1.
+   Everything the console draws text or a surface from has to yield to the
+   system palette here, not just the aliases. */
 @media (forced-colors: active){
   html:has(.admin-portal-root),
   body:has(.admin-portal-root),
-  .admin-portal-root {
+  .admin-portal-root,
+  html[data-theme="admin-control"],
+  [data-theme="admin-control"] {
+    --p42-bg: Canvas;
+    --p42-surface: Canvas;
+    --p42-surface-card: Canvas;
+    --p42-surface-elevated: Canvas;
+    --p42-surface-code: Canvas;
+    --p42-card-border: CanvasText;
+    --p42-border-soft: CanvasText;
+    --p42-primary: LinkText;
+    --p42-primary-fg: Canvas;
+    --p42-primary-hover: LinkText;
+    --p42-accent: LinkText;
+    --p42-accent-fg: Canvas;
+    --p42-text-title: CanvasText;
+    --p42-text-body: CanvasText;
+    --p42-text-muted: CanvasText;
+    --p42-eyebrow: CanvasText;
+    --p42-secondary-btn-bg: Canvas;
+    --p42-secondary-btn-fg: CanvasText;
+    --p42-secondary-btn-border: CanvasText;
+    --p42-interactive-muted: Canvas;
+    --p42-hero-image: none;
     --ink: CanvasText;
     --ink-soft: CanvasText;
     --paper: Canvas;
