@@ -1,7 +1,7 @@
 {
   "$schemaVersion": 1,
   "measuredOn": "2026-09-06",
-  "measuredAt": "portal v0.19.0, platform v0.101.0, theme 06-galactic-guide",
+  "measuredAt": "portal v0.19.0, platform v0.103.5, theme 06-galactic-guide, Gallery ae9bfaa",
   "note": "Budgets are set from what the build actually produces today plus a stated margin. A budget nobody can meet gets disabled, so the margins are real, and each one says what it is protecting against. Re-measure and raise deliberately, in a reviewed change, rather than nudging a number to make CI green.",
   "budgets": [
     {
@@ -15,10 +15,10 @@
     {
       "id": "client-css-bytes",
       "label": "Total client CSS",
-      "measured": 166741,
-      "limit": 200000,
-      "marginPercent": 20,
-      "reasoning": "CSS is 163 KiB, dominated by the single layout stylesheet. It grows in small increments as components are themed, and the token work already removed the duplication that would drive it up sharply. A 20% margin covers a themed feature or two; a jump past it means either a second framework or the theme boundary leaking back into core, both of which are exactly what the theme-boundary and token gates exist to stop."
+      "measured": 219875,
+      "limit": 280000,
+      "marginPercent": 27,
+      "reasoning": "CSS is 214.7 KiB on disk, but that is not what a visitor downloads. A page loads the core sheet (129,080 bytes) plus the selected theme's tokens and components and the selected layout: 156,560 bytes on the critical path today. The other five theme bundles and two layout bundles are published so a deployment can switch to them, and are never fetched by anyone who does not. Re-measured after syncing Gallery ae9bfaa: the five unselected bundles were 66-75 byte stubs under the previous pin and are now complete treatments, which moved this number by 57,158 bytes while moving the critical path by 5,821. The limit is raised to cover the published set with room for a seventh theme, because a theme this deployment does not select must not be able to fail its build. What this gate protects against - a second framework, or the theme boundary leaking back into core - lands in the core sheet, and the 27% margin still fails loudly on a step change there."
     },
     {
       "id": "largest-chunk-bytes",

@@ -1,1 +1,231 @@
-/* Optional public-portal component treatments for Learning Portal. */
+/* Project 42 component treatment -- Learning Portal.
+ *
+ * Character: a staircase you can see the whole of. Warm, plainly lit,
+ * completely flat -- progress is shown by position and rule weight, never by
+ * shadow or glow, because nothing about this brand should look like a trick.
+ *
+ * Structural signature
+ *   density   comfortable, slightly tighter than the layout default
+ *   corners   modest and asymmetric -- square where a card meets its rule
+ *   borders   one heavy step-rule on the inline start edge, hairline elsewhere
+ *   emphasis  weight and position; every shadow in the theme is removed
+ *   eyebrow   a solid filled chip, the doorway sign above each step
+ *
+ * Selectors name the portal's stable component classes first and the Gallery
+ * specimen's equivalent second. Colour arrives only through var(--p42-*).
+ */
+
+html[data-theme="02-learning-portal"] .path-card,
+html[data-theme="02-learning-portal"] .pillar-card,
+html[data-theme="02-learning-portal"] .catalog-card,
+html[data-theme="02-learning-portal"] .guide-card,
+html[data-theme="02-learning-portal"] .resource-card,
+html[data-theme="02-learning-portal"] .specimen-card,
+html[data-theme="02-learning-portal"] .specimen-hero-card {
+  border: 1px solid color-mix(in srgb, var(--p42-text-title) 12%, transparent);
+  border-inline-start: var(--p42-space-xs) solid var(--p42-primary);
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  border-start-end-radius: var(--p42-radius-small);
+  border-end-end-radius: var(--p42-radius-small);
+  padding: calc(var(--p42-card-padding) * 0.9) calc(var(--p42-card-padding) * 1.05);
+  box-shadow: none;
+}
+
+html[data-theme="02-learning-portal"] .diagram-card,
+html[data-theme="02-learning-portal"] .specimen-card-raised {
+  border-inline-start-color: var(--p42-accent);
+}
+
+/* Each card is a step, so it carries a rule under its heading that runs the
+   full measure -- the tread of the stair. */
+html[data-theme="02-learning-portal"] .path-card h3,
+html[data-theme="02-learning-portal"] .pillar-card h3,
+html[data-theme="02-learning-portal"] .specimen-card h3 {
+  padding-bottom: var(--p42-space-sm);
+  border-bottom: 2px solid color-mix(in srgb, var(--p42-primary) 25%, transparent);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+html[data-theme="02-learning-portal"] .eyebrow,
+html[data-theme="02-learning-portal"] .specimen-eyebrow {
+  display: inline-block;
+  background: var(--p42-primary);
+  color: var(--p42-primary-fg);
+  padding: var(--p42-space-2xs) var(--p42-space-sm);
+  border-radius: var(--p42-radius-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+html[data-theme="02-learning-portal"] .card-index,
+html[data-theme="02-learning-portal"] .specimen-badge {
+  background: transparent;
+  border: 2px solid color-mix(in srgb, var(--p42-primary) 45%, transparent);
+  border-radius: var(--p42-radius-small);
+  padding: var(--p42-space-2xs) var(--p42-space-sm);
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+/* Buttons are doorways: rectangular, wide, with a heavy underline so the
+   affordance survives a flat surface with no shadow anywhere. */
+html[data-theme="02-learning-portal"] .portal-actions a,
+html[data-theme="02-learning-portal"] .header-action,
+html[data-theme="02-learning-portal"] .button-secondary,
+html[data-theme="02-learning-portal"] .specimen-btn {
+  border-radius: var(--p42-radius-small);
+  min-height: calc(var(--p42-control-height) * 1.05);
+  padding-inline: calc(var(--p42-control-height) * 0.7);
+  border-bottom: 3px solid color-mix(in srgb, var(--p42-text-title) 30%, transparent);
+  box-shadow: none;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+html[data-theme="02-learning-portal"] .specimen-btn-quiet {
+  border-bottom-color: var(--p42-primary);
+}
+
+html[data-theme="02-learning-portal"] .provider-section,
+html[data-theme="02-learning-portal"] .self-host-section,
+html[data-theme="02-learning-portal"] .lesson-main,
+html[data-theme="02-learning-portal"] .specimen-panel {
+  border-radius: var(--p42-radius-small);
+  border: 1px solid color-mix(in srgb, var(--p42-text-title) 12%, transparent);
+  border-top: var(--p42-space-2xs) solid var(--p42-accent);
+  padding: calc(var(--p42-space-xl) * 0.95);
+}
+
+html[data-theme="02-learning-portal"] .lesson-callout,
+html[data-theme="02-learning-portal"] .specimen-callout {
+  border-radius: 0;
+  border-width: 0 0 0 var(--p42-space-xs);
+  padding: var(--p42-space-md) var(--p42-space-lg);
+  font-weight: 500;
+}
+
+html[data-theme="02-learning-portal"] .specimen-hero {
+  border-radius: var(--p42-radius-small);
+  box-shadow: none;
+  border: 1px solid color-mix(in srgb, var(--p42-text-title) 12%, transparent);
+  padding: calc(var(--p42-space-2xl) * 1.1) var(--p42-space-xl);
+}
+
+html[data-theme="02-learning-portal"] .specimen-hero h1,
+html[data-theme="02-learning-portal"] .specimen-section h2 {
+  letter-spacing: -0.015em;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+/* Two wide steps rather than three narrow ones: this brand shows fewer things
+   at once and shows them larger. */
+html[data-theme="02-learning-portal"] .specimen-grid {
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--p42-space-md);
+}
+
+html[data-theme="02-learning-portal"] .specimen-overlay {
+  border-radius: var(--p42-radius-small);
+  box-shadow: none;
+}
+
+html[data-theme="02-learning-portal"] .specimen-code {
+  border-radius: 0;
+  border-inline-start: var(--p42-space-2xs) solid var(--p42-accent);
+  padding: var(--p42-space-md) var(--p42-space-lg);
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Experience pass 2026-09-06 (docs/EXPERIENCE-WALK-2026-09-06.md).
+ * ------------------------------------------------------------------------ */
+
+/* Tracking belongs to the ramp step, not to the component. The portal sets a
+   display-grade em value on every heading regardless of the size it renders
+   at, so a section heading at ~29px on a phone carries the tracking of a hero
+   at ~100px on a desktop -- that is the general case of the h2 collision, not
+   one bad rule. Bind each heading family to the layout's track token for its
+   step, so tracking now tightens as the step grows and a layout switch moves
+   the whole ramp. The specimen's ramp element is named in the same rule so
+   the matrix previews the change. */
+
+html[data-theme="02-learning-portal"] .hero h1,
+html[data-theme="02-learning-portal"] .page-hero h1,
+html[data-theme="02-learning-portal"] .path-hero h1,
+html[data-theme="02-learning-portal"] .lesson-hero h1,
+html[data-theme="02-learning-portal"] .resource-detail-hero h1,
+html[data-theme="02-learning-portal"] .diagram-detail-hero h1,
+html[data-theme="02-learning-portal"] .not-found h1,
+html[data-theme="02-learning-portal"] .ramp-5 {
+  letter-spacing: var(--p42-track-5);
+}
+
+html[data-theme="02-learning-portal"] .provider-section h2,
+html[data-theme="02-learning-portal"] .policy-section-heading h2,
+html[data-theme="02-learning-portal"] .future-platform-banner h2,
+html[data-theme="02-learning-portal"] .open-source-banner h2,
+html[data-theme="02-learning-portal"] .check-heading h2,
+html[data-theme="02-learning-portal"] .ramp-4 {
+  letter-spacing: var(--p42-track-4);
+}
+
+html[data-theme="02-learning-portal"] .lesson-block h2,
+html[data-theme="02-learning-portal"] .comparison-heading h2,
+html[data-theme="02-learning-portal"] .capstone-heading h2,
+html[data-theme="02-learning-portal"] .legal-review-notice h2,
+html[data-theme="02-learning-portal"] .policy-status h2,
+html[data-theme="02-learning-portal"] .policy-machine-readable h2,
+html[data-theme="02-learning-portal"] .diagram-explanation-grid h2,
+html[data-theme="02-learning-portal"] .profile-identity h2,
+html[data-theme="02-learning-portal"] .focus-area-header h2,
+html[data-theme="02-learning-portal"] .pillar-card h3,
+html[data-theme="02-learning-portal"] .ramp-3 {
+  letter-spacing: var(--p42-track-3);
+}
+
+html[data-theme="02-learning-portal"] .learning-path-row h2,
+html[data-theme="02-learning-portal"] .resource-card h2,
+html[data-theme="02-learning-portal"] .about-grid h2,
+html[data-theme="02-learning-portal"] .sources h2,
+html[data-theme="02-learning-portal"] .diagram-card h2,
+html[data-theme="02-learning-portal"] .release-entry-head h2,
+html[data-theme="02-learning-portal"] .path-card h3,
+html[data-theme="02-learning-portal"] .ramp-2 {
+  letter-spacing: var(--p42-track-2);
+}
+
+/* On the paths index and the on-demand index, the heading that names a focus
+   area renders smaller than every path heading nested inside it. The child
+   outranks its parent, so the page stops telling you where you are. Restate
+   both against the layout's ramp, group above item. */
+
+html[data-theme="02-learning-portal"] .focus-area-header h2 {
+  font-size: var(--p42-step-3);
+}
+
+html[data-theme="02-learning-portal"] .learning-path-row h2 {
+  font-size: var(--p42-step-2);
+}
+
+/* The forward step is the quietest thing on the page. "Begin ->" on a module
+   row is --p42-text-muted, and "Open ->" on a resource card inherits body
+   colour because the portal sets a { color: inherit }. Both are the one
+   control that moves a reader onward. Give them the strongest text emphasis
+   the contract guarantees on these surfaces, and let the resource link carry
+   a rule so it reads as a link rather than as bold copy. A completed module
+   keeps its success colour. */
+
+html[data-theme="02-learning-portal"] .module-list li:not(.module-complete) .module-state,
+html[data-theme="02-learning-portal"] .diagram-next a,
+html[data-theme="02-learning-portal"] .resource-foot a {
+  color: var(--p42-text-title);
+}
+
+html[data-theme="02-learning-portal"] .resource-foot a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}

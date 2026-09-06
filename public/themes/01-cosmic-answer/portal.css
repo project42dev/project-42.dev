@@ -1,1 +1,261 @@
-/* Optional public-portal component treatments for Cosmic Answer. */
+/* Project 42 component treatment -- Cosmic Answer.
+ *
+ * Character: an observatory. Open inquiry rendered as deep space and soft
+ * light. Nothing has a hard edge; emphasis arrives as glow rather than weight.
+ *
+ * Structural signature
+ *   density   airy -- padding runs above the layout's own card padding
+ *   corners   very round, radius pushed past the layout value
+ *   borders   luminous hairlines, doubled by an inset ring
+ *   emphasis  halo and lift, never rules or bands
+ *   eyebrow   wide-tracked starlight label with a leading dot
+ *
+ * Selectors name the portal's stable component classes first and the Gallery
+ * specimen's equivalent second, so the same treatment is what the preview
+ * matrix renders and what the portal ships. Colour arrives only through
+ * var(--p42-*); structure is expressed relative to the layout tokens so a
+ * layout switch still moves it.
+ */
+
+html[data-theme="01-cosmic-answer"] .path-card,
+html[data-theme="01-cosmic-answer"] .pillar-card,
+html[data-theme="01-cosmic-answer"] .catalog-card,
+html[data-theme="01-cosmic-answer"] .guide-card,
+html[data-theme="01-cosmic-answer"] .resource-card,
+html[data-theme="01-cosmic-answer"] .specimen-card,
+html[data-theme="01-cosmic-answer"] .specimen-hero-card {
+  position: relative;
+  border-radius: calc(var(--p42-radius) * 1.6);
+  border: 1px solid color-mix(in srgb, var(--p42-primary) 30%, transparent);
+  padding: calc(var(--p42-card-padding) * 1.35);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--p42-primary) 12%, transparent),
+    0 var(--p42-space-lg) calc(var(--p42-space-3xl) * 1.1)
+      color-mix(in srgb, var(--p42-shadow-color) 55%, transparent);
+  overflow: hidden;
+}
+
+/* The halo: a soft light source in the upper left of every card. No border
+   ornament, no band -- the theme's whole vocabulary of emphasis is light. */
+html[data-theme="01-cosmic-answer"] .path-card::before,
+html[data-theme="01-cosmic-answer"] .pillar-card::before,
+html[data-theme="01-cosmic-answer"] .specimen-card::before,
+html[data-theme="01-cosmic-answer"] .specimen-hero-card::before {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--p42-space-2xl) * -1);
+  inset-inline-start: calc(var(--p42-space-2xl) * -1);
+  width: calc(var(--p42-space-3xl) * 2.4);
+  height: calc(var(--p42-space-3xl) * 2.4);
+  border-radius: var(--p42-radius-pill);
+  background: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--p42-primary) 22%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-card > *,
+html[data-theme="01-cosmic-answer"] .specimen-hero-card > * {
+  position: relative;
+}
+
+html[data-theme="01-cosmic-answer"] .diagram-card,
+html[data-theme="01-cosmic-answer"] .specimen-card-raised {
+  border-color: color-mix(in srgb, var(--p42-accent) 45%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--p42-accent) 16%, transparent),
+    0 var(--p42-space-xl) calc(var(--p42-space-3xl) * 1.3)
+      color-mix(in srgb, var(--p42-shadow-color) 60%, transparent);
+}
+
+/* Eyebrow: a star and its label. Widest tracking of any theme. */
+html[data-theme="01-cosmic-answer"] .eyebrow,
+html[data-theme="01-cosmic-answer"] .specimen-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--p42-space-sm);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+html[data-theme="01-cosmic-answer"] .eyebrow::before,
+html[data-theme="01-cosmic-answer"] .specimen-eyebrow::before {
+  content: "";
+  width: var(--p42-space-xs);
+  height: var(--p42-space-xs);
+  border-radius: var(--p42-radius-pill);
+  background: var(--p42-eyebrow);
+  box-shadow: 0 0 0 calc(var(--p42-space-2xs) * 0.8)
+    color-mix(in srgb, var(--p42-eyebrow) 28%, transparent);
+  flex: 0 0 auto;
+}
+
+html[data-theme="01-cosmic-answer"] .card-index,
+html[data-theme="01-cosmic-answer"] .specimen-badge {
+  border-radius: var(--p42-radius-pill);
+  padding: var(--p42-space-2xs) var(--p42-space-lg);
+  border: 1px solid color-mix(in srgb, var(--p42-eyebrow) 35%, transparent);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+html[data-theme="01-cosmic-answer"] .portal-actions a,
+html[data-theme="01-cosmic-answer"] .header-action,
+html[data-theme="01-cosmic-answer"] .button-secondary,
+html[data-theme="01-cosmic-answer"] .specimen-btn {
+  border-radius: var(--p42-radius-pill);
+  padding: calc(var(--p42-control-height) * 0.28) calc(var(--p42-control-height) * 0.85);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+html[data-theme="01-cosmic-answer"] .portal-actions a,
+html[data-theme="01-cosmic-answer"] .specimen-btn-primary {
+  box-shadow: 0 0 0 calc(var(--p42-space-2xs) * 1.2)
+    color-mix(in srgb, var(--p42-primary) 20%, transparent);
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-btn-accent {
+  box-shadow: 0 0 0 calc(var(--p42-space-2xs) * 1.2)
+    color-mix(in srgb, var(--p42-accent) 22%, transparent);
+}
+
+html[data-theme="01-cosmic-answer"] .button-secondary,
+html[data-theme="01-cosmic-answer"] .specimen-btn-quiet {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--p42-primary) 40%, transparent);
+}
+
+html[data-theme="01-cosmic-answer"] .provider-section,
+html[data-theme="01-cosmic-answer"] .self-host-section,
+html[data-theme="01-cosmic-answer"] .lesson-main,
+html[data-theme="01-cosmic-answer"] .specimen-panel {
+  border-radius: calc(var(--p42-radius-large) * 1.4);
+  border-color: color-mix(in srgb, var(--p42-primary) 20%, transparent);
+  padding: calc(var(--p42-space-xl) * 1.5);
+}
+
+html[data-theme="01-cosmic-answer"] .lesson-callout,
+html[data-theme="01-cosmic-answer"] .specimen-callout {
+  border-radius: calc(var(--p42-radius) * 1.2);
+  padding: var(--p42-space-lg) calc(var(--p42-space-xl) * 1.1);
+  border-width: 1px;
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-hero {
+  border-radius: calc(var(--p42-radius-large) * 1.5);
+  border-color: color-mix(in srgb, var(--p42-primary) 22%, transparent);
+  padding-block: calc(var(--p42-space-3xl) * 1.4);
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-hero h1,
+html[data-theme="01-cosmic-answer"] .specimen-section h2 {
+  letter-spacing: -0.005em;
+  font-weight: 700;
+  line-height: 1.12;
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-overlay {
+  border-radius: calc(var(--p42-radius) * 1.6);
+}
+
+html[data-theme="01-cosmic-answer"] .specimen-code {
+  border-radius: calc(var(--p42-radius) * 1.1);
+  padding: var(--p42-space-lg);
+  border: 1px solid color-mix(in srgb, var(--p42-primary) 18%, transparent);
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Experience pass 2026-09-06 (docs/EXPERIENCE-WALK-2026-09-06.md).
+ * ------------------------------------------------------------------------ */
+
+/* Tracking belongs to the ramp step, not to the component. The portal sets a
+   display-grade em value on every heading regardless of the size it renders
+   at, so a section heading at ~29px on a phone carries the tracking of a hero
+   at ~100px on a desktop -- that is the general case of the h2 collision, not
+   one bad rule. Bind each heading family to the layout's track token for its
+   step, so tracking now tightens as the step grows and a layout switch moves
+   the whole ramp. The specimen's ramp element is named in the same rule so
+   the matrix previews the change. */
+
+html[data-theme="01-cosmic-answer"] .hero h1,
+html[data-theme="01-cosmic-answer"] .page-hero h1,
+html[data-theme="01-cosmic-answer"] .path-hero h1,
+html[data-theme="01-cosmic-answer"] .lesson-hero h1,
+html[data-theme="01-cosmic-answer"] .resource-detail-hero h1,
+html[data-theme="01-cosmic-answer"] .diagram-detail-hero h1,
+html[data-theme="01-cosmic-answer"] .not-found h1,
+html[data-theme="01-cosmic-answer"] .ramp-5 {
+  letter-spacing: var(--p42-track-5);
+}
+
+html[data-theme="01-cosmic-answer"] .provider-section h2,
+html[data-theme="01-cosmic-answer"] .policy-section-heading h2,
+html[data-theme="01-cosmic-answer"] .future-platform-banner h2,
+html[data-theme="01-cosmic-answer"] .open-source-banner h2,
+html[data-theme="01-cosmic-answer"] .check-heading h2,
+html[data-theme="01-cosmic-answer"] .ramp-4 {
+  letter-spacing: var(--p42-track-4);
+}
+
+html[data-theme="01-cosmic-answer"] .lesson-block h2,
+html[data-theme="01-cosmic-answer"] .comparison-heading h2,
+html[data-theme="01-cosmic-answer"] .capstone-heading h2,
+html[data-theme="01-cosmic-answer"] .legal-review-notice h2,
+html[data-theme="01-cosmic-answer"] .policy-status h2,
+html[data-theme="01-cosmic-answer"] .policy-machine-readable h2,
+html[data-theme="01-cosmic-answer"] .diagram-explanation-grid h2,
+html[data-theme="01-cosmic-answer"] .profile-identity h2,
+html[data-theme="01-cosmic-answer"] .focus-area-header h2,
+html[data-theme="01-cosmic-answer"] .pillar-card h3,
+html[data-theme="01-cosmic-answer"] .ramp-3 {
+  letter-spacing: var(--p42-track-3);
+}
+
+html[data-theme="01-cosmic-answer"] .learning-path-row h2,
+html[data-theme="01-cosmic-answer"] .resource-card h2,
+html[data-theme="01-cosmic-answer"] .about-grid h2,
+html[data-theme="01-cosmic-answer"] .sources h2,
+html[data-theme="01-cosmic-answer"] .diagram-card h2,
+html[data-theme="01-cosmic-answer"] .release-entry-head h2,
+html[data-theme="01-cosmic-answer"] .path-card h3,
+html[data-theme="01-cosmic-answer"] .ramp-2 {
+  letter-spacing: var(--p42-track-2);
+}
+
+/* On the paths index and the on-demand index, the heading that names a focus
+   area renders smaller than every path heading nested inside it. The child
+   outranks its parent, so the page stops telling you where you are. Restate
+   both against the layout's ramp, group above item. */
+
+html[data-theme="01-cosmic-answer"] .focus-area-header h2 {
+  font-size: var(--p42-step-3);
+}
+
+html[data-theme="01-cosmic-answer"] .learning-path-row h2 {
+  font-size: var(--p42-step-2);
+}
+
+/* The forward step is the quietest thing on the page. "Begin ->" on a module
+   row is --p42-text-muted, and "Open ->" on a resource card inherits body
+   colour because the portal sets a { color: inherit }. Both are the one
+   control that moves a reader onward. Give them the strongest text emphasis
+   the contract guarantees on these surfaces, and let the resource link carry
+   a rule so it reads as a link rather than as bold copy. A completed module
+   keeps its success colour. */
+
+html[data-theme="01-cosmic-answer"] .module-list li:not(.module-complete) .module-state,
+html[data-theme="01-cosmic-answer"] .diagram-next a,
+html[data-theme="01-cosmic-answer"] .resource-foot a {
+  color: var(--p42-text-title);
+}
+
+html[data-theme="01-cosmic-answer"] .resource-foot a {
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}
