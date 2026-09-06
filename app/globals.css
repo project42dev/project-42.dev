@@ -6991,10 +6991,27 @@ html[data-project42-reduced-motion="true"] *::after {
   padding-block: 4.5rem 4rem;
 }
 
-/* The journey art leads the Learn header so the lede stays the header's last
-   child, which is what .page-hero > p:last-child styles. */
+/* The journey art leads the Learn header in source order so the lede stays
+   the header's last child, which is what .page-hero > p:last-child styles.
+   Stacked, it is a band above the copy; from desktop width it sits beside the
+   copy instead, because a 640px band left a dead column half the page wide. */
 .landing-hero > .hero-map {
   margin-bottom: 2.75rem;
+}
+
+@media (min-width: 1000px) {
+  .landing-hero:has(> .hero-map) {
+    align-items: center;
+    column-gap: clamp(2.5rem, 6vw, 5.5rem);
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 0.85fr);
+  }
+
+  .landing-hero > .hero-map {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    margin-bottom: 0;
+  }
 }
 
 .learn-format-switch {
