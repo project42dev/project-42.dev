@@ -2,8 +2,15 @@ name: Dated deferrals
 
 # An expiry that is only checked when somebody happens to push is not an
 # expiry. This runs on its own each morning so the date alone is enough to
-# fail, without waiting for the next change. It needs no build and no network,
-# so it costs a few seconds.
+# fail, without waiting for the next change.
+#
+# The check itself needs no build and no network -- it reads one JSON file and
+# compares dates. It does need `npm ci` first, because scripts/ is not source
+# in this repository: this repo is branding, configuration and release records,
+# and the front-end application, scripts/ included, is materialised out of
+# @project42/platform by the postinstall hook (see .gitignore). Without the
+# install there is no scripts/dated-deferrals.mjs on disk, so the job invokes
+# the check through the same package script the rest of the gate uses.
 
 on:
   schedule:
@@ -17,7 +24,7 @@ jobs:
   deferrals:
     name: Fail once a dated exception has expired
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
@@ -25,5 +32,11 @@ jobs:
       - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 22
+          cache: npm
+      - name: Materialise the site application from the platform
+        run: npm ci
+        env:
+          # Mermaid generation reuses Playwright; Puppeteer's separate browser is unused.
+          PUPPETEER_SKIP_DOWNLOAD: "true"
       - name: Check dated link-check exceptions
-        run: node scripts/dated-deferrals.mjs
+        run: npm run deferrals:check
