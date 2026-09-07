@@ -28,6 +28,8 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: "true"
       - run: npx playwright install --with-deps chromium --only-shell
+      # The mobile-viewport gate runs on WebKit, the engine Mobile Safari uses.
+      - run: npx playwright install --with-deps webkit
       - run: npm run release:validate
       - run: npm run check
       - run: npm audit --omit=dev --audit-level=critical
@@ -54,6 +56,7 @@ jobs:
           test "v$(node -p "require('./package.json').version")" = "$GITHUB_REF_NAME"
           npm ci
           npx playwright install --with-deps chromium --only-shell
+          npx playwright install --with-deps webkit
           npm run release:validate
           npm run check
           npm audit --omit=dev --audit-level=critical

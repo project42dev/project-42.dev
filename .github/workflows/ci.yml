@@ -39,5 +39,7 @@ jobs:
           PUPPETEER_SKIP_DOWNLOAD: "true"
       # Playwright's headless Chromium launch uses the smaller headless shell.
       - run: npx playwright install --with-deps chromium --only-shell
+      # The mobile-viewport gate runs on WebKit, the engine Mobile Safari uses.
+      - run: npx playwright install --with-deps webkit
       - name: Audit dependencies and run complete quality gates
         run: npm run verify
