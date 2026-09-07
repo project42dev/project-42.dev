@@ -69,3 +69,11 @@ next-env.d.ts
 /postcss.config.mjs
 /tsconfig.json
 /vite.config.ts
+
+# The theme bundle the platform SHIPS is materialised here on every install,
+# exactly like app/ above -- change it upstream. The Gallery-synced bundles
+# beside it are tracked on purpose: those are this deployment's own choices,
+# hash-locked in config/theme-bundles.lock.json. Tracking a platform-shipped
+# bundle would freeze it, because materialise reads a tracked bundle as
+# vendored and refuses to refresh it.
+/public/themes/portal-default/
