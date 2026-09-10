@@ -2,26 +2,15 @@
   "$schemaVersion": 1,
   "exceptions": [
     {
-      "targetPattern": "https://gallery.project-42.dev*",
-      "expectedStatuses": [
-        200,
-        404
-      ],
-      "reason": "The canonical theme gallery and studio is deployed via Pages pipeline.",
-      "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
-      "expires": "2026-09-30"
-    },
-    {
       "targetPattern": "https://docs.vllm.ai/*",
       "expectedStatuses": [
         200,
         429
       ],
-      "reason": "vLLM documentation rate limits automated scrapers.",
+      "reason": "vLLM documentation rate limits automated scrapers. Still live: re-probed 2026-09-10 with the checker's own user agent, headers, 3-attempt retry and concurrency 12, over both referenced URLs. A 429 appeared in all three probe rounds, and in one round https://docs.vllm.ai/en/latest/serving/openai_compatible_server/ returned 429 on all three attempts, so the retry does not absorb it.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
-      "expires": "2026-09-30"
+      "verifiedOn": "2026-09-10",
+      "expires": "2026-10-31"
     },
     {
       "targetPattern": "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt*",
@@ -29,10 +18,10 @@
         200,
         403
       ],
-      "reason": "OpenAI help center requires Cloudflare bot verification for scrapers.",
+      "reason": "The OpenAI help centre requires bot verification, so an automated request is refused rather than served. Still live: re-probed 2026-09-10 with the checker's own request shape and answered 403 on 9 of 9 attempts across three rounds, with no successful fetch. The article is a primary source for the ChatGPT Projects material and is correct for a reader in a browser, so replacing it with a secondary source that a checker can fetch would make the citation worse.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
-      "expires": "2026-09-30"
+      "verifiedOn": "2026-09-10",
+      "expires": "2026-10-31"
     },
     {
       "targetPattern": "https://openai.com/*",
@@ -40,22 +29,21 @@
         200,
         403
       ],
-      "reason": "OpenAI corporate pages block automated HEAD/GET bot requests.",
+      "reason": "OpenAI corporate pages block automated GET requests. Still live: re-probed 2026-09-10 with the checker's own request shape over all four referenced URLs and every one answered 403 on all three attempts, 36 of 36, with no successful fetch. These are primary-source citations for the agent-building and Codex material, so they are kept rather than swapped for a fetchable secondary source.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-08-31",
-      "expires": "2026-09-30"
+      "verifiedOn": "2026-09-10",
+      "expires": "2026-10-31"
     },
     {
       "targetPattern": "https://huggingface.co/docs/*",
       "expectedStatuses": [
         200,
-        429,
-        500
+        429
       ],
-      "reason": "Hugging Face documentation rate limits concurrent CI link checks and can return a transient server error.",
+      "reason": "Hugging Face documentation rate limits concurrent CI link checks. This entry was widened on 2026-09-01 (d5bd730) because CI itself was rate limited, so the reason is specific to the CI egress address. Re-probing on 2026-09-10 returned 200 on the first attempt for all 8 referenced URLs in all three rounds, 24 of 24 - but from a workstation address, which cannot show what the CI runner sees, so that is not evidence the limit has gone. Renewed for one cycle on that basis; this is the weakest of the four. The 500 allowance is dropped: a server error that survives all three retries is a broken link and the gate should say so. If the next review finds this exception still unexercised in CI, delete it rather than renewing again.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-09-01",
-      "expires": "2026-09-30"
+      "verifiedOn": "2026-09-10",
+      "expires": "2026-10-31"
     }
   ]
 }
