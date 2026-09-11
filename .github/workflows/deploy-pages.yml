@@ -82,12 +82,12 @@ jobs:
   # signed-in session (progress read and module_progress rows), and removes it.
   # A red run here means the site is live but learner progress is not saving.
   #
-  # Variables and inherited secrets resolve from THIS repository (or the org):
-  # PROJECT42_HOSTED_LEARN_ORIGIN, PROJECT42_HOSTED_API_ORIGIN,
-  # PROJECT42_HOSTED_ISSUER, PROJECT42_HOSTED_SMOKE_EMAIL,
-  # PROJECT42_HOSTED_SMOKE_PASSWORD, PROJECT42_HOSTED_SMOKE_SUBJECT.
-  # The workflow ref and platform-ref name the same project42-platform commit;
-  # move them together.
+  # Variables resolve from THIS repository (or the org):
+  # PROJECT42_HOSTED_LEARN_ORIGIN, PROJECT42_HOSTED_API_ORIGIN and
+  # PROJECT42_HOSTED_ISSUER. Only the three smoke secrets are passed -- not
+  # `secrets: inherit`, which would hand every secret here to the called
+  # workflow. The workflow ref and platform-ref name the same
+  # project42-platform commit; move them together.
   post-deploy-smoke:
     name: Verify hosted sign-in and progress persistence
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'project42dev/project-42.dev'
@@ -97,4 +97,7 @@ jobs:
     uses: project42dev/project42-platform/.github/workflows/hosted-smoke.yml@2b9944bf38774bbc3d70655a1d2c97d0f727c2bb
     with:
       platform-ref: 2b9944bf38774bbc3d70655a1d2c97d0f727c2bb
-    secrets: inherit
+    secrets:
+      PROJECT42_HOSTED_SMOKE_EMAIL: ${{ secrets.PROJECT42_HOSTED_SMOKE_EMAIL }}
+      PROJECT42_HOSTED_SMOKE_PASSWORD: ${{ secrets.PROJECT42_HOSTED_SMOKE_PASSWORD }}
+      PROJECT42_HOSTED_SMOKE_SUBJECT: ${{ secrets.PROJECT42_HOSTED_SMOKE_SUBJECT }}
