@@ -13,28 +13,6 @@
       "expires": "2026-10-10"
     },
     {
-      "targetPattern": "https://help.openai.com/en/articles/10169521-using-projects-in-chatgpt*",
-      "expectedStatuses": [
-        200,
-        403
-      ],
-      "reason": "The OpenAI help centre requires bot verification, so an automated request is refused rather than served. Still live: re-probed 2026-09-10 with the checker's own request shape and answered 403 on 9 of 9 attempts across three rounds, with no successful fetch. The article is a primary source for the ChatGPT Projects material and is correct for a reader in a browser, so replacing it with a secondary source that a checker can fetch would make the citation worse.",
-      "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-09-10",
-      "expires": "2026-10-10"
-    },
-    {
-      "targetPattern": "https://openai.com/*",
-      "expectedStatuses": [
-        200,
-        403
-      ],
-      "reason": "OpenAI corporate pages block automated GET requests. Still live: re-probed 2026-09-10 with the checker's own request shape over all four referenced URLs and every one answered 403 on all three attempts, 36 of 36, with no successful fetch. These are primary-source citations for the agent-building and Codex material, so they are kept rather than swapped for a fetchable secondary source.",
-      "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-09-10",
-      "expires": "2026-10-10"
-    },
-    {
       "targetPattern": "https://huggingface.co/docs/*",
       "expectedStatuses": [
         200,
