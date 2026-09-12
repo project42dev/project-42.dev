@@ -41,5 +41,9 @@ jobs:
       - run: npx playwright install --with-deps chromium --only-shell
       # The mobile-viewport gate runs on WebKit, the engine Mobile Safari uses.
       - run: npx playwright install --with-deps webkit
+      # The device matrix runs a Firefox row: Gecko clips differently from
+      # Blink and WebKit, which is how the header nav was caught clipping the
+      # About panel on every tablet held upright.
+      - run: npx playwright install --with-deps firefox
       - name: Audit dependencies and run complete quality gates
         run: npm run verify
