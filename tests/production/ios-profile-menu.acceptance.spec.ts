@@ -50,6 +50,9 @@ test("the deployed profile menu opens on a tap and is not clipped away", async (
     const header = element.closest(".site-header")!;
     const clippers: string[] = [];
     for (let ancestor = element.parentElement; ancestor; ancestor = ancestor.parentElement) {
+      // <html> and <body> are exempt: clipping the document is the supported
+      // way to stop a sideways scroll and cannot hide this panel.
+      if (ancestor === document.documentElement || ancestor === document.body) continue;
       const styles = getComputedStyle(ancestor);
       if (styles.overflowX === "visible" && styles.overflowY === "visible") continue;
       const name = `${ancestor.tagName.toLowerCase()}${String(ancestor.className).trim() ? `.${String(ancestor.className).trim().split(/\s+/)[0]}` : ""}`;
