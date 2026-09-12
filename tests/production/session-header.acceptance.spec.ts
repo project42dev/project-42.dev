@@ -55,44 +55,39 @@ function cookieDomainFor(origin: string): string {
 }
 
 /**
- * Watches the account read and reports what the API said. This is the whole
- * diagnostic value of the spec: a bare assertion failure would not distinguish
- * "the cookie never arrived" from "the UI ignored a good answer".
+ * Waits for the account read and reports what the API actually said. This is
+ * the whole diagnostic value of the spec: a bare assertion failure cannot
+ * distinguish "the cookie never arrived" from "the API holds no such session"
+ * from "the UI ignored a perfectly good answer".
+ *
+ * Awaited before the assertion rather than collected from an event handler,
+ * because a message built into expect() is evaluated when the expect is
+ * constructed -- which on a slow phone is long before the fetch has even
+ * fired, and would report "no request observed" for every failure.
+ *
+ * allHeaders() rather than headers(): Playwright strips Cookie and the other
+ * security headers from the synchronous accessor, so headers().cookie is
+ * always undefined and would report "the browser did NOT send the cookie"
+ * every single time -- which is exactly the iOS storage-jar signature, and so
+ * the most expensive possible thing to get wrong here.
  */
-function watchSessionRead(page: Page) {
-  const seen: { status: number; code: string | null; sentCookie: boolean }[] = [];
-  page.on("response", (response) => {
-    const target = new URL(response.url());
-    if (!target.pathname.startsWith(SESSION_PATH)) return;
-    const sentCookie = (response.request().headers().cookie ?? "").includes(
-      "__Secure-project42_session=",
+async function diagnoseSessionRead(page: Page): Promise<string> {
+  try {
+    const response = await page.waitForResponse(
+      (candidate) => new URL(candidate.url()).pathname === SESSION_PATH,
+      { timeout: 30_000 },
     );
-    void response
+    const status = response.status();
+    const code = await response
       .json()
-      .then((body) => {
-        seen.push({
-          status: response.status(),
-          code: (body as { error?: { code?: string } })?.error?.code ?? null,
-          sentCookie,
-        });
-      })
-      .catch(() => {
-        seen.push({ status: response.status(), code: null, sentCookie });
-      });
-  });
-  return {
-    describe() {
-      if (seen.length === 0) {
-        return `No request to ${SESSION_PATH} was observed at all. The page never asked whether you are signed in -- check that the portal's apiOrigin (${apiOrigin}) is what this deployment actually calls.`;
-      }
-      return seen
-        .map(
-          (entry) =>
-            `${SESSION_PATH} -> ${entry.status}${entry.code ? ` ${entry.code}` : ""}; the browser ${entry.sentCookie ? "DID" : "did NOT"} send __Secure-project42_session.`,
-        )
-        .join("\n  ");
-    },
-  };
+      .then((body) => (body as { error?: { code?: string } })?.error?.code ?? null)
+      .catch(() => null);
+    const cookie = (await response.request().allHeaders()).cookie ?? "";
+    const sent = cookie.includes("__Secure-project42_session=");
+    return `${SESSION_PATH} -> ${status}${code ? ` ${code}` : ""}; the browser ${sent ? "DID" : "did NOT"} send __Secure-project42_session. See the decode table at the top of this file.`;
+  } catch {
+    return `No response to ${SESSION_PATH} arrived within 30s. The page never got an answer about whether you are signed in -- check that the portal's apiOrigin (${apiOrigin}) is the origin this deployment actually calls, and that it is reachable from here.`;
+  }
 }
 
 test.describe("the deployed header, signed in", () => {
@@ -114,23 +109,23 @@ test.describe("the deployed header, signed in", () => {
         sameSite: "Lax",
       },
     ]);
-    const reads = watchSessionRead(page);
-
+    const reading = diagnoseSessionRead(page);
     await page.goto("/", { waitUntil: "domcontentloaded" });
+    const diagnosis = await reading;
 
     const state = page.locator(TRIGGER_STATE);
     // The header is allowed to be "unknown" while the read is in flight. What
     // it may never do is settle on "signed-out" with a valid session.
     await expect(
       state,
-      `The header did not settle on "signed in" with a session cookie present.\n  ${reads.describe()}`,
+      `The header did not settle on "signed in" with a session cookie present.\n  ${diagnosis}`,
     ).toHaveAttribute("data-account-state", "signed-in", { timeout: 30_000 });
 
     await page.locator(".header-actions .header-menu-trigger").click();
     await expect(page.locator(PANEL)).toBeVisible();
     await expect(
       page.locator(PANEL).getByText("Signed in as"),
-      `The menu did not name the account.\n  ${reads.describe()}`,
+      `The menu did not name the account.\n  ${diagnosis}`,
     ).toBeVisible();
     // A signed-in header must not also be offering to sign in.
     await expect(
@@ -157,21 +152,22 @@ test.describe("the deployed header, signed in", () => {
         sameSite: "Lax",
       },
     ]);
-    const reads = watchSessionRead(page);
-
+    const firstReading = diagnoseSessionRead(page);
     await page.goto("/", { waitUntil: "domcontentloaded" });
-    await expect(page.locator(TRIGGER_STATE)).toHaveAttribute(
-      "data-account-state",
-      "signed-in",
-      { timeout: 30_000 },
-    );
+    const firstDiagnosis = await firstReading;
+    await expect(
+      page.locator(TRIGGER_STATE),
+      `The header did not settle on "signed in" on the first load.\n  ${firstDiagnosis}`,
+    ).toHaveAttribute("data-account-state", "signed-in", { timeout: 30_000 });
 
     // "Every time I open the site." A reload is the closest a headless browser
     // gets to that, and it is the case the header used to get wrong.
+    const secondReading = diagnoseSessionRead(page);
     await page.reload({ waitUntil: "domcontentloaded" });
+    const secondDiagnosis = await secondReading;
     await expect(
       page.locator(TRIGGER_STATE),
-      `The header forgot the session across a reload.\n  ${reads.describe()}`,
+      `The header forgot the session across a reload.\n  ${secondDiagnosis}`,
     ).toHaveAttribute("data-account-state", "signed-in", { timeout: 30_000 });
 
     // The server must still be honouring the cookie, not just the UI.
@@ -182,7 +178,7 @@ test.describe("the deployed header, signed in", () => {
     );
     expect(
       stillValid,
-      `The API stopped honouring the session cookie.\n  ${reads.describe()}`,
+      `The API stopped honouring the session cookie.\n  ${secondDiagnosis}`,
     ).toBe(200);
   });
 });
