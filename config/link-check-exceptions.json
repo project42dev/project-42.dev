@@ -2,27 +2,15 @@
   "$schemaVersion": 1,
   "exceptions": [
     {
-      "targetPattern": "https://docs.vllm.ai/*",
+      "targetPattern": "https://docs.vllm.ai/en/latest/serving/online_serving/openai_compatible_server/",
       "expectedStatuses": [
         200,
         429
       ],
-      "reason": "vLLM documentation rate limits automated scrapers. Still live: re-probed 2026-09-10 with the checker's own user agent, headers, 3-attempt retry and concurrency 12, over both referenced URLs. A 429 appeared in all three probe rounds, and in one round https://docs.vllm.ai/en/latest/serving/openai_compatible_server/ returned 429 on all three attempts, so the retry does not absorb it.",
+      "reason": "vLLM documentation rate limits automated scrapers; the page itself is live and correct. Re-probed 2026-09-13 with the checker's own user agent (Project42-LinkChecker/0.1), a plain browser user agent, and via an independent fetch backend (not the reviewing workstation) - all three answered 429 on every attempt, so this is not a workstation-only or UA-only block. Confirmed it is not a broken link: the Wayback Machine's crawler (a different bot, unaffected by this rate limit) captured this exact URL returning 200 on 2026-09-13 with body content matching the vLLM \"OpenAI-Compatible Server\" page this citation needs. The old URL this content previously cited (serving/openai_compatible_server/, no online_serving segment) was captured by the same crawler on 2026-09-12 as a 200 that is in fact a client-side/meta-refresh redirect to this URL - confirming vLLM reorganised the page rather than removing it, and content already cites the correct current URL. The pattern is narrowed from a wildcard to the exact URL now referenced, so an unrelated future path under docs.vllm.ai cannot silently ride on this exception.",
       "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-09-10",
-      "expires": "2026-10-10"
-    },
-    {
-      "targetPattern": "https://huggingface.co/docs/*",
-      "expectedStatuses": [
-        200,
-        429,
-        500
-      ],
-      "reason": "Hugging Face documentation rate limits concurrent CI link checks and can return a server error under that load. Both codes were observed from CI rather than from a workstation: the 500 on 2026-08-31, and the 429 when this entry was widened on 2026-09-01 (d5bd730) because CI itself was being limited. Re-probing on 2026-09-10 returned 200 on the first attempt for all 8 referenced URLs in all three rounds, 24 of 24 - but from a workstation address, which cannot show what the CI runner sees, so that is not evidence either code has stopped. Renewed unchanged for one cycle on that basis; this is the weakest of the four, because the only evidence for it is nine days old and second-hand. If the next review finds it still unexercised in CI, delete it rather than renewing again.",
-      "owner": "Project 42 maintainers",
-      "verifiedOn": "2026-09-10",
-      "expires": "2026-10-10"
+      "verifiedOn": "2026-09-13",
+      "expires": "2026-10-13"
     }
   ]
 }
