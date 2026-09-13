@@ -92,15 +92,25 @@ jobs:
   # `secrets: inherit`, which would hand every secret here to the called
   # workflow. The workflow ref and platform-ref name the same
   # project42-platform commit; move them together.
+  #
+  # Pinned to platform main 00e1380 (was 0ba1b310 / v0.112.0, which predates
+  # every one of these): 162fbf8 adds playwright as a dependency so the smoke
+  # script's own import resolves, dc53681 turns off the Chromium sandbox the
+  # hosted runner's user namespaces refuse, 2a1e318/4f06a65 handle the
+  # Entra External ID authorization host and its interstitial pages, and
+  # 0ffc3bd/00e1380 name each interstitial in the failure output. Without
+  # this bump the called workflow itself -- not this repo's copy of the
+  # script -- is the pre-fix version, which is why the job failed with
+  # ERR_MODULE_NOT_FOUND on every run since 2026-09-12 (AB#6167).
   post-deploy-smoke:
     name: Verify hosted sign-in and progress persistence
     if: github.event_name == 'push' && github.ref == 'refs/heads/main' && github.repository == 'project42dev/project-42.dev'
     needs: deploy
     permissions:
       contents: read
-    uses: project42dev/project42-platform/.github/workflows/hosted-smoke.yml@0ba1b310b852e7b04525469b4d37feb4ef951459
+    uses: project42dev/project42-platform/.github/workflows/hosted-smoke.yml@00e138054f112a2e3588df28febf33d227f70890
     with:
-      platform-ref: 0ba1b310b852e7b04525469b4d37feb4ef951459
+      platform-ref: 00e138054f112a2e3588df28febf33d227f70890
     secrets:
       PROJECT42_HOSTED_SMOKE_EMAIL: ${{ secrets.PROJECT42_HOSTED_SMOKE_EMAIL }}
       PROJECT42_HOSTED_SMOKE_PASSWORD: ${{ secrets.PROJECT42_HOSTED_SMOKE_PASSWORD }}
