@@ -2,12 +2,12 @@
   "$schemaVersion": 1,
   "exceptions": [
     {
-      "targetPattern": "https://docs.vllm.ai/*",
+      "targetPattern": "https://docs.vllm.ai/en/latest/serving/online_serving/openai_compatible_server/",
       "expectedStatuses": [
         200,
         429
       ],
-      "reason": "vLLM documentation rate limits automated scrapers. Still live: re-probed 2026-09-13 with the checker's own user agent (Project42-LinkChecker/0.1), headers, and 3-attempt retry, over the single URL this pattern now covers (docs reorganised the path to serving/online_serving/openai_compatible_server/ since the last review). All three attempts answered 429. A second probe from an independent network path (not the reviewing workstation) also received 429 on its first attempt, so this is not a workstation-only block. The pattern is narrowed from a wildcard concern about two URLs to the one URL actually referenced today.",
+      "reason": "vLLM documentation rate limits automated scrapers; the page itself is live and correct. Re-probed 2026-09-13 with the checker's own user agent (Project42-LinkChecker/0.1), a plain browser user agent, and via an independent fetch backend (not the reviewing workstation) - all three answered 429 on every attempt, so this is not a workstation-only or UA-only block. Confirmed it is not a broken link: the Wayback Machine's crawler (a different bot, unaffected by this rate limit) captured this exact URL returning 200 on 2026-09-13 with body content matching the vLLM \"OpenAI-Compatible Server\" page this citation needs. The old URL this content previously cited (serving/openai_compatible_server/, no online_serving segment) was captured by the same crawler on 2026-09-12 as a 200 that is in fact a client-side/meta-refresh redirect to this URL - confirming vLLM reorganised the page rather than removing it, and content already cites the correct current URL. The pattern is narrowed from a wildcard to the exact URL now referenced, so an unrelated future path under docs.vllm.ai cannot silently ride on this exception.",
       "owner": "Project 42 maintainers",
       "verifiedOn": "2026-09-13",
       "expires": "2026-10-13"
