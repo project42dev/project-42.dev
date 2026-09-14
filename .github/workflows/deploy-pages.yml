@@ -108,9 +108,9 @@ jobs:
     needs: deploy
     permissions:
       contents: read
-    uses: project42dev/project42-platform/.github/workflows/hosted-smoke.yml@00e138054f112a2e3588df28febf33d227f70890
+    uses: project42dev/project42-platform/.github/workflows/hosted-smoke.yml@86a1f5010be0c8e62fc88f5aeb82dc178c94b4f9
     with:
-      platform-ref: 00e138054f112a2e3588df28febf33d227f70890
+      platform-ref: 86a1f5010be0c8e62fc88f5aeb82dc178c94b4f9
     secrets:
       PROJECT42_HOSTED_SMOKE_EMAIL: ${{ secrets.PROJECT42_HOSTED_SMOKE_EMAIL }}
       PROJECT42_HOSTED_SMOKE_PASSWORD: ${{ secrets.PROJECT42_HOSTED_SMOKE_PASSWORD }}
