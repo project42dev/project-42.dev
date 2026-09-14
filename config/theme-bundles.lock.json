@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "source": "https://github.com/project42dev/project42-gallery",
   "gallery": {
-    "commit": "73f3334c301f1f9f1268a390c429e85db3e2ad49"
+    "commit": "e31444e5dab52659340433a2f2ee546a02cb17eb"
   },
   "selectedTheme": "portal-default",
   "selectedLayout": "standard",
@@ -89,20 +89,20 @@
   "layouts": {
     "compact": {
       "files": {
-        "layout.css": "8755dbfa0d782fc6e488f129a61e53ec1827fdc716d8411113843eda55f126af",
-        "layout.json": "4d96adeac3ee4c933d06c9113da7e0ea9a528556e44dc66d2bb99eb6c0886164"
+        "layout.css": "5fd4fed871720532425a952dfc74effbf568177949bb93033e1dc4200b4e908a",
+        "layout.json": "ec3a834277008773112bd0bce002f81910b504661d94f671bbbf4641025a54c2"
       }
     },
     "standard": {
       "files": {
-        "layout.css": "fde57d6a1d56af98b41b2be0e1e5c740041cb0f2c28d72f76c2c1912bc0d38ed",
-        "layout.json": "ad69ae95b5e8d94381c8bf98efe6b09a38b659370a154cf6ef888c98cc84f751"
+        "layout.css": "0d031bef924b53959bc9616c39a306958ef577bdb9a4a20e985e1a9ccdb36f0d",
+        "layout.json": "4c062589ded5592b38e5ecdbe677b9e35eca6ee795a87a168b492a38e6b0fc20"
       }
     },
     "wide": {
       "files": {
-        "layout.css": "bba6b3fda3948141672ba3728557a100439ed8d3c327f6f82e36053d6ebbb4cb",
-        "layout.json": "e0ffbd07e03a47a4097b414308a92f251ad6e1385a047237f6179833ba67a9cd"
+        "layout.css": "02b2961e8772d1c4debbe27db3eedc2c4999b2fdbda3791aceb5cdba4d9e0178",
+        "layout.json": "18fa7544d04f2a53a9fa10fa80cc1817aa058fbb091a6288c84c3bad99775a36"
       }
     }
   }
