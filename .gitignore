@@ -77,3 +77,6 @@ next-env.d.ts
 # bundle would freeze it, because materialise reads a tracked bundle as
 # vendored and refuses to refresh it.
 /public/themes/portal-default/
+
+# Enterprise is supplied and refreshed by the platform package.
+/public/layouts/enterprise/

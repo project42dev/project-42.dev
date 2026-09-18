@@ -11,6 +11,28 @@
       "owner": "Project 42 maintainers",
       "verifiedOn": "2026-09-13",
       "expires": "2026-10-13"
+    },
+    {
+      "targetPattern": "https://docs.vllm.ai/en/latest/design/metrics/",
+      "expectedStatuses": [
+        200,
+        429
+      ],
+      "reason": "The official vLLM metrics page was verified to contain the cited metric definitions on 2026-09-18, but its automated link check returned HTTP 429. This exact URL is exempted from that rate limit until the next review; other errors still fail.",
+      "owner": "Project 42 maintainers",
+      "verifiedOn": "2026-09-18",
+      "expires": "2026-10-18"
+    },
+    {
+      "targetPattern": "https://docs.vllm.ai/en/latest/deployment/docker/",
+      "expectedStatuses": [
+        200,
+        429
+      ],
+      "reason": "The official vLLM Docker page was verified to contain the cited image and non-root guidance on 2026-09-18, but its automated link check returned HTTP 429. This exact URL is exempted from that rate limit until the next review; other errors still fail.",
+      "owner": "Project 42 maintainers",
+      "verifiedOn": "2026-09-18",
+      "expires": "2026-10-18"
     }
   ]
 }
