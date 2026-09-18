@@ -2,12 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/project42dev/project42-platform/main/schemas/portal-config.schema.json",
   "theme": "portal-default",
   "availableThemes": [
-    "01-cosmic-answer",
-    "02-learning-portal",
-    "03-model-constellation",
-    "04-field-signal",
-    "05-open-orbit",
-    "06-galactic-guide"
+    "portal-default"
   ],
   "galleryUrl": "https://gallery.project-42.dev",
   "layout": {
