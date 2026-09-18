@@ -7,21 +7,21 @@
       "source": "learning-evidence-loop.mmd",
       "sourceSha256": "bb7320b9964e2fac205eb30ebda50d9078a9abdfda571e41c7775f9b7088c63c",
       "svg": "learning-evidence-loop.svg",
-      "svgSha256": "cb6459ded5a6e192d7735d1fe89eb79d8079f04b7e187be40683fab1f937eeb3"
+      "svgSha256": "c72cd190296e5e5ba268f6c9e22bdf4b07f2a12af25e7a09403ed49d3d6a31af"
     },
     {
       "id": "grounded-answer-workflow",
       "source": "grounded-answer-workflow.mmd",
       "sourceSha256": "695373c14bff83c3868c7a5de4bf01ac7526fbf638add2cbc194e95913f7a65f",
       "svg": "grounded-answer-workflow.svg",
-      "svgSha256": "d7c11065d9bcccf18b34a4c406e114fd5febf359c10beef285874f4a82b74fe9"
+      "svgSha256": "b78e3223573d3cac39cb3bf00e1a15c6ffa0332275bcdba83bccda13635d94ba"
     },
     {
       "id": "safe-agent-loop",
       "source": "safe-agent-loop.mmd",
       "sourceSha256": "3b1a5b83b184a9ff4ce362ef7d253f7f13bb7ee9fc3d668c686bac7e0fe6728d",
       "svg": "safe-agent-loop.svg",
-      "svgSha256": "eaadf2c640ca4e7a8a7e14b99a80ff0dbf12a3321e40add6e741a294876227dc"
+      "svgSha256": "14df1ea953763657584ae924773a4a382e540369754eeedfb019962f1be7596c"
     },
     {
       "id": "prompt-contract",
@@ -42,7 +42,7 @@
       "source": "tool-trust-boundaries.mmd",
       "sourceSha256": "a3401e369dcd11f479b6cc04f3580e3d44b0c08542fca9596f2858013c1887be",
       "svg": "tool-trust-boundaries.svg",
-      "svgSha256": "960d492b744e6703b1ac420bcb995714c8d5d93f143d9990e74aa30f697bf73f"
+      "svgSha256": "e57ab81d5627fc73cbfa20b5d1fdaca6493fd75a8ceed272d95de07593fe1051"
     },
     {
       "id": "multi-agent-handoff",
@@ -61,9 +61,9 @@
     {
       "id": "agent-orchestration",
       "source": "agent-orchestration.mmd",
-      "sourceSha256": "c44fcba43ca4c1b90cbafe1a6941c03a3bf829292f01d89fff15ee7d324642a8",
+      "sourceSha256": "9c916bea4b29e448bceae7758d1fff3867c2e99da51b3e89237397c05c95c72a",
       "svg": "agent-orchestration.svg",
-      "svgSha256": "255ed96f23f5c8f44c11062faa2714c67701ea8f73de1e3df9d263ec942b6212"
+      "svgSha256": "3c483b215f8b8d15879f6f8dd99cf69d5f6497f810afc950b83b411ac2f794c8"
     },
     {
       "id": "cost-and-capacity-management",
@@ -75,9 +75,9 @@
     {
       "id": "orchard-lifecycle",
       "source": "orchard-lifecycle.mmd",
-      "sourceSha256": "688ba9a6364d406e54fa25940f88535db30dc843f78f6603bacb5cb8c34e7906",
+      "sourceSha256": "532337a36b5a5b189f509cf6349054f1c304420e4bda5b0dc658ba66213702e3",
       "svg": "orchard-lifecycle.svg",
-      "svgSha256": "8cf213829ff52732334a703b15c1c223fba31d0fd485b31b0dbaca623cead597"
+      "svgSha256": "d708a00ae6f9687960b833f20d6ef571bbece3bcf3848219ac3d8b35909e2574"
     }
   ]
 }
