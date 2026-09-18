@@ -69,7 +69,7 @@ accessibility, and security contract.
 ## Current ecosystem facts
 
 - Site release `0.19.0`
-- Platform package `0.116.13`
+- Platform package `0.116.14`
 - Content release `0.42.0`
 - 14 learning paths, 95 assessed modules, 95 evidence activities, and 507 reviewed questions
 - 91 practical resources and 4 provider scopes
