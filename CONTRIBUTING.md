@@ -1,10 +1,10 @@
 # Contributing to the Project 42 gateway
 
 Project 42 welcomes fixes and improvements to the public gateway at
-`project-42.dev`. This repository owns the landing experience, About and Legal
-pages, public navigation, release facts, and redirects. Learning paths belong in
-`learn.project-42.dev`, practical references belong in `guide.project-42.dev`,
-and reusable contracts or curriculum belong in `project42-platform`.
+`project-42.dev`. This repository owns deployment configuration, branding,
+wording overrides and release records. Shared pages, components and checks live
+in `project42-platform/web`; update the platform release pin to adopt them.
+Learn and Field Guide curriculum is canonical in `project42-content`.
 
 ## Before opening a change
 
@@ -23,7 +23,7 @@ Public pull-request descriptions must not contain private tracker links.
 
 ## Develop and verify
 
-Use Node.js 22.13.0 or later and the locked npm dependency graph:
+Use Node.js 22.18.0 or later and the locked npm dependency graph:
 
 ```bash
 npm ci
@@ -36,7 +36,7 @@ Run the complete gate before requesting review:
 npm run verify
 ```
 
-The gate audits production and development dependencies, then validates generated
+The gate runs the configured production dependency audit, then validates generated
 facts and assets, lint and type safety, the production build, links, rendered
 routes, browser behavior, GitHub Pages output, accessibility, workflows, and
 repository governance documents.
@@ -63,7 +63,7 @@ who owns that boundary.
 ## Content and licensing
 
 Application code is Apache-2.0. Reusable curriculum is maintained in
-`project42-platform` under CC BY 4.0 and should not be duplicated here. By
+`project42-content` under CC BY 4.0 and distributed by the platform; it should not be duplicated here. By
 submitting a contribution, you confirm that you have the right to contribute it
 under the applicable repository license.
 

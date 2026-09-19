@@ -3,6 +3,14 @@
 All notable changes to the Project 42 public site are recorded here. Versions
 follow Semantic Versioning.
 
+## [0.20.1] - 2026-09-18
+
+- Refresh About, platform documentation links and setup commands, roadmap status, release information and offline guidance.
+- Correct account-service status when the API origin is supplied in site configuration.
+- Document current repository ownership, dependency audit behavior, identity setup and theme/layout installation.
+- Reconcile the site package version with the release history. The August 0.20.0 changelog entry did not update the package manifest, which remained 0.19.0.
+- Preserve courses, lessons, Field Guides and all learning reference material.
+
 ## [0.20.0] - 2026-08-22
 
 - Aligned platform dependency with `@project42/platform#v0.97.0`.
