@@ -1,22 +1,24 @@
-# Project 42 public site 0.19.0
+# Project 42 public site 0.20.1
 
-This release packages the public Project 42 site as a versioned static archive
-with a strict artifact manifest, checksums, and build provenance.
+Updates public About and information pages and operator documentation. The
+learner-data page recognizes the API origin in site configuration. The roadmap
+reflects shipped account capabilities and separates instructor scripts from video.
+The platform quickstart builds content before installing the site.
 
 ## Breaking changes
 
-None. Existing public routes and GitHub Pages deployment behavior are preserved.
+None. Public routes, curriculum, courses and Field Guides are unchanged.
 
 ## Migrations
 
-No data or configuration migration is required.
+No learner-data migration. Adopt platform 0.117.2 and regenerate deployment facts.
 
 ## Known limitations
 
-The release archive contains the public static site only. Hosted account and
-learner-record services are versioned and operated separately.
+Reference self-host profiles retain their documented evaluation status. The legal
+page remains an owner-accepted review draft; this release does not claim legal approval.
 
 ## Rollback
 
 Redeploy the preceding known-good GitHub Pages artifact or restore the prior
-tagged static archive. No learner data is modified by this release.
+platform pin and configuration, regenerate facts and rebuild. No learner data changes.

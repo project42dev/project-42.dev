@@ -1,16 +1,16 @@
 # Diagram authoring
 
 Project 42 diagrams are accessible, source-first learning artifacts consumed from
-the `@project42/platform` package. Mermaid source under
-`node_modules/@project42/platform/content/diagrams/` is canonical. SVG and public
+the `@project42/platform` package. The platform-distributed Mermaid source under
+`node_modules/@project42/platform/content/diagrams/` is an installed copy of the canonical curriculum source. SVG and public
 `.mmd` files under `public/diagrams/` are generated and must never be hand-edited.
 
 ## Diagram source location
 
-Diagrams are authored and maintained in the `project42-platform` repository. This
+Diagrams are authored and maintained in the `project42-content` repository. This
 site consumes the published catalog from `@project42/platform/content/diagrams/catalogue.json`.
 
-To add or change a diagram, make changes in the `project42-platform` repository,
+To add or change a diagram, update `project42-content`, synchronize it into the platform,
 publish a new platform release, then bump the platform version in this site's
 `package.json`.
 

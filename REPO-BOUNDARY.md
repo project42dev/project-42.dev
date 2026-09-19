@@ -30,7 +30,8 @@ Branding, configuration, and release records. Nothing else.
 | `project42.copy.json` | This deployment's wording, overriding the platform's defaults |
 | `config/` | Roadmap, release notes, link-check exceptions, performance budget, retired paths, the Gallery bundle lock |
 | `public/brand/` | This deployment's brand source artwork |
-| `public/themes/`, `public/layouts/` | Gallery bundles, hash-locked in `config/theme-bundles.lock.json` |
+| `themes/`, `layouts/` | Optional site-owned source bundles, which take precedence during materialisation |
+| `public/themes/`, `public/layouts/` | Installed appearance bundles; Gallery-managed bundles are hash-locked in `config/theme-bundles.lock.json` |
 | `public/diagrams/`, the generated icon set, `public/release-facts.json` | Generated artifacts, committed so the build works air-gapped |
 | `scripts/mint-github-app-token.mjs` | This owner's GitHub App tooling |
 | `tests/production/` | Acceptance tests that drive this live deployment |
@@ -56,7 +57,9 @@ platform pin here. If you only need different words, put them in
 |---|---|
 | The rendering application, the platform contracts, the adopter CLI | `project42-platform` |
 | The curriculum, the content model, and its schemas | `project42-content` |
-| Themes, layouts, tokens, marks, hero artwork, badges | `project42-gallery` |
+| Default theme and canonical layouts | `project42-platform/web/themes/portal-default/` and `project42-platform/web/layouts/` |
+| Optional Gallery themes and their artwork | `project42-gallery` |
+| Customer theme installation | This adopting site's source bundle and installed `public/themes/<id>/`, never the platform repository |
 | The content lifecycle: discovery, authoring, currency | `orchard`, private |
 | Owner administration | `admin.project-42.dev` |
 | Planning, sprints, ADRs, board records | `project42dev-ops`, private |

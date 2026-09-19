@@ -2,6 +2,17 @@
   "$schemaVersion": 1,
   "releases": [
     {
+      "version": "0.20.1",
+      "date": "2026-09-18",
+      "changes": [
+        "Refresh About, platform documentation links and setup commands, roadmap status, release information and offline guidance.",
+        "Correct account-service status when the API origin is supplied in site configuration.",
+        "Document current repository ownership, dependency audit behavior, identity setup and theme/layout installation.",
+        "Reconcile the site package version with the release history. The August 0.20.0 changelog entry did not update the package manifest, which remained 0.19.0.",
+        "Preserve courses, lessons, Field Guides and all learning reference material."
+      ]
+    },
+    {
       "version": "0.20.0",
       "date": "2026-08-22",
       "changes": [

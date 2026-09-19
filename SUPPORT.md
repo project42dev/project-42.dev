@@ -4,7 +4,7 @@
 
 The supported public gateway is the current deployment at
 <https://project-42.dev> and the latest commit on `main`. Local development uses
-Node.js 22.13.0 or later and the committed npm lockfile.
+Node.js 22.18.0 or later and the committed npm lockfile.
 
 Open a [GitHub issue](https://github.com/project42dev/project-42.dev/issues) for a
 reproducible public-site defect, accessibility problem, broken redirect, or
@@ -14,8 +14,9 @@ steps. Use the private process in [SECURITY.md](SECURITY.md) for vulnerabilities
 
 ## Compatibility boundary
 
-- This repository is the public gateway. Learn, Field Guide, reusable platform,
-  and self-host distribution support belong in their respective repositories.
+- This repository owns the public deployment. Shared application and self-host
+  defects belong in `project42-platform`; Learn and Field Guide curriculum
+  corrections belong in `project42-content`.
 - The gateway consumes a reviewed `project42-platform` release tag resolved to an
   exact commit by the lockfile.
 - Production output is a static GitHub Pages artifact. Cloudflare provides DNS;
