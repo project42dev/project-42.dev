@@ -61,7 +61,7 @@ reviewed static assets before deployment. See
 
 <!-- release-facts:start -->
 - Site release `0.20.1`
-- Platform package `0.117.3`
+- Platform package `0.117.4`
 - Content release `0.42.0`
 - 14 learning paths, 95 assessed modules, 95 evidence activities, and 546 reviewed questions
 - 91 practical resources and 4 provider scopes
