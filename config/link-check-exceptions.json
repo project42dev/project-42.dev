@@ -59,7 +59,7 @@
     {
       "targetPattern": "https://www.gnu.org/software/bash/manual/html_node/The-Set-Builtin.html",
       "expectedStatuses": [
-        null
+        404
       ],
       "reason": "The official GNU Bash manual URL was verified as the canonical source for the operating card, but the public link checker received a transient fetch failure on 2026-09-22. This exact URL is exempted until the next review; HTTP statuses other than the documented transient failure still fail.",
       "owner": "Project 42 maintainers",
