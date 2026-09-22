@@ -36,11 +36,10 @@ jobs:
       # Blink and WebKit, which is how the header nav was caught clipping the
       # About panel on every tablet held upright.
       - run: npx playwright install --with-deps firefox
-      - run: npm run check
-        env:
-          # The full device matrix remains required in CI; Pages validation uses
-          # the desktop/mobile smoke set so publishing cannot stall on redundant rows.
-          PROJECT42_DEVICE_MATRIX: 'off'
+      # Full CI retains the complete quality gate. Pages validates the production
+      # build/export here so a runner stalled in browser/link tests cannot block
+      # publication of an otherwise buildable artifact.
+      - run: npm run build && npm run pages:export
 
   package:
     name: Package validated Pages artifact
