@@ -33,6 +33,28 @@
       "owner": "Project 42 maintainers",
       "verifiedOn": "2026-09-18",
       "expires": "2026-10-18"
+    },
+    {
+      "targetPattern": "https://docs.vllm.ai/en/latest/configuration/optimization/",
+      "expectedStatuses": [
+        200,
+        429
+      ],
+      "reason": "The official vLLM optimization documentation was cited by the canonical hardware and VRAM calculator. The public link checker received HTTP 429 on 2026-09-22; this exact URL is exempted until the next review, while other statuses continue to fail.",
+      "owner": "Project 42 maintainers",
+      "verifiedOn": "2026-09-22",
+      "expires": "2026-10-22"
+    },
+    {
+      "targetPattern": "https://opensource.org/ai/open-source-ai-definition",
+      "expectedStatuses": [
+        200,
+        403
+      ],
+      "reason": "The official Open Source Initiative AI definition page was cited by canonical glossary and model-provenance material. The public link checker received HTTP 403 on 2026-09-22; this exact URL is exempted until the next review, while other statuses continue to fail.",
+      "owner": "Project 42 maintainers",
+      "verifiedOn": "2026-09-22",
+      "expires": "2026-10-22"
     }
   ]
 }
