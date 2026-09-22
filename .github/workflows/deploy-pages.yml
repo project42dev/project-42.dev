@@ -37,6 +37,10 @@ jobs:
       # About panel on every tablet held upright.
       - run: npx playwright install --with-deps firefox
       - run: npm run check
+        env:
+          # The full device matrix remains required in CI; Pages validation uses
+          # the desktop/mobile smoke set so publishing cannot stall on redundant rows.
+          PROJECT42_DEVICE_MATRIX: 'off'
 
   package:
     name: Package validated Pages artifact
